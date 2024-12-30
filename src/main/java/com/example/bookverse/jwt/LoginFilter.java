@@ -49,7 +49,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority grantedAuthority = iterator.next();
         String role = grantedAuthority.getAuthority();
 
-        String accessToken = this.jwtutil.CreateJWT("access", username, role, 60*10*1000L);
+        String accessToken = this.jwtutil.CreateJWT("access", username, role, 24 * 60 * 60 * 1000L);
         String refreshToken = this.jwtutil.CreateJWT("refresh", username, role, 24 * 60 * 60 * 1000L);
 
         res.addHeader("Authorization", "Bearer " + accessToken);
