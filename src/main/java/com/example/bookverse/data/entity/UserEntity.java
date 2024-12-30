@@ -1,16 +1,17 @@
 package com.example.bookverse.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
@@ -31,7 +32,7 @@ public class UserEntity {
     private String name;
 
     @Column(name = "birthdate", nullable = false)
-    private Long birthdate;
+    private String birthdate;
 
     @Column(name = "addr")
     private String addr;
@@ -47,10 +48,10 @@ public class UserEntity {
 
     @ColumnDefault("current_timestamp()")
     @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "user")
     private List<PurchaseEntity> purchases = new ArrayList<>();
