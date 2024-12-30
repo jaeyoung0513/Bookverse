@@ -1,6 +1,7 @@
 package com.example.bookverse.data.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "user", schema = "bookverse")
 public class UserEntity {
     @Id
@@ -45,12 +47,23 @@ public class UserEntity {
     @Column(name = "provider_id")
     private String providerId;
 
-    @ColumnDefault("current_timestamp()")
+
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
     @OneToMany(mappedBy = "user")
     private List<PurchaseEntity> purchases = new ArrayList<>();
