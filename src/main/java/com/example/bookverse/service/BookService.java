@@ -3,6 +3,7 @@ package com.example.bookverse.service;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.repository.BookRepository;
+import com.example.bookverse.data.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,11 @@ import java.util.Optional;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
+    private final CartRepository cartRepository;
+
+    public void buyBook(String email, List<String> bookId) {
+        // 만드는 중
+    }
 
     public BookEntity addBook(BookDTO bookDTO) {
         // 도서 체크

@@ -42,6 +42,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication authentication) throws IOException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        System.out.println(userDetails);
         String username = userDetails.getUsername();
 
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
