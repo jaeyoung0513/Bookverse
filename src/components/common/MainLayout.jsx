@@ -9,8 +9,8 @@ export default function MainLayout() {
       <Header />
       <div className={style.child}>
         <Outlet />
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
