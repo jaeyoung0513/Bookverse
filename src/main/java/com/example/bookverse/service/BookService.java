@@ -7,15 +7,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
 @Service
 public class BookService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public BookEntity addBook(BookDTO bookDTO) {
+        // 도서 체크
+        Optional<BookEntity> existingBook = bookRepository.findByTitleAndAuthorAndPublisher(
+                bookDTO.getTitle(),
+                bookDTO.getAuthor(),
+                bookDTO.getPublisher()
+        );
 
+        if (existingBook.isPresent()) {
+            throw new RuntimeException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요");
+        }
+        // 도서 등록
         BookEntity book = BookEntity.builder()
                 .title(bookDTO.getTitle())
                 .desc(bookDTO.getDesc())
@@ -30,4 +41,5 @@ public class BookService {
 
         return bookRepository.save(book);
     }
+
 }

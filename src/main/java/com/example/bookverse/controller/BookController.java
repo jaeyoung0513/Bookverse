@@ -25,7 +25,14 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public BookEntity addBook(@RequestBody BookDTO bookDTO) {
-        return bookService.addBook(bookDTO);
+    public ResponseEntity<?> addBook(@RequestBody BookDTO bookDTO) {
+        try {
+            BookEntity addedBook = bookService.addBook(bookDTO);
+            return ResponseEntity.ok(addedBook);
+        } catch (IllegalArgumentException e) {
+            // 중복 도서 처리, 에러 메시지 출력
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 }
