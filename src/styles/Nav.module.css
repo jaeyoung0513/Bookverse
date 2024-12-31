@@ -1,15 +1,23 @@
+.navLink {
+    display: flex; /* Flexbox 레이아웃 적용 */
+    align-items: center; /* 모든 자식 요소를 세로 중앙 정렬 */
+    justify-content: space-between; /* 요소 사이에 균등한 간격을 배치 */
+}
+
 .navLink a {
     color: black;
-    align-items:center;
     font-size: 15px;
-    margin: auto;
+    text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+    padding: 10px; /* 클릭 영역 확대 및 시각적 간격 제공 */
 }
+
 .navLink a:hover {
     color: rgb(255, 142, 36);
-    text-decoration: chocolate;
+    text-decoration: underline; /* 호버 시 밑줄 효과 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
 }
 
 .logoImage {
     width: 5.2rem;
     height: 1.139375rem;
-  }
+}

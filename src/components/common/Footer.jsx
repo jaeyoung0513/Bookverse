@@ -39,7 +39,7 @@ export default function Footer() {
         | <a href="/terms">이용 약관</a> | <a href="/sitemap">사이트맵</a>
       </div>
       <div>
-        © 2024 Bookverse | <a href="/privacy">개인정보 처리방침</a>
+        © 2024 Copyright 별빛개발소 | <a href="/privacy">개인정보 처리방침</a>
       </div>
     </footer>
   );
