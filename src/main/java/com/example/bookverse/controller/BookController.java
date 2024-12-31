@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,7 +32,7 @@ public class BookController {
             return ResponseEntity.ok(addedBook);
         } catch (IllegalArgumentException e) {
             // 중복 도서 처리, 에러 메시지 출력
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 

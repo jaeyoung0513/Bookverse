@@ -23,9 +23,13 @@ public class BookService {
                 bookDTO.getPublisher()
         );
 
-        if (existingBook.isPresent()) {
-            throw new RuntimeException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요");
+
+        if (bookRepository.existsByTitleAndAuthorAndPublisher(
+                bookDTO.getTitle(), bookDTO.getAuthor(), bookDTO.getPublisher())) {
+            throw new IllegalArgumentException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요.");
         }
+
+
         // 도서 등록
         BookEntity book = BookEntity.builder()
                 .title(bookDTO.getTitle())
