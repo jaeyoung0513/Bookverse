@@ -36,4 +36,16 @@ public class BookController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchBooks(
+            @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(required = false, defaultValue = "") String author) {
+        try {
+            List<BookEntity> books = bookService.searchBooks(title, author);
+            return ResponseEntity.ok(books);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage())); // 에러 메시지 반환
+        }
+    }
+
 }

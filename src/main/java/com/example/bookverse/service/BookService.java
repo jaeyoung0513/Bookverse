@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -46,4 +47,18 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+
+    public List<BookEntity> searchBooks(String title, String author) {
+        if (title.isBlank() && author.isBlank()) {
+            throw new IllegalArgumentException("검색 조건을 입력해주세요."); // 검색 조건이 없을 때 예외 처리
+        }
+
+        List<BookEntity> books = bookRepository.findBooksByTitleAndAuthor(title, author);
+
+        if (books.isEmpty()) {
+            throw new IllegalArgumentException("검색 결과가 없습니다. 다시 한번 확인해주세요."); // 검색 결과가 없을 때 예외 처리
+        }
+
+        return books;
+    }
 }
