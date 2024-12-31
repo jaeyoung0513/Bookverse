@@ -44,9 +44,12 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/", "/api/user/login", "/api/user/join",
+                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join",
                                         "/api/user/find/id", "/api/user/find/pw",
-                                        "/api/book/search", "/api/reissue").permitAll()
+                                        "/api/book/search",
+                                        "/api/book/add",
+                                        "/api/book/edit/{id}",
+                                        "/api/reissue").permitAll()
                                 .requestMatchers("/api/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 

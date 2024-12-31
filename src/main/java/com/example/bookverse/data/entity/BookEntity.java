@@ -1,21 +1,21 @@
 package com.example.bookverse.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "book", schema = "bookverse")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
