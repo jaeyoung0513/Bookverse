@@ -1,3 +1,5 @@
+import RegisterForm from "../components/auth/RegisterForm";
+
 export default function RegisterPage() {
-    return <div>회원가입 하기</div>
+  return <RegisterForm />;
 }
