@@ -1,15 +1,15 @@
 package com.example.bookverse.service;
 
 import com.example.bookverse.data.dto.UserDTO;
+import com.example.bookverse.data.entity.RoleEntity;
 import com.example.bookverse.data.entity.UserEntity;
+import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -18,10 +18,8 @@ import java.time.LocalDateTime;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private EntityManager entityManager;
 
     public UserEntity saveUser(UserDTO user) {
         if (this.userRepository.findByEmail(user.getEmail()) == null) {
@@ -35,6 +33,16 @@ public class UserService {
                     .createdAt(LocalDateTime.now())
                     .build();
             this.userRepository.save(userEntity);
+
+            RoleEntity roleEntity = new RoleEntity();
+            roleEntity.setUser(userEntity);
+            if (user.getEmail().equals("admin@bookverse.com")) {
+                roleEntity.setRoleName("ROLE_ADMIN");
+            } else {
+                roleEntity.setRoleName("ROLE_USER");
+            }
+            roleRepository.save(roleEntity);
+
             return userEntity;
         }
         return null;
@@ -47,7 +55,7 @@ public class UserService {
         }
         return id;
     }
-    
+
     public String findPw(UserDTO user) {
         UserEntity userEntity = userRepository.findUserEntityByEmailNameBirthdatePhone(user.getEmail(), user.getName(), user.getBirthdate(), user.getPhone());
         if (userEntity == null) {
@@ -69,7 +77,7 @@ public class UserService {
         SecureRandom rm = new SecureRandom();
         StringBuffer sb = new StringBuffer();
 
-        for(int i=0; i<len; i++) {
+        for (int i = 0; i < len; i++) {
             int index = rm.nextInt(chars.length());
             sb.append(chars.charAt(index));
         }

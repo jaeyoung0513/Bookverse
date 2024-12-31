@@ -1,6 +1,7 @@
 package com.example.bookverse.service;
 
 import com.example.bookverse.data.entity.UserEntity;
+import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.List;
 @Service
 public class AuthenService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -26,11 +28,9 @@ public class AuthenService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-        if (email.equals("admin@bookverse.com")) {
-            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER")); // role 정보 넣어줌
+        roleRepository.findRolesByEmail(email).forEach(role -> {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role));
+        });
 
         return new User(user.getEmail(), user.getPw(), grantedAuthorities);
     }
