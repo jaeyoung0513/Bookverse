@@ -38,7 +38,7 @@ public class BookService {
                 .author(bookDTO.getAuthor())
                 .publisher(bookDTO.getPublisher())
                 .category(bookDTO.getCategory())
-                .quantity(bookDTO.getQuantity() != null ? bookDTO.getQuantity() : 10) // Default 값
+                .quantity(bookDTO.getQuantity())
                 .price(bookDTO.getPrice())
                 .image(bookDTO.getImage())
                 .createdAt(LocalDateTime.now())
@@ -61,4 +61,27 @@ public class BookService {
 
         return books;
     }
+
+    public BookEntity updateBook(Long id, BookDTO bookDTO) {
+        BookEntity book = bookRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 도서를 찾을 수 없습니다."));
+
+        BookEntity updatedBook = BookEntity.builder()
+                .id(book.getId())
+                .title(bookDTO.getTitle() != null ? bookDTO.getTitle() : book.getTitle())
+                .desc(bookDTO.getDesc() != null ? bookDTO.getDesc() : book.getDesc())
+                .author(bookDTO.getAuthor() != null ? bookDTO.getAuthor() : book.getAuthor())
+                .publisher(bookDTO.getPublisher() != null ? bookDTO.getPublisher() : book.getPublisher())
+                .category(bookDTO.getCategory() != null ? bookDTO.getCategory() : book.getCategory())
+                .quantity(bookDTO.getQuantity() != null ? bookDTO.getQuantity() : book.getQuantity())
+                .price(bookDTO.getPrice() != null ? bookDTO.getPrice() : book.getPrice())
+                .image(bookDTO.getImage() != null ? bookDTO.getImage() : book.getImage())
+                .createdAt(book.getCreatedAt())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        return bookRepository.save(updatedBook);
+    }
+
+
 }

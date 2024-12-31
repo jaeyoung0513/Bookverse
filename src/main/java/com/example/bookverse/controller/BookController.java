@@ -21,31 +21,29 @@ public class BookController {
 
     @GetMapping(value = "/booklist")
     public ResponseEntity<List<BookEntity>> booklist() {
-        List<BookEntity> bookEntityEntityList = this.bookRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(bookEntityEntityList);
+        List<BookEntity> bookEntityList = this.bookRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(bookEntityList);
     }
 
     @PostMapping("/add")
     public ResponseEntity<?> addBook(@RequestBody BookDTO bookDTO) {
-        try {
-            BookEntity addedBook = bookService.addBook(bookDTO);
-            return ResponseEntity.ok(addedBook);
-        } catch (IllegalArgumentException e) {
-            // 중복 도서 처리, 에러 메시지 출력
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
+        BookEntity addedBook = bookService.addBook(bookDTO); // 예외 발생 시 GlobalExceptionHandler 처리
+        return ResponseEntity.ok(addedBook);
+
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> searchBooks(
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false, defaultValue = "") String author) {
-        try {
-            List<BookEntity> books = bookService.searchBooks(title, author);
-            return ResponseEntity.ok(books);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage())); // 에러 메시지 반환
-        }
+        List<BookEntity> books = bookService.searchBooks(title, author); // 예외 발생 시 GlobalExceptionHandler 처리
+        return ResponseEntity.ok(books);
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<BookEntity> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        BookEntity updatedBook = bookService.updateBook(id, bookDTO);
+        return ResponseEntity.ok(updatedBook);
     }
 
 }
