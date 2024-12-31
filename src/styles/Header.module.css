@@ -1,7 +1,25 @@
-.title {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 1rem; 
-    background-color: #f8f9fa;
-}
+@font-face {
+    font-family: "Bazzi";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
+    font-weight: bolder;
+    font-style: normal;
+  }
+  
+  .header {
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: 160px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5625rem 6.25rem;
+  }
+    .logoImage {
+      width: 8rem;
+      height: 1.8rem;
+    }
