@@ -1,0 +1,20 @@
+.searchTerm {
+    display: flex;
+    justify-content: flex-end;  /* flex 아이템들을 컨테이너의 끝으로 정렬 */
+    align-items: center;
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 15px;
+    padding: 3px;
+    width: 150px;
+    height: 26px;
+}
+
+.searchTerm input {
+    margin-left: 5px;
+    border: none;
+    font-size: 10.5px;
+    outline: none;
+    width: 100%;
+    text-align: left;
+    padding-right: 10px;
+}

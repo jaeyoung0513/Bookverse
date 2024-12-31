@@ -7,7 +7,6 @@ export default function Footer() {
         서울 서초구 강남대로 405 통영빌딩 8층 |{" "}
         <span>공동대표이사: 류재영, 여찬엽, 안희연, 이승호</span>
       </div>
-      <br />
       <div>
         고객지원: <a href="/support">도움말 센터</a> |{" "}
         <a href="/faq">자주 묻는 질문</a>
@@ -39,7 +38,7 @@ export default function Footer() {
         | <a href="/terms">이용 약관</a> | <a href="/sitemap">사이트맵</a>
       </div>
       <div>
-        © 2024 Bookverse | <a href="/privacy">개인정보 처리방침</a>
+        © 2024 Copyright 별빛개발소 | <a href="/privacy">개인정보 처리방침</a>
       </div>
     </footer>
   );

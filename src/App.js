@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BookDetail from "./components/book/BookDetail";
 import FindUserInfo from "./pages/FindUserInfo";
 import RegisterPage from "./pages/RegisterPage";
+import Cart from "./components/user/Cart";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/booklist" element={<BookList />} />
           <Route path="/bookdetail" element={<BookDetail />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/finduserinfo" element={<FindUserInfo />}>

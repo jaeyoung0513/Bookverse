@@ -10,14 +10,16 @@
     box-sizing: border-box;
     position: fixed;
     top: 0;
-    z-index: 1000;
     display: flex;
     width: 100%;
     max-width: 1200px;
-    margin-left: 160px;
+    margin-left: 149px;
     align-items: center;
     justify-content: space-between;
     padding: 1.5625rem 6.25rem;
+    width: 100%;
+    z-index: 10; /* 헤더가 항상 위에 보이도록 설정 */
+    background: #ffffff; /* 헤더 배경색, 필요에 따라 수정 */
   }
     .logoImage {
       width: 8rem;
