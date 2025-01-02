@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -97,6 +99,18 @@ public class UserService {
         user.setPhone(userDTO.getPhone() != null ? userDTO.getPhone() : user.getPhone());
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
+    }
+
+    public List<UserDTO> getAllUser() {
+        return userRepository.findAll().stream()
+                .map(user -> UserDTO.builder()
+                        .email(user.getEmail())
+                        .name(user.getName())
+                        .birthdate(user.getBirthdate())
+                        .addr(user.getAddr())
+                        .phone(user.getPhone())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

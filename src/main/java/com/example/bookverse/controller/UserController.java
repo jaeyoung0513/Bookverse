@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/user")
@@ -37,5 +39,11 @@ public class UserController {
     public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserDTO user) {
         UserEntity updatedUser = userService.updateUser(id, user);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @GetMapping(value = "/userlist")
+    public ResponseEntity<List<UserDTO>> getAllUser() {
+        List<UserDTO> user = userService.getAllUser();
+        return ResponseEntity.ok(user);
     }
 }

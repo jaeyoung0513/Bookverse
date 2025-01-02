@@ -5,6 +5,7 @@ import com.example.bookverse.component.CustomAuthenticationEntryPoint;
 import com.example.bookverse.jwt.JwtFilter;
 import com.example.bookverse.jwt.JwtUtil;
 import com.example.bookverse.jwt.LoginFilter;
+import com.example.bookverse.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,17 +40,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, PurchaseService purchaseService) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join","/api/user/update/{id}",
+                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join","/api/user/update/{id}","/api/user/userlist",
                                         "/api/user/find/id", "/api/user/find/pw",
                                         "/api/book/search",
                                         "/api/book/add",
                                         "/api/book/edit/{id}",
-                                        "/api/reissue").permitAll()
+                                        "/api/reissue",
+                                        "/api/purchase/purchaseList", "/api/purchase/membersPurchaseList").permitAll()
                                 .requestMatchers("/api/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 

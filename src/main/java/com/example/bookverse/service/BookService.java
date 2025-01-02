@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class BookService {
 
     public BookEntity addBook(BookDTO bookDTO) {
         // 도서 체크
-        Optional<BookEntity> existingBook = bookRepository.findByTitleAndAuthorAndPublisher(
+        bookRepository.findByTitleAndAuthorAndPublisher(
                 bookDTO.getTitle(),
                 bookDTO.getAuthor(),
                 bookDTO.getPublisher()

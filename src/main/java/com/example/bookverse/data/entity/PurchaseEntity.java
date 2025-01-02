@@ -32,4 +32,7 @@ public class PurchaseEntity {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
+
 }
