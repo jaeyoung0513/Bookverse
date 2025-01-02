@@ -90,6 +90,7 @@ public class UserService {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
 
+        user.setPw(userDTO.getPw() != null ? this.passwordEncoder.encode(userDTO.getPw()) : user.getPw());
         user.setName(userDTO.getName() != null ? userDTO.getName() : user.getName());
         user.setBirthdate(userDTO.getBirthdate() != null ? userDTO.getBirthdate() : user.getBirthdate());
         user.setAddr(userDTO.getAddr() != null ? userDTO.getAddr() : user.getAddr());
