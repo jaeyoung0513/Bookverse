@@ -19,7 +19,7 @@ export default function FindById() {
         } else if (!phone) {
             alert('전화번호를 입력해주세요');
         } else {
-            alert('User001');
+            alert('당신의 아이디는 User001입니다');
             navigate("/login");
         }
     }
