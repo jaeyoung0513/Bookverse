@@ -46,4 +46,19 @@ public class UserController {
         List<UserDTO> user = userService.getAllUser();
         return ResponseEntity.ok(user);
     }
+
+    //휴면 관련 기능
+
+    @PutMapping(value = "/{userId}/setDormant")
+    public ResponseEntity<?> setDormantStatus(@PathVariable Long userId){
+        userService.setDormantStatus(userId);
+        return ResponseEntity.ok("회원이 휴면 상태로 전환되었습니다.");
+    }
+
+    @PutMapping(value = "/{UserId}/restoreActive")
+    public ResponseEntity<?> restoreActiveStatus(@PathVariable Long UserId) {
+        userService.restoreActiveStatus(UserId);
+        return ResponseEntity.ok("회원이 활성 상태로 전환되었습니다.");
+    }
+
 }

@@ -47,11 +47,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/", "api/user/login", "/api/user/join","/api/user/update/{id}","/api/user/userlist",
                                         "/api/user/find/id", "/api/user/find/pw",
-                                        "/api/book/search",
-                                        "/api/book/add",
-                                        "/api/book/edit/{id}",
+                                        "/api/book/search", "/api/book/add", "/api/book/edit/{id}",
                                         "/api/reissue",
-                                        "/api/purchase/purchaseList", "/api/purchase/membersPurchaseList").permitAll()
+                                        "/api/purchase/purchaseList", "/api/purchase/membersPurchaseList",
+                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}","/api/review/edit", "/api/review/delete"
+                                ).permitAll()
                                 .requestMatchers("/api/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 

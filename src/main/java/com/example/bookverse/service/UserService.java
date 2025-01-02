@@ -7,9 +7,12 @@ import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -22,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     public UserEntity saveUser(UserDTO user) {
         if (this.userRepository.findByEmail(user.getEmail()) == null) {
@@ -112,5 +116,17 @@ public class UserService {
                         .build())
                 .collect(Collectors.toList());
     }
+    public void setDormantStatus(Long userId){
+        userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
+        userRepository.updateUserStatus(userId,false);
+    }
+    public void  restoreActiveStatus(Long userId){
+        userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
+        userRepository.updateUserStatus(userId,true);
+    }
+
+
 
 }
