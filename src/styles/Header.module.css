@@ -1,27 +1,32 @@
 @font-face {
-    font-family: "Bazzi";
-    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
-    font-weight: bolder;
-    font-style: normal;
-  }
-  
+  font-family: "Bazzi";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
+  font-weight: bolder;
+  font-style: normal;
+}
+
+.header {
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5625rem 12.25rem;
+  z-index: 10;
+  background: #ffffff;
+  margin: 0 auto; /* 중앙 정렬을 위해 자동 마진 설정 */
+}
+
+.logoImage {
+  width: 8rem;
+  height: 1.8rem;
+}
+
+/* 추가: 미디어 쿼리를 사용하여 작은 화면에서 패딩 조정 */
+@media (max-width: 768px) {
   .header {
-    width: 100%;
-    box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-    margin-left: 149px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5625rem 6.25rem;
-    width: 100%;
-    z-index: 10; /* 헤더가 항상 위에 보이도록 설정 */
-    background: #ffffff; /* 헤더 배경색, 필요에 따라 수정 */
+      padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
   }
-    .logoImage {
-      width: 8rem;
-      height: 1.8rem;
-    }
+}

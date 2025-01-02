@@ -1,51 +1,66 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import style from "../../styles/Nav.module.css";
 import { useState } from "react";
 
 export default function Nav() {
   const [searchForm, setSearchForm] = useState("");
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault(); // 페이지 리로드 방지
     console.log("Searching for:", searchForm);
-    // 검색 로직을 여기에 구현
+    // 검색 로직을 여기에 구현, 예: 페이지 리다이렉트 또는 API 호출
   };
 
   return (
     <nav className={style.navLink}>
       <div className={style.logoContainer}>
-        <Link to="/">
-          <img src="/BookverseLogo.png" className={style.logoImage} alt="" />
-        </Link>
+        <NavLink to="/">
+          <img
+            src="/BookverseLogo.png"
+            className={style.logoImage}
+            alt="Bookverse Logo"
+          />
+        </NavLink>
       </div>
       <div className={style.linksContainer}>
-        <Link to="/">추천</Link>
-        <Link to="/booklist">도서</Link>
+        <NavLink to="/" exact activeClassName={style.active}>
+          추천
+        </NavLink>
+        <NavLink to="/booklist" activeClassName={style.active}>
+          도서
+        </NavLink>
       </div>
       <div className={style.rightContainer}>
-        <form className={style.searchForm} onSubmit={(e) => e.preventDefault()}>
+        <form className={style.searchForm} onSubmit={handleSearch}>
           <input
             type="text"
             placeholder="제목, 작가를 입력하세요."
             value={searchForm}
             onChange={(e) => setSearchForm(e.target.value)}
+            className={style.searchInput}
           />
-          <img
-            src="/assets/searchIcon.png"
-            alt="검색"
-            className={style.searchIcon}
-            onClick={handleSearch}
-          />
+          <button type="submit" className={style.searchButton}>
+            <img
+              src="/assets/searchIcon.png"
+              alt="검색"
+              className={style.searchIcon}
+            />
+          </button>
         </form>
-        <Link to="/cart">
-          <img src="/assets/cart.png" alt="User" className={style.cartIcon} />
-        </Link>
-        <Link to="/login">
+        <NavLink to="/cart">
+          <img
+            src="/assets/cart.png"
+            alt="장바구니"
+            className={style.cartIcon}
+          />
+        </NavLink>
+        <NavLink to="/login">
           <img
             src="/assets/userIcon.png"
-            alt="User"
+            alt="로그인"
             className={style.userIcon}
           />
-        </Link>
+        </NavLink>
       </div>
     </nav>
   );
