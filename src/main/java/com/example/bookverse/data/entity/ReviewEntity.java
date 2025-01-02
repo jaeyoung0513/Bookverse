@@ -18,6 +18,10 @@ public class ReviewEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "book_id", nullable = false)
+    private BookEntity book;
+
     @Column(name = "content", nullable = false)
     private String content;
 

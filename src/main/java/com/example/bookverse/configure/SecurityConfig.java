@@ -44,11 +44,11 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join","/api/user/update/{id}",
-                                        "/api/user/find/id", "/api/user/find/pw",
-                                        "/api/book/search",
-                                        "/api/book/add",
-                                        "/api/book/edit/{id}",
+                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join",
+                                        "/api/user/find/id", "/api/user/find/pw", "/api/user/update/{id}",
+                                        "/api/book/search", "/api/book/add", "/api/book/edit/{id}",
+                                        "/api/book/add/wish", "/api/book/delete/wish", "/api/book/add/cart", "/api/book/delete/cart",
+                                        "/api/book/buy",
                                         "/api/reissue").permitAll()
                                 .requestMatchers("/api/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated());

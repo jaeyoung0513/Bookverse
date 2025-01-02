@@ -33,6 +33,7 @@ public class UserController {
         String newPw = userService.findPw(user);
         return ResponseEntity.status(HttpStatus.OK).body(newPw);
     }
+
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserDTO user) {
         UserEntity updatedUser = userService.updateUser(id, user);

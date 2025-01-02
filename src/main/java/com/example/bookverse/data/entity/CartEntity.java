@@ -1,9 +1,13 @@
 package com.example.bookverse.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
@@ -21,5 +25,9 @@ public class CartEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "book_id", nullable = false)
     private BookEntity book;
+
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
 }

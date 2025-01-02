@@ -7,7 +7,6 @@ import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,8 +82,6 @@ public class UserService {
         }
         return sb.toString();
     }
-
-
 
     public UserEntity updateUser(Long id, UserDTO userDTO) {
         UserEntity user = userRepository.findById(id)
