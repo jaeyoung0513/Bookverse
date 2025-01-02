@@ -7,7 +7,7 @@ export default function MainLayout() {
   return (
     <>
       <Header />
-      <div className={style.child}>
+      <div className={style.content}>
         <Outlet />
         <Footer />
       </div>

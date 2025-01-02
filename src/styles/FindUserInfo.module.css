@@ -1,6 +1,33 @@
 .FindContainer {
-    margin-top: 130px;
     display: flex;
-    justify-content: center;
-    gap: 150px
+    justify-content: space-between;
+    align-items: stretch; /* 자식들이 높이를 컨테이너에 맞춤 */
+    padding: 0 25%;
+    min-height: 300px; /* 최소 높이 보장 */
+}
+
+.FindDivider {
+    width: 3px;
+    border-radius: 1px;
+    background-color: #dedede; /* 세로선 색상 */
+    margin: 0 20px;
+}
+
+/* 가상 요소를 사용한 높이 보장 */
+.FindDivider::before {
+    content: ""; /* 가상 요소의 내용은 비워둠 */
+    display: block;
+    height: 100%;
+}
+
+.logoImageContainer {
+    display: flex;
+    justify-content: center; /* 로고 이미지를 중앙에 배치 */
+    margin-top: 130px; /* 로고 이미지와 상단 여백 */
+}
+
+.logoImage {
+    width: 10.4rem;
+    height: 2.239375rem;
+    margin-bottom: 50px;
 }
