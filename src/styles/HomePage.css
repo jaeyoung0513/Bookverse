@@ -14,7 +14,7 @@ body {
     margin: 20px auto; /* 상하 20px, 좌우 자동 마진으로 중앙 정렬 */
     position: relative;
     overflow: hidden;
-    padding: 1.5625rem 5.25rem;
+    padding: 0.1625rem 5.25rem;
 }
 
 @media (max-width: 768px) {
