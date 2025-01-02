@@ -1,6 +1,7 @@
 package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.UserDTO;
+import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,10 @@ public class UserController {
     public ResponseEntity<String> findPw(@RequestBody UserDTO user) {
         String newPw = userService.findPw(user);
         return ResponseEntity.status(HttpStatus.OK).body(newPw);
+    }
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserDTO user) {
+        UserEntity updatedUser = userService.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 }

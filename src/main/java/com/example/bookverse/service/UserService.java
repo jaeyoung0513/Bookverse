@@ -85,4 +85,17 @@ public class UserService {
     }
 
 
+
+    public UserEntity updateUser(Long id, UserDTO userDTO) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+
+        user.setName(userDTO.getName() != null ? userDTO.getName() : user.getName());
+        user.setBirthdate(userDTO.getBirthdate() != null ? userDTO.getBirthdate() : user.getBirthdate());
+        user.setAddr(userDTO.getAddr() != null ? userDTO.getAddr() : user.getAddr());
+        user.setPhone(userDTO.getPhone() != null ? userDTO.getPhone() : user.getPhone());
+        user.setUpdatedAt(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
 }

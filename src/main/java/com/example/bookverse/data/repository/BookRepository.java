@@ -18,7 +18,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     boolean existsByTitleAndAuthorAndPublisher(String title, String author, String publisher);
 
-    @Query(value = "SELECT * FROM book b WHERE b.title LIKE %:title% AND b.author LIKE %:author%", nativeQuery = true)
-    List<BookEntity> findBooksByTitleAndAuthor(@Param("title") String title, @Param("author") String author);
-
+    @Query("SELECT b FROM BookEntity b WHERE b.title LIKE %:query% OR b.author LIKE %:query%")
+    List<BookEntity> findBooksByQuery(@Param("query") String query);
 }

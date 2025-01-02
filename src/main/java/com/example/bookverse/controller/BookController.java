@@ -27,16 +27,14 @@ public class BookController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addBook(@RequestBody BookDTO bookDTO) {
-        BookEntity addedBook = bookService.addBook(bookDTO); // 예외 발생 시 GlobalExceptionHandler 처리
+        BookEntity addedBook = bookService.addBook(bookDTO);
         return ResponseEntity.ok(addedBook);
 
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchBooks(
-            @RequestParam(required = false, defaultValue = "") String title,
-            @RequestParam(required = false, defaultValue = "") String author) {
-        List<BookEntity> books = bookService.searchBooks(title, author); // 예외 발생 시 GlobalExceptionHandler 처리
+    public ResponseEntity<?> searchBooks(@RequestParam(required = false, defaultValue = "") String query) {
+        List<BookEntity> books = bookService.searchBooks(query);
         return ResponseEntity.ok(books);
     }
 
