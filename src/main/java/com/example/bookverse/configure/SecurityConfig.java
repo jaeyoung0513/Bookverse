@@ -44,13 +44,14 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join", "/api/user/check/id",
-                                        "/api/user/find/id", "/api/user/find/pw", "/api/user/update/{id}",
-                                        "/api/book/search", "/api/book/add", "/api/book/edit/{id}",
-                                        "/api/book/add/wish", "/api/book/delete/wish", "/api/book/add/cart", "/api/book/delete/cart",
-                                        "/api/book/buy",
+                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join",
+                                        "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw",
+                                        "/api/user/update/{id}",
+                                        "/api/book/search", "/api/book/top/all", "/api/book/top/category",
                                         "/api/reissue").permitAll()
-                                .requestMatchers("/api/admin").hasRole("ADMIN")
+                                .requestMatchers("/api/user/update/{id}", "/api/book/add/wish", "/api/book/delete/wish",
+                                        "/api/book/add/cart", "/api/book/delete/cart", "/api/book/buy").hasRole("USER")
+                                .requestMatchers("/api/book/add", "/api/book/edit/{id}").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 
         http.cors(cors -> cors.configurationSource(request -> {

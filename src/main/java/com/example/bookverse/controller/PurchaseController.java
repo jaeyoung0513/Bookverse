@@ -1,12 +1,16 @@
 package com.example.bookverse.controller;
 
+import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.request.RequestDTO;
 import com.example.bookverse.data.request.RequestListDTO;
+import com.example.bookverse.response.Top5BooksResponse;
 import com.example.bookverse.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -42,5 +46,17 @@ public class PurchaseController {
     public ResponseEntity<String> buyBook(@RequestBody RequestListDTO requestListDTO) {
         purchaseService.buyBook(requestListDTO.getEmail(), requestListDTO.getRequestBuyDTOS());
         return ResponseEntity.status(HttpStatus.OK).body("구매되었습니다.");
+    }
+
+    @GetMapping(value = "/top/all")
+    public ResponseEntity<List<BookDTO>> findTop5Books() {
+        List<BookDTO> bookDTOS = purchaseService.findTop5Books();
+        return ResponseEntity.status(HttpStatus.OK).body(bookDTOS);
+    }
+
+    @GetMapping(value = "/top/category")
+    public ResponseEntity<List<BookDTO>> findTop5BooksByCategory(@RequestParam String category) {
+        List<BookDTO> bookDTOS = purchaseService.findTop5BooksByCategory(category);
+        return ResponseEntity.status(HttpStatus.OK).body(bookDTOS);
     }
 }
