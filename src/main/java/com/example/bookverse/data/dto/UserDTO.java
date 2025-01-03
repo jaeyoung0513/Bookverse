@@ -16,5 +16,5 @@ public class UserDTO {
     private String birthdate;
     private String addr;
     private String phone;
-
+    private boolean status;
 }

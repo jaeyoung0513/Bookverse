@@ -3,40 +3,35 @@ package com.example.bookverse.service;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.repository.BookRepository;
-import com.example.bookverse.data.repository.CartRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @RequiredArgsConstructor
 @Service
 public class BookService {
     private final BookRepository bookRepository;
-    private final CartRepository cartRepository;
 
-    public void buyBook(String email, List<String> bookId) {
-        // 만드는 중
+    public BookEntity existsByBookId(Long bookId) {
+        BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new EntityNotFoundException("해당 도서를 찾을 수 없습니다."));
+        return book;
     }
 
     public BookEntity addBook(BookDTO bookDTO) {
-        // 도서 체크
         bookRepository.findByTitleAndAuthorAndPublisher(
                 bookDTO.getTitle(),
                 bookDTO.getAuthor(),
                 bookDTO.getPublisher()
         );
 
-
         if (bookRepository.existsByTitleAndAuthorAndPublisher(
                 bookDTO.getTitle(), bookDTO.getAuthor(), bookDTO.getPublisher())) {
             throw new IllegalArgumentException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요.");
         }
 
-
-        // 도서 등록
         BookEntity book = BookEntity.builder()
                 .title(bookDTO.getTitle())
                 .desc(bookDTO.getDesc())
@@ -52,7 +47,6 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-
     public List<BookEntity> searchBooks(String query) {
         if (query == null || query.isBlank()) {
             throw new IllegalArgumentException("검색어를 입력해주세요.");
@@ -61,10 +55,8 @@ public class BookService {
         return bookRepository.findBooksByQuery(query);
     }
 
-
     public BookEntity updateBook(Long id, BookDTO bookDTO) {
-        BookEntity book = bookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 도서를 찾을 수 없습니다."));
+        BookEntity book = existsByBookId(id);
 
         BookEntity updatedBook = BookEntity.builder()
                 .id(book.getId())
@@ -82,6 +74,4 @@ public class BookService {
 
         return bookRepository.save(updatedBook);
     }
-
-
 }

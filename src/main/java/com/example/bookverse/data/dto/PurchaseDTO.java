@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +16,5 @@ public class PurchaseDTO {
     private String bookTitle;
     private Integer quantity;
     private Integer price;
-    private Instant orderDate;
+    private LocalDateTime orderDate;
 }

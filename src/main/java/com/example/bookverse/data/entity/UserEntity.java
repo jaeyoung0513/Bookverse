@@ -53,7 +53,7 @@ public class UserEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean isActive = true;
 
     @OneToMany(mappedBy = "user")
@@ -67,5 +67,4 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<WishlistEntity> wishlists = new ArrayList<>();
-
 }

@@ -5,7 +5,6 @@ import com.example.bookverse.component.CustomAuthenticationEntryPoint;
 import com.example.bookverse.jwt.JwtFilter;
 import com.example.bookverse.jwt.JwtUtil;
 import com.example.bookverse.jwt.LoginFilter;
-import com.example.bookverse.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,19 +39,23 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, PurchaseService purchaseService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join","/api/user/update/{id}","/api/user/userlist",
-                                        "/api/user/find/id", "/api/user/find/pw","/api/user/{userId}/setDormant","/api/user/{userId}/setActive", "/api/user/filter",
-                                        "/api/book/search", "/api/book/add", "/api/book/edit/{id}",
-                                        "/api/reissue",
-                                        "/api/purchase/purchaseList", "/api/purchase/membersPurchaseList",
-                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}","/api/review/edit", "/api/review/delete"
-                                ).permitAll()
-                                .requestMatchers("/api/admin").hasRole("ADMIN")
+                        auth.requestMatchers("/api/", "api/user/login", "/api/user/join",
+                                        "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw",
+                                        "/api/user/update/{id}",
+                                        "/api/book/search", "/api/book/top/all", "/api/book/top/category",
+                                        "/api/reissue").permitAll()
+                                .requestMatchers("/api/user/update/{id}",
+                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}","/api/review/edit", "/api/review/delete",
+                                        "/api/purchase/add/wish", "/api/purchase/delete/wish",
+                                        "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy").hasRole("USER")
+                                .requestMatchers("/api/user/{userId}/setDormant","/api/user/{userId}/setActive", "/api/user/filter", "/api/user/userlist",
+                                        "/api/book/add", "/api/book/edit/{id}",
+                                        "/api/purchase/purchaseList","/api/purchase/membersPurchaseList").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 
         http.cors(cors -> cors.configurationSource(request -> {

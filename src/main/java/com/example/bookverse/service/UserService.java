@@ -5,14 +5,11 @@ import com.example.bookverse.data.entity.RoleEntity;
 import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -25,7 +22,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     public UserEntity saveUser(UserDTO user) {
         if (this.userRepository.findByEmail(user.getEmail()) == null) {
@@ -52,6 +48,12 @@ public class UserService {
             return userEntity;
         }
         return null;
+    }
+
+    public void checkId(String email) {
+        if (userRepository.findByEmail(email) != null) {
+            throw new EntityExistsException("이미 있는 아이디입니다. 다시 입력해주세요.");
+        }
     }
 
     public String findId(UserDTO user) {
@@ -89,6 +91,8 @@ public class UserService {
         }
         return sb.toString();
     }
+
+
 
     public UserEntity updateUser(Long id, UserDTO userDTO) {
         UserEntity user = userRepository.findById(id)

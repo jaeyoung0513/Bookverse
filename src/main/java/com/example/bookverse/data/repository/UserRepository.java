@@ -32,5 +32,4 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.isActive = false")
     List<UserEntity> findDormantUsers();
-
 }
