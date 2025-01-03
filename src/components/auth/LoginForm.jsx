@@ -1,7 +1,32 @@
 import styles from "../../styles/LoginForm.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import {useState, useEffect} from "react";
+import axios from "axios";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] =useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(()=>{
+    if (location.state && location.state.userId) {
+      setEmail(location.state.userId);
+    }
+  }, [location.state]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const loginData = { email, password };
+    try {
+      const response = await axios.post("https://localhost:8080/login", loginData);
+      console.log("로그인 성공:", response.data); // 로그인 성공 후 MainLayout으로 전환
+      navigate.push("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
+  };
+
   return (
     <form>
       <div className={styles.container}>

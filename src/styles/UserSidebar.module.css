@@ -1,0 +1,31 @@
+.sidebar {
+    position: absolute;
+    top: 120px; /* 로고 하단 여백 */
+    left: 195px; /* 수직선 왼쪽 */
+    width: 150px; /* 사이드바 너비 */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+}
+
+.menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menuItem {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.menuItem a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.menuItem a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
