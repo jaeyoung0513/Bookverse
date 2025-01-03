@@ -8,6 +8,7 @@ import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.BookRepository;
 import com.example.bookverse.data.repository.ReviewRepository;
 import com.example.bookverse.data.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,9 @@ public class ReviewService {
     // 리뷰 작성
     public ReviewEntity addReview(ReviewDTO reviewDTO) {
         UserEntity user = userRepository.findById(reviewDTO.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자입니다."));
         BookEntity book = bookRepository.findById(reviewDTO.getBookId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 책입니다."));
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 책입니다."));
 
         ReviewEntity review = ReviewEntity.builder()
                 .user(user)
@@ -49,7 +50,7 @@ public class ReviewService {
     // 리뷰 수정
     public ReviewEntity editReview(Long reviewId, Long userId, String content) {
         ReviewEntity review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
         if (!review.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("권한이 없습니다.");
         }
@@ -60,7 +61,7 @@ public class ReviewService {
     // 리뷰 삭제
     public void deleteReview(Long reviewId, Long userId) {
         ReviewEntity review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
         if (!review.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("권한이 없습니다.");
         }

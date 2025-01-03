@@ -53,8 +53,8 @@ public class UserEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "status", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
-    private boolean isActive = true;
+    @Column(name = "status", nullable = false)
+    private boolean isDormant = false;
 
     @OneToMany(mappedBy = "user")
     private List<PurchaseEntity> purchases = new ArrayList<>();

@@ -24,20 +24,20 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(bookEntityList);
     }
 
-    @PostMapping("/add")
+    @PostMapping(value ="/add")
     public ResponseEntity<?> addBook(@RequestBody BookDTO bookDTO) {
         BookEntity addedBook = bookService.addBook(bookDTO);
         return ResponseEntity.ok(addedBook);
 
     }
 
-    @GetMapping("/search")
+    @GetMapping(value ="/search")
     public ResponseEntity<?> searchBooks(@RequestParam(required = false, defaultValue = "") String query) {
         List<BookEntity> books = bookService.searchBooks(query);
         return ResponseEntity.ok(books);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping(value ="/edit/{id}")
     public ResponseEntity<BookEntity> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
         BookEntity updatedBook = bookService.updateBook(id, bookDTO);
         return ResponseEntity.ok(updatedBook);

@@ -12,19 +12,19 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/review")
+@RequestMapping(value ="/api/review")
 public class ReviewController {
     private final ReviewService reviewService;
 
     // 리뷰 작성
-    @PostMapping("/add")
+    @PostMapping(value ="/add")
     public ResponseEntity<?> addReview(@RequestBody ReviewDTO reviewDTO) {
         ReviewEntity savedReview = reviewService.addReview(reviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
     }
 
     // 책별 리뷰 조회
-    @GetMapping("/book/{bookId}")
+    @GetMapping(value ="/book/{bookId}")
     public ResponseEntity<List<ReviewDTO>> getBookReviews(@PathVariable Long bookId) {
         List<ReviewDTO> reviews = reviewService.getReviewsByBook(bookId)
                 .stream()
@@ -38,19 +38,19 @@ public class ReviewController {
     }
 
     // 회원별 리뷰 조회 (관리자)
-    @GetMapping("/user/{userId}")
+    @GetMapping(value ="/user/{userId}")
     public ResponseEntity<?> getUserReviews(@PathVariable Long userId) {
         List<ReviewEntity> reviews = reviewService.getReviewsByUser(userId);
         return ResponseEntity.ok(reviews);
     }
 
     // 리뷰 수정
-    @PutMapping("/edit")
+    @PutMapping(value ="/edit/{id}")
     public ResponseEntity<ReviewEntity> editReview(@RequestBody ReviewDTO reviewDTO) {
         return ResponseEntity.ok(reviewService.editReview(reviewDTO.getId(), reviewDTO.getUserId(), reviewDTO.getContent()));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping(value ="/delete")
     public ResponseEntity<Void> deleteReview(@RequestBody ReviewDTO reviewDTO) {
         reviewService.deleteReview(reviewDTO.getId(), reviewDTO.getUserId());
         return ResponseEntity.ok().build();

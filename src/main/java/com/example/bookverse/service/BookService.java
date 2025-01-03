@@ -3,6 +3,7 @@ package com.example.bookverse.service;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.repository.BookRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class BookService {
 
         if (bookRepository.existsByTitleAndAuthorAndPublisher(
                 bookDTO.getTitle(), bookDTO.getAuthor(), bookDTO.getPublisher())) {
-            throw new IllegalArgumentException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요.");
+            throw new EntityExistsException("같은 도서가 이미 존재합니다. 다시 한번 확인해주세요.");
         }
 
         BookEntity book = BookEntity.builder()

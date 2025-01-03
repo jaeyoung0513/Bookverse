@@ -47,16 +47,15 @@ public class SecurityConfig {
                         auth.requestMatchers("/api/", "api/user/login", "/api/user/join",
                                         "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw",
                                         "/api/user/update/{id}",
-                                        "/api/book/search", "/api/purchase/top/all", "/api/purchcase/top/category",
+                                        "/api/book/search", "/api/purchase/top/all", "/api/purchase/top/category",
                                         "/api/reissue").permitAll()
                                 .requestMatchers("/api/user/update/{id}",
-                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}", "/api/review/edit", "/api/review/delete",
+                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}","/api/review/edit", "/api/review/delete",
                                         "/api/purchase/add/wish", "/api/purchase/delete/wish",
-                                        "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
-                                        "/api/purchase/membersPurchaseList").hasRole("USER")
-                                .requestMatchers("/api/user/{userId}/setDormant", "/api/user/{userId}/setActive", "/api/user/filter", "/api/user/userlist",
+                                        "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy").hasRole("USER")
+                                .requestMatchers("/api/user/{userId}/setDormant","/api/user/{userId}/setActive", "/api/user/filter", "/api/user/userlist",
                                         "/api/book/add", "/api/book/edit/{id}",
-                                        "/api/purchase/purchaseList", "/api/purchase/membersPurchaseList").hasRole("ADMIN")
+                                        "/api/purchase/purchaseList","/api/purchase/membersPurchaseList").hasRole("ADMIN")
                                 .anyRequest().authenticated());
 
         http.cors(cors -> cors.configurationSource(request -> {

@@ -98,7 +98,7 @@ public class UserService {
 
     public UserEntity updateUser(Long id, UserDTO userDTO) {
         UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("해당 유저를 찾을 수 없습니다."));
 
         user.setPw(userDTO.getPw() != null ? this.passwordEncoder.encode(userDTO.getPw()) : user.getPw());
         user.setName(userDTO.getName() != null ? userDTO.getName() : user.getName());
@@ -123,14 +123,14 @@ public class UserService {
 
     public void setDormantStatus(Long userId) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId, false);
+                .orElseThrow(() -> new EntityNotFoundException("해당 사용자는 존재하지 않습니다."));
+        userRepository.updateUserStatus(userId, true);
     }
 
     public void restoreActiveStatus(Long userId) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId, true);
+                .orElseThrow(() -> new EntityNotFoundException("해당 사용자는 존재하지 않습니다."));
+        userRepository.updateUserStatus(userId, false);
     }
 
     public List<UserEntity> getAllUsers() {

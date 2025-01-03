@@ -69,13 +69,13 @@ public class UserController {
         return ResponseEntity.ok("회원이 활성 상태로 전환되었습니다.");
     }
 
-    @GetMapping("/filter")
+    @GetMapping(value ="/filter")
     public ResponseEntity<?> filterUsers(@RequestParam(required = false) String status) {
         List<UserEntity> users;
 
-        if ("active".equalsIgnoreCase(status)) {
+        if ("false".equalsIgnoreCase(status)) {
             users = userService.getActiveUsers();
-        } else if ("dormant".equalsIgnoreCase(status)) {
+        } else if ("true".equalsIgnoreCase(status)) {
             users = userService.getDormantUsers();
         } else {
             users = userService.getAllUsers();

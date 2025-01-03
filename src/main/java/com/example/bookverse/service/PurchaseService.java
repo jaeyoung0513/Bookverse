@@ -37,7 +37,7 @@ public class PurchaseService {
     public List<PurchaseDTO> getPurchasesByUser(String email) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new IllegalArgumentException("해당 이메일의 사용자를 찾을 수 없습니다.");
+            throw new EntityNotFoundException("해당 이메일의 사용자를 찾을 수 없습니다.");
         }
 
         List<PurchaseEntity> purchases = purchaseRepository.findByUserId(user.getId());
