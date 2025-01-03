@@ -53,7 +53,7 @@ public class UserEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     private boolean isActive = true;
 
     @OneToMany(mappedBy = "user")

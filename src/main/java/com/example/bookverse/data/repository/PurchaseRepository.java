@@ -1,7 +1,7 @@
 package com.example.bookverse.data.repository;
 
 import com.example.bookverse.data.entity.PurchaseEntity;
-import com.example.bookverse.response.Top5BooksResponse;
+import com.example.bookverse.data.response.Top5BooksResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

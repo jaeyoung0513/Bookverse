@@ -18,13 +18,13 @@ import java.util.List;
 public class PurchaseController {
     private final PurchaseService purchaseService;
 
-    @GetMapping("/purchaseList")
+    @GetMapping("/membersPurchaseList")
     public ResponseEntity<List<PurchaseDTO>> getPurchasesByUser(@RequestParam String email) {
         List<PurchaseDTO> purchases = purchaseService.getPurchasesByUser(email);
         return new ResponseEntity<>(purchases, HttpStatus.OK);
     }
 
-    @GetMapping("/membersPurchaseList")
+    @GetMapping("/purchaseList")
     public ResponseEntity<List<PurchaseDTO>> getAllPurchases() {
         List<PurchaseDTO> purchases = purchaseService.getAllPurchases();
         return new ResponseEntity<>(purchases, HttpStatus.OK);

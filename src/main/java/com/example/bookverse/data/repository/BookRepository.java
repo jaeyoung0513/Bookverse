@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
-
-
     @Query(value = "SELECT * FROM book b WHERE b.title = :title AND b.author = :author AND b.publisher = :publisher", nativeQuery = true)
     Optional<BookEntity> findByTitleAndAuthorAndPublisher(@Param("title") String title, @Param("author") String author, @Param("publisher") String publisher);
 

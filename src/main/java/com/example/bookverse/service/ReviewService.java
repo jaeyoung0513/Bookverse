@@ -6,7 +6,6 @@ import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.entity.ReviewEntity;
 import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.BookRepository;
-import com.example.bookverse.data.repository.PurchaseRepository;
 import com.example.bookverse.data.repository.ReviewRepository;
 import com.example.bookverse.data.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import java.util.List;
 @Service
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final PurchaseRepository purchaseRepository;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
@@ -47,6 +45,7 @@ public class ReviewService {
     public List<ReviewEntity> getReviewsByUser(Long userId) {
         return reviewRepository.findByUserId(userId);
     }
+
     // 리뷰 수정
     public ReviewEntity editReview(Long reviewId, Long userId, String content) {
         ReviewEntity review = reviewRepository.findById(reviewId)

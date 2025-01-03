@@ -2,7 +2,6 @@ package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.ReviewDTO;
 import com.example.bookverse.data.entity.ReviewEntity;
-import com.example.bookverse.data.repository.ReviewRepository;
 import com.example.bookverse.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequestMapping("/api/review")
 public class ReviewController {
     private final ReviewService reviewService;
-    private final ReviewRepository reviewRepository;
 
     // 리뷰 작성
     @PostMapping("/add")
@@ -24,7 +22,6 @@ public class ReviewController {
         ReviewEntity savedReview = reviewService.addReview(reviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
     }
-
 
     // 책별 리뷰 조회
     @GetMapping("/book/{bookId}")
@@ -40,15 +37,12 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
-
-
     // 회원별 리뷰 조회 (관리자)
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getUserReviews(@PathVariable Long userId) {
         List<ReviewEntity> reviews = reviewService.getReviewsByUser(userId);
         return ResponseEntity.ok(reviews);
     }
-
 
     // 리뷰 수정
     @PutMapping("/edit")
@@ -61,5 +55,4 @@ public class ReviewController {
         reviewService.deleteReview(reviewDTO.getId(), reviewDTO.getUserId());
         return ResponseEntity.ok().build();
     }
-
 }

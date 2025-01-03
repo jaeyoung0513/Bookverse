@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class PurchaseDTO {
-
     private String bookTitle;
     private Integer quantity;
     private Integer price;

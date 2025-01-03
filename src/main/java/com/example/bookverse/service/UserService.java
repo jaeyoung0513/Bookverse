@@ -37,9 +37,13 @@ public class UserService {
             this.userRepository.save(userEntity);
 
             RoleEntity roleEntity = new RoleEntity();
+            RoleEntity roleEntity2 = new RoleEntity();
             roleEntity.setUser(userEntity);
             if (user.getEmail().equals("admin@bookverse.com")) {
                 roleEntity.setRoleName("ROLE_ADMIN");
+                roleEntity2.setUser(userEntity);
+                roleEntity2.setRoleName("ROLE_USER");
+                roleRepository.save(roleEntity2);
             } else {
                 roleEntity.setRoleName("ROLE_USER");
             }
@@ -92,8 +96,6 @@ public class UserService {
         return sb.toString();
     }
 
-
-
     public UserEntity updateUser(Long id, UserDTO userDTO) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
@@ -118,24 +120,28 @@ public class UserService {
                         .build())
                 .collect(Collectors.toList());
     }
-    public void setDormantStatus(Long userId){
+
+    public void setDormantStatus(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId,false);
+        userRepository.updateUserStatus(userId, false);
     }
-    public void  restoreActiveStatus(Long userId){
+
+    public void restoreActiveStatus(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId,true);
+        userRepository.updateUserStatus(userId, true);
     }
+
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
+
     public List<UserEntity> getActiveUsers() {
         return userRepository.findActiveUsers();
     }
+
     public List<UserEntity> getDormantUsers() {
         return userRepository.findDormantUsers();
     }
-
 }

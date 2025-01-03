@@ -1,4 +1,4 @@
-package com.example.bookverse.response;
+package com.example.bookverse.data.response;
 
 public interface Top5BooksResponse {
     Long getBookId();

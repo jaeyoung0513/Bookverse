@@ -1,15 +1,11 @@
 package com.example.bookverse.service;
 
-import com.example.bookverse.data.dto.PurchaseDTO;
-import com.example.bookverse.data.entity.PurchaseEntity;
-import com.example.bookverse.data.entity.UserEntity;
-import com.example.bookverse.data.repository.PurchaseRepository;
-import com.example.bookverse.data.repository.UserRepository;
 import com.example.bookverse.data.dto.BookDTO;
+import com.example.bookverse.data.dto.PurchaseDTO;
 import com.example.bookverse.data.entity.*;
 import com.example.bookverse.data.repository.*;
 import com.example.bookverse.data.request.RequestBuyDTO;
-import com.example.bookverse.response.Top5BooksResponse;
+import com.example.bookverse.data.response.Top5BooksResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

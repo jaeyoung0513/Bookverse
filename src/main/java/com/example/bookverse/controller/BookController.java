@@ -3,8 +3,6 @@ package com.example.bookverse.controller;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.repository.BookRepository;
-import com.example.bookverse.data.request.RequestDTO;
-import com.example.bookverse.data.request.RequestListDTO;
 import com.example.bookverse.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
