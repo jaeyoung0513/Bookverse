@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -57,6 +58,17 @@ public class UserService {
     public void checkId(String email) {
         if (userRepository.findByEmail(email) != null) {
             throw new EntityExistsException("이미 있는 아이디입니다. 다시 입력해주세요.");
+        }
+    }
+
+    @Transactional
+    public void cancelUser(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("일치하는 회원이 없습니다.");
+        } else {
+            roleRepository.deleteByUserId(user.getId());
+            userRepository.deleteById(user.getId());
         }
     }
 

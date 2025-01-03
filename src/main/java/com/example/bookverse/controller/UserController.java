@@ -31,6 +31,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("가입가능한 아이디입니다.");
     }
 
+    @DeleteMapping(value = "/cancel")
+    public ResponseEntity<String> cancel(@RequestParam String email) {
+        userService.cancelUser(email);
+        return ResponseEntity.status(HttpStatus.OK).body("회원탈퇴되었습니다.");
+    }
+
     @GetMapping(value = "/find/id")
     public ResponseEntity<String> findId(@RequestBody UserDTO user) {
         String id = userService.findId(user);
