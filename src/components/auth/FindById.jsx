@@ -19,8 +19,10 @@ export default function FindById() {
         } else if (!phone) {
             alert('전화번호를 입력해주세요');
         } else {
-            alert('당신의 아이디는 User001입니다');
-            navigate("/login");
+            const userId = 'User001';
+            alert(`당신의 아이디는 ${userId}입니다`);
+            navigate("/login", {state: {userId} }); //이 부분은 아이디 찾기를 완료하면 로그인 페이지로 자동 랜더링 된 후
+                                                    // 아이디(이메일) 입력 필드에 찾은 아이디를 자동으로 입려되게 하는 코드임.
         }
     }
 

@@ -1,15 +1,31 @@
+/* 로고 컨테이너 및 이미지 스타일 */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logoImage {
+    width: 5.2rem;
+    height: 1.139375rem;
+}
+
+/* 네비게이션 링크 스타일 */
 .navLink {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* 시작점에서 정렬 */
-    width: 100%; /* 네비게이션 바 전체 너비 사용 */
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px; /* 좌우 패딩 */
+    box-sizing: border-box;
+    background-color: #fff; /* 배경색 */
 }
 
 .linksContainer {
-    margin-left: 35px;
-    gap: 10px;
     display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
+    align-items: center;
+    gap: 10px;
+    margin-left: 35px;
 }
 
 .navLink a {
@@ -17,51 +33,17 @@
     font-size: 15px;
     font-weight: bolder;
     text-decoration: none;
+    margin-right: 20px;
     position: relative;
-    margin-right: 20px; /* 링크 간 일정 간격 유지 */
 }
 
-.navLink a:hover {
+.linksContainer a:hover,
+.linksContainer a.active,
+.linksContainer a.active:hover { /* 활성화 상태에서도 호버 효과 유지 */
     color: orange;
 }
 
-.rightContainer {
-    display: flex;
-    align-items: center; /* 모든 아이템을 세로 중앙에 배치 */
-    margin-left: auto; /* 자동 마진으로 오른쪽 정렬 */
-    gap: 18px; /* 요소 간 간격 추가 */
-}
-.searchForm {
-    display: flex;
-    align-items: center;
-    border: 1px solid rgb(177, 177, 177);
-    border-radius: 15px;
-    padding: 5px; /* 약간의 패딩 조정 */
-    width: 170px; /* 폼의 전체 너비를 조금 더 넓게 설정 */
-    height: 26px;
-}
-.searchIcon {
-    width: 10px; /* 아이콘 크기 조절 */
-    height: 10px; /* 아이콘 크기 조절 */
-    cursor: pointer; /* 클릭 가능한 아이콘으로 표시 */
-    transition: transform 0.2s; /* 부드러운 변형을 위한 트랜지션 */
-}
-.searchIcon:active {
-    transform: scale(1.1); /* 아이콘을 약간 확대 */
-    opacity: 0.7; /* 클릭 시 투명도 변경 */
-}
-
-.searchForm input {
-    margin-left: 6.7px;
-    border: none;
-    font-size: 10.5px;
-    outline: none;
-    width: 80%; /* 아이콘을 위한 공간 확보 */
-    text-align: left;
-    margin-right: 10px; /* 입력창과 아이콘 사이 간격 */
-}
-
-.navLink a::after {
+.linksContainer a::after {
     content: '';
     position: absolute;
     bottom: -5px;
@@ -72,28 +54,72 @@
     transition: background-color 0.3s;
 }
 
-.navLink a:hover::after {
+.linksContainer a:hover::after,
+.linksContainer a.active::after,
+.linksContainer a.active:hover::after { /* 활성화 상태에서도 호버 효과의 after 유지 */
     background-color: rgb(255, 142, 36);
 }
-.userIcon {
-    position: absolute;
-    top: -9px;
-    height: 20px;
-    padding: 0;
+
+
+/* 우측 컨테이너 스타일 */
+.rightContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 18px;
 }
 
+.searchForm {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 15px;
+    padding: 5px;
+    width: 170px;
+    height: 26px;
+    margin-right: 15px;
+}
+
+.searchButton {
+    border: none;
+    background-color: #fff;
+}
+
+.searchIcon {
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.searchIcon:active {
+    transform: scale(1.1);
+    opacity: 0.7;
+}
+
+.searchForm input {
+    margin-left: 6.7px;
+    border: none;
+    font-size: 10.5px;
+    outline: none;
+    width: 80%;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.userIcon,
 .cartIcon {
-    position: absolute;
-    top: -9px;
     height: 20px;
     padding: 0;
 }
 
-.logoContainer a::after {
-    content: none;
-}
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+    .linksContainer, .rightContainer {
+        display: none; /* 모바일에서는 메뉴 버튼으로 대체될 수 있음 */
+    }
 
-.logoImage {
-    width: 5.2rem;
-    height: 1.139375rem;
+    .navLink {
+        justify-content: space-between;
+    }
 }
