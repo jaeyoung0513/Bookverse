@@ -59,5 +59,4 @@ public class BookEntity {
 
     @OneToMany(mappedBy = "book")
     private List<WishlistEntity> wishlists = new ArrayList<>();
-
 }

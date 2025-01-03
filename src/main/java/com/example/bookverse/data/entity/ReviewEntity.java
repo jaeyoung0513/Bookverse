@@ -24,5 +24,4 @@ public class ReviewEntity {
 
     @Column(name = "content", nullable = false)
     private String content;
-
 }

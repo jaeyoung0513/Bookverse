@@ -16,10 +16,17 @@ public class UserController {
 
     @PostMapping(value = "/join")
     public ResponseEntity<String> join(@RequestBody UserDTO user) {
-        if(this.userService.saveUser(user)!=null) {
+        if (this.userService.saveUser(user) != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body("회원가입하였습니다.");
-        };
+        }
+        ;
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 있는 아이디입니다. 다시 입력해주세요.");
+    }
+
+    @GetMapping(value = "/check/id")
+    public ResponseEntity<String> checkId(@RequestParam String email) {
+        userService.checkId(email);
+        return ResponseEntity.status(HttpStatus.OK).body("가입가능한 아이디입니다.");
     }
 
     @GetMapping(value = "/find/id")

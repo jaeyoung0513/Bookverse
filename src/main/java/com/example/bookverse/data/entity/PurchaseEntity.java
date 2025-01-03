@@ -42,5 +42,4 @@ public class PurchaseEntity {
     @NotNull
     @Column(name = "price", nullable = false)
     private Integer price;
-
 }

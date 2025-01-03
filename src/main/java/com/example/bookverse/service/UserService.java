@@ -5,6 +5,7 @@ import com.example.bookverse.data.entity.RoleEntity;
 import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +46,12 @@ public class UserService {
             return userEntity;
         }
         return null;
+    }
+
+    public void checkId(String email) {
+        if (userRepository.findByEmail(email) != null) {
+            throw new EntityExistsException("이미 있는 아이디입니다. 다시 입력해주세요.");
+        }
     }
 
     public String findId(UserDTO user) {
@@ -95,5 +102,4 @@ public class UserService {
         user.setUpdatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }
-
 }

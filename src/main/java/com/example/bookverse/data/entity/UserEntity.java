@@ -64,5 +64,4 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<WishlistEntity> wishlists = new ArrayList<>();
-
 }

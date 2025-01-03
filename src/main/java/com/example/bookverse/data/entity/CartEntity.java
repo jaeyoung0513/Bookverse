@@ -29,5 +29,4 @@ public class CartEntity {
     @NotNull
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
-
 }
