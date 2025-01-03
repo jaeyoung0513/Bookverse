@@ -50,15 +50,28 @@ public class UserController {
     //휴면 관련 기능
 
     @PutMapping(value = "/{userId}/setDormant")
-    public ResponseEntity<?> setDormantStatus(@PathVariable Long userId){
+    public ResponseEntity<?> setDormantStatus(@PathVariable Long userId) {
         userService.setDormantStatus(userId);
         return ResponseEntity.ok("회원이 휴면 상태로 전환되었습니다.");
     }
 
-    @PutMapping(value = "/{UserId}/restoreActive")
+    @PutMapping(value = "/{UserId}/setActive")
     public ResponseEntity<?> restoreActiveStatus(@PathVariable Long UserId) {
         userService.restoreActiveStatus(UserId);
         return ResponseEntity.ok("회원이 활성 상태로 전환되었습니다.");
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterUsers(@RequestParam(required = false) String status) {
+        List<UserEntity> users;
+
+        if ("active".equalsIgnoreCase(status)) {
+            users = userService.getActiveUsers();
+        } else if ("dormant".equalsIgnoreCase(status)) {
+            users = userService.getDormantUsers();
+        } else {
+            users = userService.getAllUsers();
+        }
+        return ResponseEntity.ok(users);
+    }
 }
