@@ -1,5 +1,4 @@
 import styles from "../../styles/BookNav.module.css";
-import { useState } from "react";
 
 export default function BookNav({ selectedCategory, setSelectedCategory }) {
   const categories = [

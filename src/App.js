@@ -1,6 +1,6 @@
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
-import BookList from "./components/book/BookList";
+import BookList from "./pages/BookList";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -35,8 +35,7 @@ function App() {
         </Route>
         </Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/finduserinfo" element={<FindUserInfo />}>
-        </Route>
+        <Route path="/finduserinfo" element={<FindUserInfo />}></Route>
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>

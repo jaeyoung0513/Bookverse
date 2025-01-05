@@ -1,115 +1,55 @@
-import React, { useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import React, { useEffect, useState } from "react";
+import axios from "axios"; // axios 임포트
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "../styles/HomePage.css";
+import BookSwiper from "../components/book/BookSwiper";
+import errorDisplay from "../api/errorDisplay";
 
 export default function HomePage() {
+  const [popularBooks, setPopularBooks] = useState([]);
+  const [categoryBooks, setCategoryBooks] = useState([]);
+
+  // 데이터 fetch 함수
+  const fetchData = async () => {
+    try {
+      // 인기 도서 요청
+      const popularResponse = await axios.get(
+        "http://localhost:8080/api/popular-books",
+        { withCredentials: true }
+      );
+      setPopularBooks(popularResponse.data);
+
+      // 카테고리별 인기 도서 요청
+      const categoryResponse = await axios.get(
+        "http://localhost:8080/api/category-popular-books",
+        { withCredentials: true }
+      );
+      setCategoryBooks(categoryResponse.data);
+    } catch (error) {
+      errorDisplay(error);
+      console.error("Error fetching books:", error);
+    }
+  };
+
+  // 컴포넌트 렌더링 시 데이터 가져오기
   useEffect(() => {
-    const svgs = document.querySelectorAll(
-      ".swiper-button-prev, .swiper-button-next"
-    );
-    svgs.forEach((svg) => {
-      svg.setAttribute("width", "16");
-      svg.setAttribute("height", "16");
-    });
+    fetchData();
   }, []);
 
   return (
     <div className="swiper-container">
-      <h2 className="title">인기도서</h2>
-      <Swiper
-        modules={[Navigation, Pagination]}
-        className="bestSeller"
-        navigation
-        pagination={{
-          clickable: true,
-          type: "fraction", // 숫자 형식의 페이지네이션으로 설정
-        }}
-        spaceBetween={0}
-        slidesPerView={5}
-        breakpoints={{
-          440: {
-            slidesPerView: 2,
-            spaceBetween: 0,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 0,
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 0,
-          },
-        }}
-      >
-        <SwiperSlide>
-          <img src="/assets/amond.jpeg" alt="Amond" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/dontsaygoodbye.jpeg" alt="Don't Say Goodbye" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/theboywillcome.jpeg" alt="The Boy Will Come" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/vegetarian.jpeg" alt="Vegetarian" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/dontsaygoodbye.jpeg" alt="Don't Say Goodbye" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/vegetarian.jpeg" alt="Vegetarian" />
-        </SwiperSlide>
-      </Swiper>
+      <h1>인기도서</h1>
+      <BookSwiper books={popularBooks} />
 
-      <h2 className="title">문학/소설</h2>
-      <Swiper
-        modules={[Navigation, Pagination]}
-        className="bestSeller"
-        navigation
-        pagination={{
-          clickable: true,
-          type: "fraction", // 숫자 형식의 페이지네이션으로 설정
-        }}
-        spaceBetween={0}
-        slidesPerView={5}
-        breakpoints={{
-          440: {
-            slidesPerView: 2,
-            spaceBetween: 0,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 0,
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 0,
-          },
-        }}
-      >
-        <SwiperSlide>
-          <img src="/assets/vegetarian.jpeg" alt="Vegetarian" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/amond.jpeg" alt="Amond" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/dontsaygoodbye.jpeg" alt="Don't Say Goodbye" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/theboywillcome.jpeg" alt="The Boy Will Come" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/vegetarian.jpeg" alt="Vegetarian" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="/assets/dontsaygoodbye.jpeg" alt="Don't Say Goodbye" />
-        </SwiperSlide>
-      </Swiper>
+      {/* 카테고리별 도서 출력 */}
+      {categoryBooks.map((category, index) => (
+        <div key={index}>
+          <h2>{category.category}</h2>
+          <BookSwiper books={category.books} />
+        </div>
+      ))}
     </div>
   );
 }

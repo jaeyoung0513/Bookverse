@@ -1,8 +1,14 @@
+import { useState } from "react";
+import BookNav from "../components/book/BookNav";
+
 export default function BookList() {
-    
-    return (
-        <div>
-            북리스트
-        </div>
-    )
+  const [selectedCategory, setSelectedCategory] = useState("전체");
+  return (
+    <div>
+      <BookNav
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+    </div>
+  );
 }
