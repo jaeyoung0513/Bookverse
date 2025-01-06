@@ -108,52 +108,72 @@ public class UserService {
         return sb.toString();
     }
 
-    public UserEntity updateUser(Long id, UserDTO userDTO) {
-        UserEntity user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("해당 유저를 찾을 수 없습니다."));
 
-        user.setPw(userDTO.getPw() != null ? this.passwordEncoder.encode(userDTO.getPw()) : user.getPw());
-        user.setName(userDTO.getName() != null ? userDTO.getName() : user.getName());
-        user.setBirthdate(userDTO.getBirthdate() != null ? userDTO.getBirthdate() : user.getBirthdate());
-        user.setAddr(userDTO.getAddr() != null ? userDTO.getAddr() : user.getAddr());
-        user.setPhone(userDTO.getPhone() != null ? userDTO.getPhone() : user.getPhone());
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+
+        if (userDTO.getPw() != null) {
+            user.setPw(passwordEncoder.encode(userDTO.getPw()));
+        }
+        if (userDTO.getName() != null) {
+            user.setName(userDTO.getName());
+        }
+        if (userDTO.getAddr() != null) {
+            user.setAddr(userDTO.getAddr());
+        }
+        if (userDTO.getPhone() != null) {
+            user.setPhone(userDTO.getPhone());
+        }
         user.setUpdatedAt(LocalDateTime.now());
-        return userRepository.save(user);
+
+        UserEntity updatedUser = userRepository.save(user);
+        return convertToDTO(updatedUser);
     }
 
-    public List<UserDTO> getAllUser() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> UserDTO.builder()
-                        .email(user.getEmail())
-                        .name(user.getName())
-                        .birthdate(user.getBirthdate())
-                        .addr(user.getAddr())
-                        .phone(user.getPhone())
-                        .build())
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public void setDormantStatus(Long userId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId, true);
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+        user.setDormant(true);
+        userRepository.save(user);
     }
 
     public void restoreActiveStatus(Long userId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 사용자는 존재하지 않습니다."));
-        userRepository.updateUserStatus(userId, false);
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+        user.setDormant(false);
+        userRepository.save(user);
     }
 
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> filterUsersByStatus(String status) {
+        List<UserEntity> users;
+        if ("active".equalsIgnoreCase(status)) {
+            users = userRepository.findActiveUsers();
+        } else if ("dormant".equalsIgnoreCase(status)) {
+            users = userRepository.findDormantUsers();
+        } else {
+            users = userRepository.findAll();
+        }
+        return users.stream()
+                .map(this::convertToDTO) // UserEntity -> UserDTO 변환
+                .collect(Collectors.toList());
     }
 
-    public List<UserEntity> getActiveUsers() {
-        return userRepository.findActiveUsers();
-    }
-
-    public List<UserEntity> getDormantUsers() {
-        return userRepository.findDormantUsers();
+    // 변환 메서드
+    private UserDTO convertToDTO(UserEntity userEntity) {
+        return UserDTO.builder()
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .birthdate(userEntity.getBirthdate())
+                .addr(userEntity.getAddr())
+                .phone(userEntity.getPhone())
+                .status(userEntity.isDormant())
+                .build();
     }
 }

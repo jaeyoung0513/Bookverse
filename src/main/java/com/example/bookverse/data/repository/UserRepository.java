@@ -23,12 +23,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE UserEntity u SET u.isActive = :isActive WHERE u.id = :userId")
+    @Query("UPDATE UserEntity u SET u.isDormant = :isDormant WHERE u.id = :userId")
     void updateUserStatus(@Param("userId") Long userId, @Param("isActive") boolean isActive);
 
-    @Query("SELECT u FROM UserEntity u WHERE u.isActive = true")
+    @Query("SELECT u FROM UserEntity u WHERE u.isDormant = true")
     List<UserEntity> findActiveUsers();
 
-    @Query("SELECT u FROM UserEntity u WHERE u.isActive = false")
+    @Query("SELECT u FROM UserEntity u WHERE u.isDormant = false")
     List<UserEntity> findDormantUsers();
 }

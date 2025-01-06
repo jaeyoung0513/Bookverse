@@ -50,42 +50,33 @@ public class UserController {
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserDTO user) {
-        UserEntity updatedUser = userService.updateUser(id, user);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
     @GetMapping(value = "/userlist")
     public ResponseEntity<List<UserDTO>> getAllUser() {
-        List<UserDTO> user = userService.getAllUser();
-        return ResponseEntity.ok(user);
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
-    //휴면 관련 기능
-
+    // 휴면 관련 기능
     @PutMapping(value = "/{userId}/setDormant")
-    public ResponseEntity<?> setDormantStatus(@PathVariable Long userId) {
+    public ResponseEntity<String> setDormantStatus(@PathVariable Long userId) {
         userService.setDormantStatus(userId);
         return ResponseEntity.ok("회원이 휴면 상태로 전환되었습니다.");
     }
 
-    @PutMapping(value = "/{UserId}/setActive")
-    public ResponseEntity<?> restoreActiveStatus(@PathVariable Long UserId) {
-        userService.restoreActiveStatus(UserId);
+    @PutMapping(value = "/{userId}/setActive")
+    public ResponseEntity<String> restoreActiveStatus(@PathVariable Long userId) {
+        userService.restoreActiveStatus(userId);
         return ResponseEntity.ok("회원이 활성 상태로 전환되었습니다.");
     }
 
-    @GetMapping(value ="/filter")
-    public ResponseEntity<?> filterUsers(@RequestParam(required = false) String status) {
-        List<UserEntity> users;
-
-        if ("false".equalsIgnoreCase(status)) {
-            users = userService.getActiveUsers();
-        } else if ("true".equalsIgnoreCase(status)) {
-            users = userService.getDormantUsers();
-        } else {
-            users = userService.getAllUsers();
-        }
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<UserDTO>> filterUsers(@RequestParam(required = false) String status) {
+        List<UserDTO> users = userService.filterUsersByStatus(status);
         return ResponseEntity.ok(users);
     }
 }
