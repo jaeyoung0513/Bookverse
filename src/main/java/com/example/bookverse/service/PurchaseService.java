@@ -124,6 +124,7 @@ public class PurchaseService {
             if (optionalBook.isPresent()) {
                 BookEntity bookEntity = optionalBook.get();
                 BookDTO bookDTO = BookDTO.builder()
+                        .id(bookEntity.getId())
                         .title(bookEntity.getTitle())
                         .desc(bookEntity.getDesc())
                         .author(bookEntity.getAuthor())
@@ -147,6 +148,7 @@ public class PurchaseService {
             if (optionalBook.isPresent()) {
                 BookEntity bookEntity = optionalBook.get();
                 BookDTO bookDTO = BookDTO.builder()
+                        .id(bookEntity.getId())
                         .title(bookEntity.getTitle())
                         .desc(bookEntity.getDesc())
                         .author(bookEntity.getAuthor())
