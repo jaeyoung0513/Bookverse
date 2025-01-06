@@ -1,0 +1,108 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 10rem;
+    color: #2c3e50;
+    font-family: 'Roboto', sans-serif;
+    background: #ffffff;
+    margin: 0 13rem;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.85); /* 내용의 가독성을 위해 배경에 약간의 투명도 추가 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bookImage {
+    width: 320px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+.title {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.author {
+    font-size: 1.0rem;
+    color: #6a7070;
+    margin-bottom: 1rem;
+}
+
+.detailBox {
+    display: flex;
+    width: 45%;
+    padding: 3rem;
+    background: #fff;
+    flex-direction: column;
+    justify-content:space-between;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.desc {
+    margin-top: 6rem;
+    padding: 0 1.8rem;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.infoRow {
+    display: flex;
+    padding: 0 2.8rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.category, .value {
+    color: #34495e;
+}
+
+.addCartButton, .purchaseButton {
+    padding: 10px 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(255, 179, 39);
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(40, 40, 40);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addCartButton:hover, .purchaseButton:hover {
+    background-color: #feb669;
+}
+
+.ratingFilled, .notRated {
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+.notRated {
+    color: #bdc3c7;
+}

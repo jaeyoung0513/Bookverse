@@ -23,10 +23,16 @@ export default function Nav() {
         </NavLink>
       </div>
       <div className={style.linksContainer}>
-        <NavLink to="/" exact activeClassName={style.active}>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? style.active : undefined)}
+        >
           추천
         </NavLink>
-        <NavLink to="/booklist" activeClassName={style.active}>
+        <NavLink
+          to="/booklist"
+          className={({ isActive }) => (isActive ? style.active : undefined)}
+        >
           도서
         </NavLink>
       </div>

@@ -3,6 +3,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "../../styles/BookSwiper.css";
+import { Link } from "react-router-dom";
 
 export default function BookSwiper({ books }) {
   return (
@@ -15,7 +17,7 @@ export default function BookSwiper({ books }) {
         type: "fraction", // 숫자 형식의 페이지네이션으로 설정
       }}
       spaceBetween={0}
-      slidesPerView={5}
+      slidesPerView={4}
       breakpoints={{
         440: {
           slidesPerView: 2,
@@ -26,19 +28,17 @@ export default function BookSwiper({ books }) {
           spaceBetween: 0,
         },
         1024: {
-          slidesPerView: 5,
+          slidesPerView: 4,
           spaceBetween: 0,
         },
       }}
     >
       {books.map((book) => (
-        <SwiperSlide key={book.book_id}>
-          <div>
+        <SwiperSlide key={book.id}>
+          <Link to={`booklist/${book.id}`}>
             <img src={book.image} alt={book.title} />
-            <h3>{book.title}</h3>
-            <p>{book.author}</p>
-            <p>{book.price}원</p>
-          </div>
+            <h5>{book.title}</h5>
+          </Link>
         </SwiperSlide>
       ))}
     </Swiper>

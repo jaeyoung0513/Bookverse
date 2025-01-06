@@ -1,0 +1,10 @@
+.bookListContainer {
+    padding: 2rem 1rem;
+    color: #2c3e50;
+    font-family: 'Roboto', sans-serif;
+    background: #ffffff;
+    margin: 0 13rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}

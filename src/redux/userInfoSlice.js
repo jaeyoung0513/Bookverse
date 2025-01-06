@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const userInfoSlice = createSlice({
-  name: "userInfo",
+  name: "userInfoReducer",
   initialState: {
     entities: {}, // { id: userInfo }
     loginFlag: false,

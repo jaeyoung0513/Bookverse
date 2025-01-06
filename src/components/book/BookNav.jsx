@@ -1,7 +1,8 @@
 import styles from "../../styles/BookNav.module.css";
-import { useState } from "react";
 
 export default function BookNav({ selectedCategory, setSelectedCategory }) {
+  
+
   const categories = [
     "전체",
     "문학/소설",
@@ -13,7 +14,7 @@ export default function BookNav({ selectedCategory, setSelectedCategory }) {
     "실용",
     "어학",
     "아동/청소년",
-    "학술/전문",
+    "학술/전문서적",
   ];
   return (
     <div>

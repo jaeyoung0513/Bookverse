@@ -1,6 +1,6 @@
 import "./App.css";
 import MainLayout from "./components/common/MainLayout";
-import BookList from "./components/book/BookList";
+import BookList from "./pages/BookList";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -22,21 +22,25 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/booklist" element={<BookList />} />
-          <Route path="/bookdetail" element={<BookDetail />} />
+          <Route path="/booklist/:id" element={<BookDetail />} />
           <Route path="/mymenu" element={<MyMenu />}>
             <Route index element={<MyProfile />} />
             <Route path="/mymenu/cart" element={<Cart />} />
             <Route path="/mymenu/myprofile" element={<MyProfile />} />
-            <Route path="/mymenu/purchasehistory" element={<PurchaseHistory />} />
+            <Route
+              path="/mymenu/purchasehistory"
+              element={<PurchaseHistory />}
+            />
             <Route path="/mymenu/wishlist" element={<WishList />} />
             <Route path="/mymenu/usersidebar" element={<UserSidebar />} />
           </Route>
-          <Route path="/mymenu/cart/purchase" element={<PurchaseForm />}>
-        </Route>
+          <Route
+            path="/mymenu/cart/purchase"
+            element={<PurchaseForm />}
+          ></Route>
         </Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/finduserinfo" element={<FindUserInfo />}>
-        </Route>
+        <Route path="/finduserinfo" element={<FindUserInfo />}></Route>
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
