@@ -14,6 +14,7 @@ import WishList from "./components/user/WishList";
 import UserSidebar from "./components/user/UserSidebar";
 import MyMenu from "./pages/MyMenu";
 import PurchaseForm from "./components/user/PurchaseForm";
+import BookSearch from "./components/book/BookSearch";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/booklist" element={<BookList />} />
           <Route path="/booklist/:id" element={<BookDetail />} />
+          <Route path="/booklist/searchResult" element={<BookSearch />} />
           <Route path="/mymenu" element={<MyMenu />}>
             <Route index element={<MyProfile />} />
             <Route path="/mymenu/cart" element={<Cart />} />
@@ -34,13 +36,10 @@ function App() {
             <Route path="/mymenu/wishlist" element={<WishList />} />
             <Route path="/mymenu/usersidebar" element={<UserSidebar />} />
           </Route>
-          <Route
-            path="/mymenu/cart/purchase"
-            element={<PurchaseForm />}
-          ></Route>
+          <Route path="/mymenu/cart/purchase" element={<PurchaseForm />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/finduserinfo" element={<FindUserInfo />}></Route>
+        <Route path="/finduserinfo" element={<FindUserInfo />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>

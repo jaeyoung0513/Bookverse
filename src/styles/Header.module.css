@@ -30,3 +30,9 @@
       padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
   }
 }
+
+@media (min-width: 1920px) {
+  .header {
+      padding: 1.5625rem 60rem; 
+  }
+}

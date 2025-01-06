@@ -31,8 +31,8 @@
 
 .bookImage {
     width: 320px;
-    height: 400px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     border-radius: 5px;
 }
 
@@ -106,3 +106,15 @@
 .notRated {
     color: #bdc3c7;
 }
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
+    }
+  }
+  
+  @media (min-width: 1920px) {
+    .container {
+        padding: 14.5625rem 50rem; 
+    }
+  }

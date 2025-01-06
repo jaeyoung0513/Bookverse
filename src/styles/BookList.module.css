@@ -4,7 +4,23 @@
     font-family: 'Roboto', sans-serif;
     background: #ffffff;
     margin: 0 13rem;
+    margin-top: -50px; /* 위로 20px 이동 */
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .bookListContainer {
+        padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
+        margin-top: -10px; /* 작은 화면에서 위로 10px 이동 */
+    }
+}
+
+@media (min-width: 1920px) {
+    .bookListContainer {
+        padding: 14.5625rem 50rem;
+        margin-top: -190px; /* 매우 큰 화면에서 위로 50px 이동 */
+    }
 }
