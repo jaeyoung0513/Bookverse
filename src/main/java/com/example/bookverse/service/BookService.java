@@ -17,6 +17,13 @@ import java.util.stream.Collectors;
 public class BookService {
     private final BookRepository bookRepository;
 
+    public BookDTO getBookById(Long bookid) {
+        BookEntity book = bookRepository.findByBookId(bookid)
+                .orElseThrow(() -> new EntityNotFoundException("해당 책을 찾을 수 없습니다."));
+
+        return convertToDTO(book);
+    }
+
     public List<BookDTO> getAllBook() {
         return bookRepository.findAll()
                 .stream()

@@ -38,4 +38,10 @@ public class BookController {
         BookDTO updatedBook = bookService.updateBook(id, bookDTO);
         return ResponseEntity.ok(updatedBook);
     }
+
+    @GetMapping(value = "/bookdetail/{id}")
+    public ResponseEntity<BookDTO> getBook(@PathVariable Long id) {
+        BookDTO book = bookService.getBookById(id);
+        return ResponseEntity.ok(book);
+    }
 }
