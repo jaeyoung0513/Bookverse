@@ -1,7 +1,7 @@
 import styles from "../../styles/Cart.module.css";
 import { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
-import {Outlet, useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([

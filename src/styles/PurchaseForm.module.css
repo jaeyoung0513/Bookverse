@@ -1,46 +1,256 @@
 .purchase_Container {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 섹션 간 간격 */
+    height: 80rem;
+}
+
+.purchase_Content {
+    display: flex;
+    justify-content: space-between; /* 좌우 정렬 */
+    align-items: flex-start; /* 위쪽 정렬 */
 }
 
 .purchase_Title {
-    text-align: center;
-    margin-bottom: 20px;
+    position: relative;
+    padding-left: 5vh;
+    padding-top: 15px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-left: 35px;
+
 }
 
-.purchase_Table {
+.purchase_Title::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    height: 1px;
+    background-color: black;
 }
 
-.purchase_Table th, .purchase_Table td {
-    border: 1px solid #000;
+.purchase_Detail {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     padding: 10px;
-    text-align: center;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-right: 5vh;
+    margin-left: 10vh;
+    width: 95vh;
+}
+
+.purchase_Detail::after {
+    content: '';
+    position: absolute;
+    top: -94px;
+    right: -40px;
+    width: 1.5px;
+    height: 160vh;
+    background-color: black; /* 검은색 세로선 */
+}
+
+.purchase_Detail td {
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .purchase_BookImage {
-    width: 100px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 40px;
 }
 
-.purchase_Total {
-    text-align: right;
-    margin-top: 20px;
+.purchase_Detail_Text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-left: 0;
+}
+
+.purchase_Summary {
+    flex: 1; /* 오른쪽 영역 */
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.purchase_Total{
+    margin-top: 0;
+    padding: 10px;
+    width: calc(100% - 10vh);
+    margin-left: 10vh;
 }
 
 .purchase_Notice {
-    margin-top: 20px;
+    margin-top: 50px;
+    padding: 10px;
+    width: calc(100% - 10vh);
+    margin-left: 10vh;
+    font-size: 0.8rem;
 }
 
 .purchase_Button {
-    display: block;
-    width: 100px;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    width: 15%; /* 버튼을 전체 너비로 맞출 수도 있습니다 */
+    margin-left: 145vh;
+    margin-top: 40px;
+}
+
+.purchase_Button:hover {
+    background-color: #0056b3;
+}
+
+.purchase_DeleteButton{
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 3px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 65vh;
+}
+
+.purchase_DeleteButton:hover {
+    background-color: #e60000;
+}
+
+/* PurchaseForm.module.css */
+
+.paymentModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.paymentCompleteModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.paymentModal h2,
+.paymentCompleteModal h2 {
+    margin: 0 0 15px;
+    font-size: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+.paymentOptions {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.paymentOptions li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #444;
+}
+
+.paymentOptions input[type="radio"] {
+    margin-right: 10px;
+}
+
+.paymentButton {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: #4caf50;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.paymentButton:hover {
+    background: #45a049;
+}
+
+.homeButton {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: #2196f3;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.homeButton:hover {
+    background: #1976d2;
+}
+
+/* 모달 배경 스타일 */
+.ReactModal__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -60%);
+    }
+    to {
+        transform: translate(-50%, -50%);
+    }
 }
