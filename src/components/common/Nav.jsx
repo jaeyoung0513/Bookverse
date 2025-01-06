@@ -47,7 +47,7 @@ export default function Nav() {
             />
           </button>
         </form>
-        <NavLink to="/cart">
+        <NavLink to="/mymenu/cart">
           <img
             src="/assets/cart.png"
             alt="장바구니"

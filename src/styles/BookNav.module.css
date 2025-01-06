@@ -1,0 +1,39 @@
+.button:active {
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out; /* 클릭 시 크기 변경 애니메이션 */
+}
+
+.active,
+.notActive {
+    padding: 7px;
+    font-size: 11px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out; /* 모든 상태 변화에 애니메이션 적용 */
+}
+
+.active {
+    color: orange;
+    background-color: #ffffff;
+}
+
+.notActive {
+    background-color: #ffffff;
+}
+
+.notActive:hover {
+    background-color: #d0d0d0;
+}
+
+
+.categoryNav {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5625rem 15.25rem;
+    padding-top: 40px;
+    z-index: 10;
+    margin: 0 auto; /* 중앙 정렬을 위해 자동 마진 설정 */
+}

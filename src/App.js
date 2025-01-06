@@ -13,6 +13,7 @@ import PurchaseHistory from "./components/user/PurchaseHistory";
 import WishList from "./components/user/WishList";
 import UserSidebar from "./components/user/UserSidebar";
 import MyMenu from "./pages/MyMenu";
+import PurchaseForm from "./components/user/PurchaseForm";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
             <Route path="/mymenu/wishlist" element={<WishList />} />
             <Route path="/mymenu/usersidebar" element={<UserSidebar />} />
           </Route>
+          <Route path="/mymenu/cart/purchase" element={<PurchaseForm />}>
+        </Route>
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/finduserinfo" element={<FindUserInfo />}>
