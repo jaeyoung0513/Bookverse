@@ -65,7 +65,7 @@ public class PurchaseController {
         List<BookDTO> bookDTOS = purchaseService.findTop5Books();
         return ResponseEntity.status(HttpStatus.OK).body(bookDTOS);
     }
-
+    
     @GetMapping(value = "/top/category")
     public ResponseEntity<List<BookDTO>> findTop5BooksByCategory(@RequestParam String category) {
         List<BookDTO> bookDTOS = purchaseService.findTop5BooksByCategory(category);
