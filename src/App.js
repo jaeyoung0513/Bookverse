@@ -22,17 +22,22 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/booklist" element={<BookList />} />
-          <Route path="/bookdetail" element={<BookDetail />} />
+          <Route path="/booklist/:id" element={<BookDetail />} />
           <Route path="/mymenu" element={<MyMenu />}>
             <Route index element={<MyProfile />} />
             <Route path="/mymenu/cart" element={<Cart />} />
             <Route path="/mymenu/myprofile" element={<MyProfile />} />
-            <Route path="/mymenu/purchasehistory" element={<PurchaseHistory />} />
+            <Route
+              path="/mymenu/purchasehistory"
+              element={<PurchaseHistory />}
+            />
             <Route path="/mymenu/wishlist" element={<WishList />} />
             <Route path="/mymenu/usersidebar" element={<UserSidebar />} />
           </Route>
-          <Route path="/mymenu/cart/purchase" element={<PurchaseForm />}>
-        </Route>
+          <Route
+            path="/mymenu/cart/purchase"
+            element={<PurchaseForm />}
+          ></Route>
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/finduserinfo" element={<FindUserInfo />}></Route>

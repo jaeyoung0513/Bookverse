@@ -22,8 +22,8 @@
     text-align: left;
     width: 100%;
     color: #4b3e3a;
-    left: 100px;
-    bottom: 320px; /* 하단에서 10px 위치로 조정 */
+    left: 125px;
+    bottom: 353px; /* 하단에서 10px 위치로 조정 */
     position: absolute; /* 절대 위치 */
 }
 
@@ -47,6 +47,10 @@
     height: 300px;
     object-fit: contain;
   }
+  .bestSeller a {
+    text-decoration: none;
+    color:#4b3e3a;
+  }
   
   /* Swiper 버튼 스타일 조정 */
   .swiper-button-prev, .swiper-button-next {
@@ -66,11 +70,7 @@
     opacity: 1; /* 호버 시 투명도 원래대로 */
 }
 
-.swiper-container h2.title {
-    padding: 0;
-    text-align: left; /* 부모 컨테이너에 대한 스타일 직접 지정 */
-    position: absolute;
-}
+
   
   
   @media (max-width: 768px) {

@@ -46,8 +46,6 @@ export default function LoginForm() {
         <button className={styles.button}>로그인</button>
         <div className={styles.orContainer}>
           <hr className={styles.line} />
-          <span className={styles.orText}>또는</span>
-          <hr className={styles.line} />
         </div>
         <button className={styles.naverButton}>네이버 로그인</button>
         <div className={styles.linkContainer}>

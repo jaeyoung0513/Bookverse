@@ -1,6 +1,6 @@
 /* 일반적인 바디 스타일 설정 */
 body {
-    font-family: 'Noto Sans KR', Arial, sans-serif; /* 폰트 가족 추가 */
+   font-family: 'Roboto', sans-serif;
     font-size: 1rem; /* 폰트 크기 */
     line-height: 1.6; /* 줄 간격 */
     color: #333; /* 글자 색상 */
@@ -14,5 +14,27 @@ body {
     margin: 20px auto; /* 상하 20px, 좌우 자동 마진으로 중앙 정렬 */
     position: relative;
     overflow: hidden;
-    padding: 0.1625rem 5.25rem;
+    padding: 0.1625rem 8.25rem;
+}
+
+.swiper-container h2.title, .swiper-container h2.title2, .swiper-container h2.title3, .swiper-container h2.title5 {
+  font-family: 'Roboto', sans-serif; /* 폰트 적용 */
+  padding: 0;
+  text-align: left;
+  position: absolute;
+}
+
+.swiper-container h2.title {
+  padding-left: 15px;
+}
+
+.swiper-container h2.title2 {
+  padding-left: 45px;
+}
+.swiper-container h2.title3 {
+  padding-left: 23px;
+}
+
+.swiper-container h2.title5 {
+  padding-left: 0px;
 }
