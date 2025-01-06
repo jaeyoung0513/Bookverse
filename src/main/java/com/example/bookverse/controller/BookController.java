@@ -3,15 +3,19 @@ package com.example.bookverse.controller;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/api/book")
+    @RequestMapping(value = "/api/book")
 public class BookController {
     private final BookService bookService;
 
@@ -44,11 +48,26 @@ public class BookController {
         BookDTO book = bookService.getBookById(id);
         return ResponseEntity.ok(book);
     }
-    @GetMapping("/category")
-    public ResponseEntity<List<BookDTO>> getBooksByCategory(@RequestParam String category) {
-        List<BookDTO> books = bookService.getBooksByCategory(category);
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<BookDTO>> getAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BookDTO> books = bookService.getAllBooks(pageable);
         return ResponseEntity.ok(books);
     }
 
-}
 
+    @GetMapping("/category")
+    public ResponseEntity<Page<BookDTO>> getBooksByCategory(
+            @RequestParam String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BookDTO> books = bookService.getBooksByCategory(category, pageable);
+        return ResponseEntity.ok(books);
+    }
+}

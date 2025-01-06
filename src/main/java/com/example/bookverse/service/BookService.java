@@ -1,5 +1,7 @@
 package com.example.bookverse.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.example.bookverse.data.dto.BookDTO;
 import com.example.bookverse.data.entity.BookEntity;
 import com.example.bookverse.data.repository.BookRepository;
@@ -83,6 +85,18 @@ public class BookService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+    public Page<BookDTO> getAllBooks(Pageable pageable) {
+        Page<BookEntity> booksPage = bookRepository.findAllBooks(pageable);
+        return booksPage.map(this::convertToDTO);
+    }
+
+    public Page<BookDTO> getBooksByCategory(String category, Pageable pageable) {
+        Page<BookEntity> booksPage = bookRepository.findByCategory(category, pageable);
+        return booksPage.map(this::convertToDTO);
+    }
+
+
 
     // BookEntity -> BookDTO 변환 메서드
     private BookDTO convertToDTO(BookEntity bookEntity) {

@@ -48,7 +48,7 @@ public class SecurityConfig {
                                         "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw",
                                         "/api/user/update/{id}",
                                         "/api/book/search", "/api/book/bookdetail/{id}", "/api/book/category",
-                                        "/api/purchase/top/all", "/api/purchase/top/category",
+                                        "/api/purchase/top/all", "/api/purchase/top/category","/api/book/booklist","/api/book/all",
                                         "/api/reissue").permitAll()
                                 .requestMatchers("/api/user/cancel", "/api/user/update/{id}",
                                         "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
