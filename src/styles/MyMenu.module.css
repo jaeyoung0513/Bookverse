@@ -1,0 +1,9 @@
+.mymenulayout {
+    display: flex;
+}
+
+.mymenucontent {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 180px; /* 사이드바 크기만큼 여백 */
+}

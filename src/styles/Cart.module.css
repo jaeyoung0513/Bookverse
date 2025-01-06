@@ -1,0 +1,104 @@
+.cartContainer {
+    position: relative;
+    margin-top: 15px;
+    margin-left: 200px;
+    padding-top: 10px; /* 가로 선과 컨텐츠 사이에 여백 추가 */
+    /*border: 1px solid black;*/
+    height: 40rem;
+}
+
+.cartContainer::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -230px;
+    width: calc(100% + 20vh);
+    height: 1.5px;
+    background-color: black;
+}
+
+.cartTitle {
+    position: relative;
+    padding-left: 5vh; /*  텍스트와 세로선 사이의 여백 */
+    padding-top: 15px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.cartTitle::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    width: 1.5px;
+    height: calc(100% + 100vh);
+    background-color: black; /* 검은색 세로 선 */
+}
+
+.cartBookItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-right: 30vh;
+    margin-left: 5vh;
+}
+
+.cartBookDetails {
+    flex: 1;
+}
+
+.cartBookDetails p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.cartDeleteButton {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cartDeleteButton:hover {
+    background-color: #e60000;
+}
+
+.cartTotal {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 110vh;
+}
+
+.cartPurchaseButton {
+    display: block;
+    width: 30%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    margin-left: 45vh;
+}
+
+.cartPurchaseButton:hover {
+    background-color: #45a049;
+}

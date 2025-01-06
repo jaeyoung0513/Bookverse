@@ -1,0 +1,78 @@
+.wishContainer {
+    position: relative;
+    margin-top: 15px;
+    margin-left: 200px;
+    padding-top: 10px; /* 가로 선과 컨텐츠 사이에 여백 추가 */
+    /*border: 1px solid black;*/
+    height: 40rem;
+}
+
+.wishContainer::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -230px;
+    width: calc(100% + 20vh);
+    height: 1.5px;
+    background-color: black;
+}
+
+.wishTitle {
+    position: relative;
+    padding-left: 5vh; /* 내 정보 텍스트와 세로선 사이의 여백 */
+    padding-top: 15px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.wishTitle::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    width: 1.5px;
+    height: calc(100% + 100vh);
+    background-color: black; /* 검은색 세로 선 */
+}
+
+.wishBookItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 25vh;
+    margin-top: 10vh;
+}
+
+.wishBookImage {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.wishBookDetails {
+    flex: 1;
+    margin-left: 25vh;
+}
+
+.wishBookTitle {
+    margin: 5px 0;
+}
+
+.wishBookAuthor {
+    margin: 5px 0;
+    margin-top: 5vh;
+}
+
+.wishBookPrice {
+    margin: 5px 0;
+    margin-top: 5vh;
+}
+
+.addToCartButton {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10vh;
+}
