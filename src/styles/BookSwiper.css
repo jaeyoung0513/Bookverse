@@ -23,19 +23,19 @@
     width: 100%;
     color: #4b3e3a;
     left: 125px;
-    bottom: 353px; /* 하단에서 10px 위치로 조정 */
+    bottom: 385px; /* 하단에서 10px 위치로 조정 */
     position: absolute; /* 절대 위치 */
 }
 
   
   /* Swiper 슬라이드 및 이미지 스타일 */
   .swiper-slide {
-    background: #ffffff;
+    background: #fbf7f4;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0;
+    padding: 1rem;
     margin-top: 5px;
   }
   
