@@ -44,4 +44,11 @@ public class BookController {
         BookDTO book = bookService.getBookById(id);
         return ResponseEntity.ok(book);
     }
+    @GetMapping("/category")
+    public ResponseEntity<List<BookDTO>> getBooksByCategory(@RequestParam String category) {
+        List<BookDTO> books = bookService.getBooksByCategory(category);
+        return ResponseEntity.ok(books);
+    }
+
 }
+

@@ -77,6 +77,13 @@ public class BookService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 도서를 찾을 수 없습니다."));
     }
 
+    public List<BookDTO> getBooksByCategory(String category) {
+        List<BookEntity> books = bookRepository.findByCategory(category);
+        return books.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     // BookEntity -> BookDTO 변환 메서드
     private BookDTO convertToDTO(BookEntity bookEntity) {
         return BookDTO.builder()
