@@ -1,10 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import style from "../../styles/Nav.module.css";
 import SearchForm from "./SearchForm";
 import { useSelector } from "react-redux";
 
 export default function Nav() {
   const isLogin = useSelector((state) => state.userInfo.loginFlag);
+  const navigate = useNavigate();
+
+  const handleUserIconClick = () => {
+    // 로그인 상태가 아닐 때는 로그인 페이지로 이동
+    if (!isLogin) {
+      navigate("/login");
+    } else {
+      // 로그인 상태일 때는 사용자 메뉴 페이지로 이동
+      navigate("/mymenu");
+    }
+  };
 
   return (
     <nav className={style.navLink}>

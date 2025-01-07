@@ -1,31 +1,38 @@
+import React, { useEffect } from "react";
 import styles from "../../styles/Cart.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
-import { removeItem, updateQuantity } from "../../redux/cartSlice"; // 액션 임포트
+import { removeItem, updateQuantity } from "../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const cartItems = useSelector((state) => state.cart.items); // Redux에서 장바구니 아이템 가져오기
-  const totalPrice = useSelector((state) => state.cart.total); // Redux에서 총 가격 가져오기
-
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalPrice = useSelector((state) => state.cart.total);
+  const isLogin = useSelector((state) => state.userInfo.loginFlag);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // 로그인이 되어있지 않다면 로그인 페이지로 이동
+    if (!isLogin) {
+      navigate("/login");
+    }
+  }, [isLogin, navigate]);
+
   const handleDelete = (bookId) => {
-    dispatch(removeItem(bookId)); // 아이템 삭제
+    dispatch(removeItem(bookId));
   };
 
   const handleQuantityChange = (id, quantity) => {
-    dispatch(updateQuantity({ id, quantity })); // 수량 업데이트
+    dispatch(updateQuantity({ id, quantity }));
   };
 
   const handlePurchase = () => {
-    if(cartItems.length===0){
-      alert("장바구니에 물건을 추가한 뒤 결제버튼을 눌러주세요");
-    } else { navigate("/mymenu/cart/Purchase", {
-      state: { items: cartItems, totalAmount: totalPrice },  // 카트 아이템과 총액을 상태로 전달);
-      });
-    };
+    navigate("/mymenu/cart/purchase");
+  };
+
+  if (!isLogin) {
+    return null; // 로그인이 되어 있지 않다면 아무것도 렌더링하지 않음
   }
 
   return (
