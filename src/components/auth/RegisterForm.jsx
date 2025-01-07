@@ -4,178 +4,318 @@ import styles from "../../styles/RegisterForm.module.css";
 import axios from "axios";
 
 export default function RegisterForm() {
-  const [username, setUsername] = useState("");
+  const [emailName, setEmailName] = useState("");
+  const [emailDomain, setEmailDomain] = useState("");
+  const [customDomain, setCustomDomain] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [isUsernameChecked, setIsUsernameChecked] = useState(false); // 중복확인 여부를 저장하는 상태
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isUsernameChecked, setIsUsernameChecked] = useState(false);
   const navigate = useNavigate();
 
-  const handleCheckUsername = async () => {
-    if (!username) {
-      alert("아이디를 입력해주세요");
+  const emailDomains = [
+    "@gmail.com",
+    "@naver.com",
+    "@daum.net",
+    "@yahoo.com",
+    "@outlook.com",
+    "직접 입력",
+  ];
+
+  const handlePasswordCheck = () => {
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    try {
-      console.log("아이디 중복확인 요청 시작");
-      const response = await axios.get(
-          `http://localhost:8080/api/user/isAvailableEmail/${username}`,
-          { withCredentials: true }
+    if (!validatePassword(password)) {
+      alert("비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다.");
+      setPasswordError(
+        "비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다."
       );
-      console.log("아이디 중복확인 응답:", response.data);
-      if (response.data === false) {
-        alert("이미 사용중인 아이디입니다.");
-        setIsUsernameChecked(false);
-      } else if (response.data === true){
-        alert("사용 가능한 아이디입니다.");
+    } else {
+      setPasswordError("");
+      alert("비밀번호가 유효합니다.");
+    }
+  };
+
+  const validatePassword = (password) => {
+    const regex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    return regex.test(password);
+  };
+
+  const handleDomainChange = (e) => {
+    const selectedDomain = e.target.value;
+    setEmailDomain(selectedDomain);
+    if (selectedDomain === "직접 입력") {
+      setCustomDomain(""); // 사용자가 직접 입력을 선택하면 customDomain을 초기화
+    } else {
+      setCustomDomain(selectedDomain); // 그 외 선택된 도메인을 customDomain에 설정
+    }
+  };
+
+  const handleCheckUsername = async () => {
+    const fullEmail = `${emailName}${customDomain}`;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!fullEmail) {
+      alert("이메일을 입력해주세요");
+      return;
+    }
+
+    if (!emailRegex.test(fullEmail)) {
+      alert("유효하지 않은 이메일 형식입니다. 올바른 이메일을 입력해주세요.");
+      setEmailName("");
+      setCustomDomain("");
+      setEmailDomain("");
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/user/check/id?email=${fullEmail}`,
+        { withCredentials: true }
+      );
+      if (response.data) {
+        alert("사용 가능한 이메일입니다.");
         setIsUsernameChecked(true);
       } else {
-        alert("오류 : 서버에서 예상하지 못한 응답을 받았습니다.");
+        alert("이미 사용중인 이메일입니다.");
+        setIsUsernameChecked(false);
       }
     } catch (error) {
-      console.error("아이디 중복확인 중 오류 발생:", error);
-      alert("아이디 중복확인 중 오류가 발생했습니다.");
+      if (error.response) {
+        alert(`오류: ${error.response.data}`);
+      } else {
+        alert("네트워크 오류가 발생했습니다.");
+      }
+    }
+  };
+
+  const loadPostcodeScript = () => {
+    const script = document.createElement("script");
+    script.src =
+      "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+    script.onload = () => {
+      initPostcode();
+    };
+    document.head.appendChild(script);
+  };
+
+  const initPostcode = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        let fullAddress = data.address;
+        let extraAddress = "";
+        if (data.addressType === "R") {
+          if (data.bname !== "") {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== "") {
+            extraAddress += extraAddress
+              ? `, ${data.buildingName}`
+              : data.buildingName;
+          }
+          fullAddress += extraAddress ? ` (${extraAddress})` : "";
+        }
+        setAddress(fullAddress);
+      },
+    }).open();
+  };
+
+  const handleAddressSearch = () => {
+    if (!window.daum) {
+      loadPostcodeScript();
+    } else {
+      initPostcode();
     }
   };
 
   const handleRegister = async (event) => {
-    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
-    if (!username) {
-      alert("아이디를 입력해주세요");
-    } else if (!password) {
-      alert("비밀번호를 입력해주세요");
-    } else if (!name) {
-      alert("이름을 입력해주세요");
-    } else if (!dob) {
-      alert("생년월일을 선택해주세요");
-    } else if (!address) {
-      alert("주소를 입력해주세요");
-    } else if (!phone) {
-      alert("전화번호를 입력해주세요");
-    } else if (!isUsernameChecked) {
-      alert("아이디 중복확인을 진행해주세요");
-    } else {
-      const joinData = {
-        email: username,
-        pw: password,
-        name: name,
-        birthdate: dob,
-        addr: address,
-        phone: phone,
-      };
-      try {
-        console.log("회원가입 요청 시작");
-        const response = await axios.post(
-            `http://localhost:8080/api/user/join`,
-            joinData,
-            {
-              withCredentials: true,
-            }
-        );
-        console.log("회원가입 응답:", response.data);
-        alert("회원가입 성공");
-        navigate("/login");
-      } catch (error) {
-        console.error("회원가입 중 오류 발생:", error);
-        alert("회원가입 중 오류가 발생했습니다.");
-      }
+    event.preventDefault();
+    const email = `${emailName}${customDomain}`;
+    if (
+      !email ||
+      !password ||
+      !name ||
+      !dob ||
+      !address ||
+      !phone ||
+      !isUsernameChecked
+    ) {
+      alert("모든 필드를 채워주세요");
+      return;
+    }
+    const joinData = {
+      email,
+      pw: password,
+      name,
+      birthdate: dob,
+      addr: address,
+      phone,
+    };
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/user/join`,
+        joinData,
+        { withCredentials: true }
+      );
+      alert("회원가입 성공");
+      navigate("/login");
+    } catch (error) {
+      console.error("회원가입 중 오류 발생:", error);
+      alert("회원가입 중 오류가 발생했습니다.");
     }
   };
 
-  // 반환 JSX는 함수 내부에서 작성
   return (
-      <div className={styles.container}>
-        <Link to="/">
-          <img src="/BookverseLogo.png" className={styles.logoImage} alt="" />
-        </Link>
-        <form onSubmit={handleRegister}>
-          <div className={styles.formGroup}>
-            <label htmlFor="username">이메일</label>
-            <div className={styles.usernameContainer}>
+    <div className={styles.container}>
+      <Link to="/">
+        <img src="/BookverseLogo.png" className={styles.logoImage} alt="Logo" />
+      </Link>
+      <form onSubmit={handleRegister}>
+        <div className={styles.formGroup}>
+          <div className={styles.emailContainer}>
+            <input
+              type="text"
+              id="emailName"
+              name="emailName"
+              value={emailName}
+              onChange={(e) => setEmailName(e.target.value)}
+              className={styles.emailInput}
+              placeholder="이메일"
+              required
+            />
+            <select
+              id="emailDomain"
+              name="emailDomain"
+              value={emailDomain}
+              onChange={handleDomainChange}
+              className={styles.emailDomain}
+              required
+            >
+              <option value="">도메인 선택 또는 입력</option>
+              {emailDomains.map((domain, index) => (
+                <option key={index} value={domain}>
+                  {domain !== "직접 입력" ? domain : "도메인 직접 입력"}
+                </option>
+              ))}
+            </select>
+            {emailDomain === "직접 입력" && (
               <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className={styles.usernameInput}
-                  required
+                type="text"
+                value={customDomain}
+                onChange={(e) => setCustomDomain(e.target.value)}
+                className={styles.customDomainInput}
+                placeholder="도메인 입력"
+                required
               />
-              <button
-                  type="button"
-                  className={styles.checkbtn}
-                  onClick={handleCheckUsername}
-              >
-                중복확인
-              </button>
-            </div>
+            )}
+            <button
+              type="button"
+              className={styles.checkbtn}
+              onClick={handleCheckUsername}
+            >
+              중복확인
+            </button>
           </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="password">비밀번호</label>
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.input}
+            placeholder="비밀번호 / 8자 이상 / 영문, 숫자, 특수문자 포함"
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={styles.input}
+            placeholder="비밀번호 확인"
+            required
+          />
+        </div>
+        <button
+          type="button"
+          className={styles.checkbtn}
+          onClick={handlePasswordCheck}
+        >
+          비밀번호 확인
+        </button>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={styles.input}
+            placeholder="이름"
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            id="dob"
+            name="dob"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+            placeholder="생년월일 8자리"
+            className={styles.input}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <div className={styles.addressContainer}>
             <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.input}
-                required
+              type="text"
+              id="address"
+              name="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="주소"
+              className={styles.input}
+              required
             />
+            <button
+              type="button"
+              onClick={handleAddressSearch}
+              className={styles.addressSearchBtn}
+            >
+              주소 찾기
+            </button>
           </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="name">이름</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={styles.input}
-                required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="dob">생년월일</label>
-            <input
-                type="date"
-                id="dob"
-                name="dob"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                className={styles.input}
-                required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="address">주소</label>
-            <input
-                type="text"
-                id="address"
-                name="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className={styles.input}
-                required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="phone">전화번호</label>
-            <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className={styles.input}
-                required
-            />
-          </div>
-          <button type="submit" className={styles.registerbtn}>
-            회원가입
-          </button>
-        </form>
-      </div>
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="전화번호"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className={styles.input}
+            required
+          />
+        </div>
+        <button type="submit" className={styles.registerbtn}>
+          회원가입
+        </button>
+      </form>
+    </div>
   );
 }

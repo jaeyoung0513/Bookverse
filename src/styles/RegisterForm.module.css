@@ -67,6 +67,7 @@
 }
 
 .checkbtn {
+  margin-top: 4px;
   width: auto;
   padding: 3px 15px;
   border-radius: 5px;
@@ -106,4 +107,8 @@
 
 .registerbtn:hover {
   background-color: #cc7a00;
+}
+
+.input {
+  margin-top: 4px;
 }
