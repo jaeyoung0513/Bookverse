@@ -35,12 +35,18 @@ export default function LoginForm() {
       const response = await apiClient.post("/api/user/login", params, {
         withCredentials: true,
       });
-      const token = response.headers["authorization"];
+      const token = response.headers["authorization"]?.split(" ")[1]; // "Bearer " 를 제거하고 토큰만 저장
       const role = response.data.role; // 역할이 데이터 객체에 포함되어 있는지 확인 필요
-      dispatch(setLoginFlag(true));
-      dispatch(saveJwtToken(token));
-      dispatch(setRole(role));
-      dispatch(addUserInfo(response.data));
+      await dispatch(setLoginFlag(true));
+      await dispatch(saveJwtToken(token));
+      await dispatch(setRole(role));
+      const userInfo = await apiClient.get("/api/user/userinfo", {
+        params: { email },
+        withCredentials: true,
+      });
+      console.log(userInfo.data);
+
+      dispatch(addUserInfo(userInfo.data));
       navigate("/");
     } catch (error) {
       errorDisplay(error);

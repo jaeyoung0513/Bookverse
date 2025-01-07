@@ -1,9 +1,11 @@
 .profileContainer {
+    display: flex;
     position: relative;
     margin-top: 15px;
     margin-left: 200px;
     padding-top: 10px; /* 가로 선과 컨텐츠 사이에 여백 추가 */
     /*border: 1px solid black;*/
+    align-items: center;
     height: 40rem;
 }
 
@@ -38,7 +40,7 @@ label.profileTelLable {
     display: flex;
     align-items: center;
     margin-bottom: 25px; /*각 라벨 간의 간격*/
-    margin-left: 180px;
+    margin-left: 120px;
 }
 
 input.idinfo{
@@ -47,7 +49,6 @@ input.idinfo{
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 34px;
 }
 
 input.pwinfo {
@@ -56,7 +57,6 @@ input.pwinfo {
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 18px;
 }
 
 input.nameinfo {
@@ -65,7 +65,6 @@ input.nameinfo {
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 50px;
 }
 
 input.dateinfo {
@@ -74,7 +73,6 @@ input.dateinfo {
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 18px;
 }
 
 input.addrinfo {
@@ -83,7 +81,6 @@ input.addrinfo {
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 50px;
 }
 
 input.telinfo {
@@ -92,7 +89,6 @@ input.telinfo {
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: left;
-    margin-left: 18px;
 }
 
 input[readonly] {

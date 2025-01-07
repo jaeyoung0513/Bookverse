@@ -1,5 +1,5 @@
 .bookListContainer {
-    padding: 2rem 1rem;
+    padding: 7rem 1rem;
     color: #2c3e50;
     font-family: 'Roboto', sans-serif;
     background: #ffffff;
@@ -13,14 +13,14 @@
 
 @media (max-width: 768px) {
     .bookListContainer {
-        padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
+        padding: 4.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
         margin-top: -10px; /* 작은 화면에서 위로 10px 이동 */
     }
 }
 
 @media (min-width: 1920px) {
     .bookListContainer {
-        padding: 14.5625rem 50rem;
+        padding: 24.5625rem 50rem;
         margin-top: -190px; /* 매우 큰 화면에서 위로 50px 이동 */
     }
 }

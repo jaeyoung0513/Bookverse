@@ -1,17 +1,10 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import style from "../../styles/Nav.module.css";
-import { useState } from "react";
 import SearchForm from "./SearchForm";
+import { useSelector } from "react-redux";
 
 export default function Nav() {
-  const [searchForm, setSearchForm] = useState("");
-  const navigate = useNavigate(); // 페이지 네비게이션을 위해 useNavigate 훅 사용
-
-  const handleSearch = (event) => {
-    event.preventDefault(); // 페이지 리로드 방지
-    console.log("Searching for:", searchForm);
-    navigate(`/booklist/searchResult?query=${encodeURIComponent(searchForm)}`); // 검색어를 URL 파라미터로 포함하여 리다이렉트
-  };
+  const isLogin = useSelector((state) => state.userInfo.loginFlag);
 
   return (
     <nav className={style.navLink}>
@@ -47,7 +40,7 @@ export default function Nav() {
             className={style.cartIcon}
           />
         </NavLink>
-        <NavLink to="/login">
+        <NavLink to={!isLogin ? "/login" : "/mymenu"}>
           <img
             src="/assets/userIcon.png"
             alt="로그인"

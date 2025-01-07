@@ -5,10 +5,9 @@
     width: 40vh; /* 사이드바 너비 */
     padding: 10px;
     background-color: white;
-    /* border-right: 1px solid #ddd; */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
+    border-right: 1px solid #ddd;
     height: 90vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .menuList {
@@ -27,7 +26,6 @@
 }
 
 .sidebarFont a.active {
-    /* color: white;  */
-    /* text-decoration: underline; */
-    background-color: #f69a06;
+    color: black; /* 클릭된 글씨 색을 하얀색으로 설정 */
+    background-color: #f69a06; /* 클릭된 항목 배경색을 설정 */
 }
