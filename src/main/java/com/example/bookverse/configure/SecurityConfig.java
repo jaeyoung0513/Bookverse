@@ -48,7 +48,7 @@ public class SecurityConfig {
                                         "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw",
                                         "/api/user/update/{id}",
                                         "/api/book/search", "/api/book/bookdetail/{id}", "/api/book/category",
-                                        "/api/purchase/top/all", "/api/purchase/top/category","/api/book/booklist","/api/book/all",
+                                        "/api/purchase/top/all", "/api/purchase/top/category", "/api/book/booklist", "/api/book/all",
                                         "/api/reissue").permitAll()
                                 .requestMatchers("/api/user/cancel", "/api/user/update/{id}",
                                         "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
@@ -56,7 +56,13 @@ public class SecurityConfig {
                                         "/api/purchase/add/wish", "/api/purchase/delete/wish",
                                         "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
                                         "/api/purchase/membersPurchaseList").hasRole("USER")
-                                .requestMatchers("/api/user/{userId}/setDormant", "/api/user/{userId}/setActive",
+                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}",
+                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
+                                        "/api/review/edit", "/api/review/delete",
+                                        "/api/purchase/add/wish", "/api/purchase/delete/wish",
+                                        "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
+                                        "/api/purchase/membersPurchaseList",
+                                        "/api/user/{userId}/setDormant", "/api/user/{userId}/setActive",
                                         "/api/user/filter", "/api/user/userlist",
                                         "/api/book/add", "/api/book/edit/{id}",
                                         "/api/purchase/purchaselist", "/api/purchase/members-purchaselist").hasRole("ADMIN")
