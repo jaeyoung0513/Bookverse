@@ -8,13 +8,13 @@ export default function RegisterForm() {
   const [emailDomain, setEmailDomain] = useState("");
   const [customDomain, setCustomDomain] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [isUsernameChecked, setIsUsernameChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const emailDomains = [
@@ -26,38 +26,40 @@ export default function RegisterForm() {
     "직접 입력",
   ];
 
-  const handlePasswordCheck = () => {
-    if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
+  // 전화번호 하이픈 추가
+  const formatPhoneNumber = (value) => {
+    const cleaned = value.replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{2,3})(\d{3,4})(\d{4})$/);
+    if (match) {
+      return `${match[1]}-${match[2]}-${match[3]}`;
     }
-    if (!validatePassword(password)) {
-      alert("비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다.");
-      setPasswordError(
-        "비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다."
-      );
-    } else {
-      setPasswordError("");
-      alert("비밀번호가 유효합니다.");
-    }
+    return value;
   };
 
+  const handlePhoneChange = (e) => {
+    const input = e.target.value;
+    setPhone(formatPhoneNumber(input));
+  };
+
+  // 비밀번호 유효성 검사
   const validatePassword = (password) => {
     const regex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     return regex.test(password);
   };
 
+  // 이메일 도메인 선택/입력 처리
   const handleDomainChange = (e) => {
     const selectedDomain = e.target.value;
     setEmailDomain(selectedDomain);
     if (selectedDomain === "직접 입력") {
-      setCustomDomain(""); // 사용자가 직접 입력을 선택하면 customDomain을 초기화
+      setCustomDomain("");
     } else {
-      setCustomDomain(selectedDomain); // 그 외 선택된 도메인을 customDomain에 설정
+      setCustomDomain(selectedDomain);
     }
   };
 
+  // 이메일 중복 확인
   const handleCheckUsername = async () => {
     const fullEmail = `${emailName}${customDomain}`;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -88,14 +90,11 @@ export default function RegisterForm() {
         setIsUsernameChecked(false);
       }
     } catch (error) {
-      if (error.response) {
-        alert(`오류: ${error.response.data}`);
-      } else {
-        alert("네트워크 오류가 발생했습니다.");
-      }
+      alert("네트워크 오류가 발생했습니다.");
     }
   };
 
+  // 다음 주소 API
   const loadPostcodeScript = () => {
     const script = document.createElement("script");
     script.src =
@@ -135,21 +134,37 @@ export default function RegisterForm() {
     }
   };
 
+  // 회원가입 유효성 검사
+  const isFormValid = () => {
+    if (!validatePassword(password)) {
+      alert("비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다.");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return false;
+    }
+    return (
+      emailName &&
+      customDomain &&
+      password &&
+      confirmPassword &&
+      name &&
+      dob &&
+      address &&
+      phone &&
+      isUsernameChecked
+    );
+  };
+
+  // 회원가입 요청
   const handleRegister = async (event) => {
     event.preventDefault();
     const email = `${emailName}${customDomain}`;
-    if (
-      !email ||
-      !password ||
-      !name ||
-      !dob ||
-      !address ||
-      !phone ||
-      !isUsernameChecked
-    ) {
-      alert("모든 필드를 채워주세요");
+    if (!isFormValid()) {
       return;
     }
+
     const joinData = {
       email,
       pw: password,
@@ -158,17 +173,18 @@ export default function RegisterForm() {
       addr: address,
       phone,
     };
+
+    setLoading(true);
     try {
-      const response = await axios.post(
-        `http://localhost:8080/api/user/join`,
-        joinData,
-        { withCredentials: true }
-      );
+      await axios.post(`http://localhost:8080/api/user/join`, joinData, {
+        withCredentials: true,
+      });
       alert("회원가입 성공");
       navigate("/login");
     } catch (error) {
-      console.error("회원가입 중 오류 발생:", error);
       alert("회원가입 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -182,8 +198,6 @@ export default function RegisterForm() {
           <div className={styles.emailContainer}>
             <input
               type="text"
-              id="emailName"
-              name="emailName"
               value={emailName}
               onChange={(e) => setEmailName(e.target.value)}
               className={styles.emailInput}
@@ -191,8 +205,6 @@ export default function RegisterForm() {
               required
             />
             <select
-              id="emailDomain"
-              name="emailDomain"
               value={emailDomain}
               onChange={handleDomainChange}
               className={styles.emailDomain}
@@ -219,16 +231,15 @@ export default function RegisterForm() {
               type="button"
               className={styles.checkbtn}
               onClick={handleCheckUsername}
+              disabled={loading}
             >
-              중복확인
+              {loading ? "확인 중..." : "중복확인"}
             </button>
           </div>
         </div>
         <div className={styles.formGroup}>
           <input
             type="password"
-            id="password"
-            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
@@ -239,8 +250,6 @@ export default function RegisterForm() {
         <div className={styles.formGroup}>
           <input
             type="password"
-            id="confirmPassword"
-            name="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className={styles.input}
@@ -248,18 +257,9 @@ export default function RegisterForm() {
             required
           />
         </div>
-        <button
-          type="button"
-          className={styles.checkbtn}
-          onClick={handlePasswordCheck}
-        >
-          비밀번호 확인
-        </button>
         <div className={styles.formGroup}>
           <input
             type="text"
-            id="name"
-            name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={styles.input}
@@ -270,8 +270,6 @@ export default function RegisterForm() {
         <div className={styles.formGroup}>
           <input
             type="text"
-            id="dob"
-            name="dob"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
             placeholder="생년월일 8자리"
@@ -283,8 +281,6 @@ export default function RegisterForm() {
           <div className={styles.addressContainer}>
             <input
               type="text"
-              id="address"
-              name="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="주소"
@@ -303,17 +299,15 @@ export default function RegisterForm() {
         <div className={styles.formGroup}>
           <input
             type="tel"
-            id="phone"
-            name="phone"
-            placeholder="전화번호"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            placeholder="전화번호"
+            onChange={handlePhoneChange}
             className={styles.input}
             required
           />
         </div>
-        <button type="submit" className={styles.registerbtn}>
-          회원가입
+        <button type="submit" className={styles.registerbtn} disabled={loading}>
+          {loading ? "가입 중..." : "회원가입"}
         </button>
       </form>
     </div>

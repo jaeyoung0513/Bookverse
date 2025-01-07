@@ -1,9 +1,35 @@
 .mymenulayout {
     display: flex;
+    flex-wrap: wrap; /* 화면 크기에 따라 줄 바꿈 */
+    gap: 20px; /* 컴포넌트 간 간격 추가 */
 }
 
 .mymenucontent {
     flex-grow: 1;
-    padding: 20px;
-    margin-left: 180px; /* 사이드바 크기만큼 여백 */
+    margin-left: 150px; /* 사이드바 크기를 줄이고 여백 감소 */
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1200px) {
+    .mymenulayout {
+        flex-direction: column; /* 작은 화면에서는 사이드바와 컨텐츠를 세로로 배치 */
+        gap: 10px; /* 간격 축소 */
+    }
+
+    .mymenucontent {
+        margin-left: 0; /* 사이드바가 위로 이동하므로 여백 제거 */
+        margin-top: 10px; /* 사이드바와 컨텐츠 간의 간격 축소 */
+    }
+}
+
+@media (max-width: 768px) {
+    .mymenulayout {
+        flex-direction: column;
+        gap: 5px; /* 더 작은 화면에서는 최소 간격 유지 */
+    }
+
+    .mymenucontent {
+        padding: 10px; /* 작은 화면에서는 패딩 축소 */
+        margin: 0; /* 여백 제거 */
+    }
 }

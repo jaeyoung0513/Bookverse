@@ -1,63 +1,71 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import apiClient from "../api/axiosInstance";
 
+// 비동기 Thunk 선언
+export const updateUserInfo = createAsyncThunk(
+  "userInfo/update",
+  async (userInfo, { rejectWithValue }) => {
+    try {
+      const response = await apiClient.put(
+        `/api/user/update/${userInfo.user_id}`, // user_id 사용
+        userInfo
+      );
+      return response.data;
+    } catch (error) {
+      console.error("프로필 업데이트 실패:", error);
+      return rejectWithValue(error.response?.data || "프로필 업데이트 실패");
+    }
+  }
+);
+
+// Redux Slice 선언
 const userInfoSlice = createSlice({
   name: "userInfo",
   initialState: {
-    entities: {}, // { id: userInfo }
+    user: null,
     loginFlag: false,
     role: "",
     jwtToken: "",
+    updateStatus: "idle",
+    updateError: null,
   },
   reducers: {
-    addUserInfo: (state, action) => {
-      const { user_id, ...rest } = action.payload;
-      state.entities[user_id] = rest;
+    setUserInfo: (state, action) => {
+      state.user = action.payload;
+      state.loginFlag = !!action.payload; // 사용자 정보가 있을 때만 true
     },
     clearUserInfo: (state) => {
-      state.entities = {};
-    },
-    setLoginFlag: (state, action) => {
-      state.loginFlag = action.payload;
-    },
-    setLogout: (state) => {
+      state.user = null;
       state.loginFlag = false;
       state.role = "";
       state.jwtToken = "";
     },
     saveJwtToken: (state, action) => {
       state.jwtToken = action.payload;
+      state.loginFlag = !!action.payload; // 토큰이 있을 때만 true
     },
     setRole: (state, action) => {
       state.role = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateUserInfo.pending, (state) => {
+        state.updateStatus = "pending";
+        state.updateError = null;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.user = { ...state.user, ...action.payload }; // 새로운 사용자 정보로 갱신
+        state.updateStatus = "succeeded";
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.updateError = action.payload || "프로필 업데이트 실패";
+      });
+  },
 });
 
-export const {
-  addUserInfo,
-  clearUserInfo,
-  setLoginFlag,
-  setLogout,
-  saveJwtToken,
-  setRole,
-} = userInfoSlice.actions;
-
-export const updateUserInfo = (userInfo) => async (dispatch) => {
-  try {
-    const response = await axios.put(
-      `/api/user/update/${userInfo.id}`,
-      userInfo
-    );
-    dispatch({
-      type: "userInfo/updateSuccess",
-      payload: response.data,
-    });
-    alert("프로필 정보가 성공적으로 업데이트되었습니다.");
-  } catch (error) {
-    console.error("프로필 업데이트 실패:", error);
-    alert("프로필 업데이트를 실패하였습니다.");
-  }
-};
-
+// 액션과 리듀서 내보내기
+export const { setUserInfo, clearUserInfo, saveJwtToken, setRole } =
+  userInfoSlice.actions;
 export default userInfoSlice.reducer;

@@ -1,34 +1,84 @@
 .FindContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* 자식 요소 간의 균형 유지 */
     align-items: stretch; /* 자식들이 높이를 컨테이너에 맞춤 */
-    padding: 0 25%;
+    padding: 0 17%; /* 상대적인 패딩으로 간격 조정 */
+    gap: 2rem; /* 요소 간격을 gap으로 설정 */
     min-height: 300px; /* 최소 높이 보장 */
-}
-
-.FindDivider {
-    width: 3px;
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    max-height: 100vh; /* 최대 높이를 뷰포트 높이로 제한 */
+    overflow-y: auto; /* 스크롤 활성화 */
+  }
+  
+  .FindDivider {
+    width: 2px; /* 세로선 두께 줄임 */
     border-radius: 1px;
     background-color: #f7d58e; /* 세로선 색상 */
-    margin: 0 20px;
-}
-
-/* 가상 요소를 사용한 높이 보장 */
-.FindDivider::before {
-    content: ""; /* 가상 요소의 내용은 비워둠 */
-    display: block;
-    height: 100%;
-}
-
-.logoImageContainer {
+  }
+  
+  .logoImageContainer {
     display: flex;
     justify-content: center; /* 로고 이미지를 중앙에 배치 */
     margin-top: 130px; /* 로고 이미지와 상단 여백 */
-}
-
-.logoImage {
+  }
+  
+  .logoImage {
     margin-top: -40px;
     width: 10.4rem;
     height: 2.239375rem;
     margin-bottom: 50px;
-}
+  }
+  
+  /* 반응형 스타일 */
+  @media (max-width: 768px) {
+    .FindContainer {
+        flex-direction: column; /* 작은 화면에서 세로 배치 */
+        align-items: center; /* 중앙 정렬 */
+        padding: 0 5%; /* 패딩 축소 */
+        gap: 0.6rem; /* 간격 축소 */
+        font-size: 8px;
+        overflow-y: auto; /* 스크롤 활성화 */
+      }
+  
+    .FindDivider {
+      display: none; /* 작은 화면에서는 세로선 제거 */
+    }
+  
+    .logoImageContainer {
+      margin-top: 70px; /* 로고 여백 축소 */
+    }
+  
+    .logoImage {
+      width: 8rem; /* 로고 크기 축소 */
+      height: auto; /* 비율 유지 */
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .FindContainer {
+      padding: 0 25%; /* 데스크톱에서 패딩 확대 */
+      overflow-y: auto; /* 스크롤 활성화 */
+      gap: 3rem; /* 간격 확대 */
+      overflow-y: auto; /* 스크롤 활성화 */
+      max-height: 90vh; /* 데스크톱에서 최대 높이 설정 */
+    }
+  
+    .logoImageContainer {
+      margin-top: 150px; /* 데스크톱에서 상단 여백 확대 */
+    }
+  }
+  
+  @media (min-width: 1920px) {
+    .FindContainer {
+      padding: 0 30%; /* 초대형 화면에서 패딩 확대 */
+      gap: 4rem; /* 요소 간격 확대 */
+      overflow-y: auto; /* 스크롤 활성화 */
+      max-height: 85vh; /* 초대형 화면에서도 스크롤 허용 */
+    }
+  
+    .logoImage {
+      width: 12rem; /* 로고 크기 확대 */
+      height: auto; /* 비율 유지 */
+    }
+  }
+  

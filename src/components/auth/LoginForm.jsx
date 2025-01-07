@@ -2,15 +2,9 @@ import styles from "../../styles/LoginForm.module.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setLoginFlag,
-  saveJwtToken,
-  setRole,
-  addUserInfo,
-} from "../../redux/userInfoSlice";
+import { saveJwtToken, setRole, setUserInfo } from "../../redux/userInfoSlice";
 import apiClient from "../../api/axiosInstance";
 import errorDisplay from "../../api/errorDisplay";
-import axios from "axios";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -21,39 +15,45 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (location.state && location.state.userId) {
-      setEmail(location.state.userId);
+      setEmail(location.state.userId); // 이전 페이지에서 이메일 전달 시 기본값 설정
     }
   }, [location.state]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const params = new URLSearchParams();
     params.append("username", email);
     params.append("password", password);
 
     try {
+      // 로그인 요청
       const response = await apiClient.post("/api/user/login", params, {
         withCredentials: true,
       });
-      const token = response.headers["authorization"]?.split(" ")[1]; // "Bearer " 를 제거하고 토큰만 저장
-      const role = response.data.role; // 역할이 데이터 객체에 포함되어 있는지 확인 필요
-      await dispatch(setLoginFlag(true));
-      await dispatch(saveJwtToken(token));
-      await dispatch(setRole(role));
-      const userInfo = await apiClient.get("/api/user/userinfo", {
+
+      // JWT 토큰 추출
+      const token = response.headers["authorization"]?.split(" ")[1];
+      const role = response.data.role;
+
+      // Redux 상태 업데이트
+      dispatch(saveJwtToken(token));
+      dispatch(setRole(role));
+
+      // 사용자 정보 요청
+      const userInfoResponse = await apiClient.get("/api/user/userinfo", {
         params: { email },
         withCredentials: true,
       });
-      console.log(userInfo.data);
 
-      dispatch(addUserInfo(userInfo.data));
+      // Redux에 사용자 정보 저장
+      dispatch(setUserInfo(userInfoResponse.data));
+
+      // 홈 페이지로 이동
       navigate("/");
     } catch (error) {
-      errorDisplay(error);
-      console.error(
-        "로그인 실패:",
-        error.response ? error.response.data : "서버 연결 실패"
-      );
+      errorDisplay(error); // 사용자 친화적인 에러 메시지 출력
+      console.error("로그인 실패:", error.response?.data || "서버 연결 실패");
     }
   };
 
@@ -72,7 +72,7 @@ export default function LoginForm() {
           placeholder="아이디 (email)"
           className={styles.input}
           value={email}
-          onChange={(e) => setEmail(e.target.value)} // 이메일 입력값 상태에 반영
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
@@ -80,7 +80,7 @@ export default function LoginForm() {
           placeholder="비밀번호"
           className={styles.input}
           value={password}
-          onChange={(e) => setPassword(e.target.value)} // 비밀번호 입력값 상태에 반영
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button type="submit" className={styles.button}>

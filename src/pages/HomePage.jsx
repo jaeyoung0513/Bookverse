@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -7,12 +8,32 @@ import "../styles/HomePage.css";
 import BookSwiper from "../components/book/BookSwiper";
 import errorDisplay from "../api/errorDisplay";
 import CategoryBooks from "../components/book/CategoryBooks";
+import { setWishList } from "../redux/wishlistSlice";
+import apiClient from "../api/axiosInstance";
 
 export default function HomePage() {
   const [popularBooks, setPopularBooks] = useState([]);
+  const dispatch = useDispatch();
+  const loginFlag = useSelector((state) => state.userInfo.loginFlag); // Redux에서 loginFlag 가져오기
+  const user = useSelector((state) => state.userInfo.user);
 
-  // 데이터 fetch 함수
-  const fetchData = async () => {
+  // 위시리스트 데이터를 가져와 Redux에 저장
+  const fetchWishlist = useCallback(async () => {
+    if (!loginFlag || !user?.email) return; // loginFlag가 false거나 user가 없으면 실행하지 않음
+
+    try {
+      const response = await apiClient.get(`/api/purchase/wishlist`, {
+        params: { email: user.email }, // 사용자 이메일 추가
+      });
+      dispatch(setWishList(response.data));
+    } catch (error) {
+      console.error("Error fetching wishlist:", error);
+      errorDisplay(error);
+    }
+  }, [dispatch, loginFlag, user?.email]);
+
+  // 인기 도서 데이터 fetch
+  const fetchData = useCallback(async () => {
     try {
       const popularResponse = await axios.get(
         "http://localhost:8080/api/purchase/top/all",
@@ -20,15 +41,16 @@ export default function HomePage() {
       );
       setPopularBooks(popularResponse.data);
     } catch (error) {
+      console.error("Error fetching popular books:", error);
       errorDisplay(error);
-      console.error("Error fetching books:", error);
     }
-  };
-
-  // 마운트될 때마다 데이터를 다시 가져옴
-  useEffect(() => {
-    fetchData();
   }, []);
+
+  // 마운트될 때 데이터를 가져옴
+  useEffect(() => {
+    fetchWishlist();
+    fetchData();
+  }, [fetchWishlist, fetchData]);
 
   return (
     <div className="swiper-container">

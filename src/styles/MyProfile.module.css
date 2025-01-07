@@ -1,126 +1,165 @@
 .profileContainer {
-    display: flex;
-    position: relative;
-    margin-top: 15px;
-    margin-left: 200px;
-    padding-top: 10px; /* 가로 선과 컨텐츠 사이에 여백 추가 */
-    /*border: 1px solid black;*/
-    align-items: center;
-    height: 40rem;
-}
-
-.profileContainer::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -42vh;
-    width: 120%;
-    height: 1.5px;
-    background-color: black;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Roboto", sans-serif;
 }
 
 .profileTitle {
-    position: relative;
-    padding-left: 170px; /* 내 정보 텍스트와 세로선 사이의 여백 */
-    padding-top: 15px;
-    margin-bottom: 40px;
-    margin-top: -10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-.profileform {
-    margin-left: 500px;
-}
-
-label.profileIdLable,
-label.profilePwLable,
-label.profileNameLable,
-label.profileDateLable,
-label.profileAddrLable,
-label.profileTelLable {
+.profileForm {
     display: flex;
-    align-items: center;
-    margin-bottom: 25px; /*각 라벨 간의 간격*/
-    margin-left: 120px;
+    flex-direction: column;
+    gap: 20px;
 }
 
-input.idinfo{
-    width: 300px;
+.profileForm label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #34495e;
+    font-size: 14px;
+}
+
+.profileForm input {
+    width: 100%;
     padding: 10px;
+    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: left;
+    font-size: 14px;
 }
 
-input.pwinfo {
-    width: 300px;
+.profileForm input:focus {
+    outline: none;
+    border-color: #f69a06;
+    box-shadow: 0 0 4px rgba(246, 154, 6, 0.5);
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.profileBtn {
+    background-color: #f69a06;
+    color: #ffffff;
+    font-weight: bold;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 5px;
-    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-input.nameinfo {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: left;
+.profileBtn:hover {
+    background-color: #feb669;
 }
 
-input.dateinfo {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: left;
-}
-
-input.addrinfo {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: left;
-}
-
-input.telinfo {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: left;
-}
-
-input[readonly] {
-    background-color: #f0f0f0;
+.idInfo {
+    background-color: #f8f9fa;
     cursor: not-allowed;
 }
 
-.profilebtn {
-    padding: 10px;
-    background-color: #fbb319;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-start;
-    margin-top: 35px;
-    margin-left: 230px;
-    width: 100%;
-    max-width: 300px;
+.pwInfo,
+.nameInfo,
+.dateInfo,
+.addrInfo,
+.telInfo {
+    background-color: #ffffff;
 }
 
-.profilebtn:hover {
-    background-color: #fbb319;
+/* Small screen (mobile) styles */
+@media (max-width: 768px) {
+    .profileContainer {
+        max-width: 100%;
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .profileTitle {
+        font-size: 20px;
+    }
+
+    .profileForm label {
+        font-size: 12px;
+    }
+
+    .profileForm input {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .profileBtn {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
 
-.editIcon {
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 10px;
-    color: #007bff;
+/* Medium screen (tablet) styles */
+@media (max-width: 1024px) {
+    .profileContainer {
+        max-width: 50%;
+        padding: 20px;
+        margin-left: auto; /* 왼쪽 여백을 자동으로 */
+        margin-right: 10%; /* 오른쪽 여백을 추가 */
+    }
+
+    .profileForm label {
+        font-size: 13px;
+    }
+
+    .profileForm input {
+        padding: 9px;
+        font-size: 13px;
+    }
 }
 
-.editIcon:hover {
-    color: #0056b3;
+/* Large screen (desktop) styles */
+@media (min-width: 1200px) {
+    .profileContainer {
+        max-width: 500px;
+        margin-left: auto; /* 왼쪽 여백을 자동으로 */
+        padding: 25px;
+    }
+
+    .profileTitle {
+        font-size: 26px;
+    }
+
+    .profileBtn {
+        font-size: 18px;
+        padding: 12px;
+    }
+}
+
+/* Extra-large screen styles */
+@media (min-width: 1920px) {
+    .profileContainer {
+        max-width: 600px;
+        margin-left: auto; /* 왼쪽 여백을 자동으로 */
+
+    }
+
+    .profileTitle {
+        font-size: 28px;
+    }
+
+    .profileBtn {
+        font-size: 20px;
+        padding: 15px;
+    }
 }

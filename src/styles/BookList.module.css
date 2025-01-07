@@ -1,26 +1,45 @@
 .bookListContainer {
-    padding: 7rem 1rem;
+    padding: 6rem 5% 0 5%; /* 패딩을 상대적인 값으로 변경 */
     color: #2c3e50;
     font-family: 'Roboto', sans-serif;
     background: #ffffff;
-    margin: 0 13rem;
-    margin-top: -50px; /* 위로 20px 이동 */
+    margin: 0 auto; /* 가로 마진을 자동으로 설정하여 중앙 정렬 */
+    margin-top: -50px; /* 위로 50px 이동 */
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  /* 작은 화면 스타일 */
+  @media (max-width: 768px) {
     .bookListContainer {
-        padding: 4.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
-        margin-top: -10px; /* 작은 화면에서 위로 10px 이동 */
+      padding: 4rem 3%; /* 작은 화면에서 패딩 축소 */
+      margin-top: -10px; /* 위로 이동 값 줄이기 */
     }
-}
-
-@media (min-width: 1920px) {
+  }
+  
+  /* 중간 화면 스타일 */
+  @media (min-width: 769px) and (max-width: 1200px) {
     .bookListContainer {
-        padding: 24.5625rem 50rem;
-        margin-top: -190px; /* 매우 큰 화면에서 위로 50px 이동 */
+      padding: 7rem 7% 0 7%; /* 중간 화면에서 패딩 조정 */
+      margin-top: -30px; /* 중간 화면에서 위로 30px 이동 */
     }
-}
+  }
+  
+  /* 데스크톱 스타일 */
+  @media (min-width: 1200px) and (max-width: 1920px) {
+    .bookListContainer {
+      padding: 8rem 10% 0 10%;/* 데스크톱 화면에서 패딩을 넓게 */
+      margin-top: -50px; /* 기본값 유지 */
+    }
+  }
+  
+  /* 초대형 화면 스타일 */
+  @media (min-width: 1920px) {
+    .bookListContainer {
+      padding: 12rem 30% 0 30%; /* 매우 큰 화면에서 여백 추가 */
+      margin-top: -100px; /* 위로 이동 값 증가 */
+    }
+  }
+  

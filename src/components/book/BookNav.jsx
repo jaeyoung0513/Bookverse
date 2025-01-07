@@ -18,7 +18,6 @@ export default function BookNav({ selectedCategory, setSelectedCategory }) {
   ];
   return (
     <div>
-      <hr />
       <nav className={styles.categoryNav}>
         {categories.map((category) => (
           <button

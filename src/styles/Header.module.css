@@ -1,10 +1,4 @@
-@font-face {
-  font-family: "Bazzi";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-}
-
+/* 헤더 스타일 수정 */
 .header {
   width: 100%;
   box-sizing: border-box;
@@ -13,26 +7,78 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5625rem 12.25rem;
+  padding: 1rem 10%; /* 상대적인 패딩 값 사용 */
   z-index: 10;
+  height: 4rem; /* 헤더의 높이 고정 */
   background: #ffffff;
-  margin: 0 auto; /* 중앙 정렬을 위해 자동 마진 설정 */
 }
 
+/* 로고 이미지 반응형 크기 조정 */
 .logoImage {
-  width: 8rem;
-  height: 1.8rem;
+  width: auto; /* 고정된 크기 대신 비율 유지 */
+  max-width: 8rem;
+  height: auto;
 }
 
-/* 추가: 미디어 쿼리를 사용하여 작은 화면에서 패딩 조정 */
+/* 네비게이션 링크 스타일 */
+.navLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 5%; /* 상대적인 패딩 값 사용 */
+  box-sizing: border-box;
+}
+
+/* 미디어 쿼리로 다양한 화면 크기 지원 */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column; /* 헤더의 콘텐츠를 세로로 정렬 */
+    align-items: flex-start; /* 아이템을 왼쪽 정렬 */
+    padding: 0.5rem 0.5rem; /* 더 작은 패딩 */
+  }
+
+  .logoImage {
+    max-width: 6rem; /* 작은 화면에서 로고 크기 줄이기 */
+  }
+
+  .navLink {
+    flex-direction: column; /* 네비게이션 링크를 세로로 정렬 */
+    align-items: flex-start;
+    gap: 10px; /* 링크 간격 추가 */
+    padding: 0; /* 패딩 제거 */
+  }
+
+  .navLink a {
+    font-size: 14px; /* 텍스트 크기 줄이기 */
+  }
+
+  .rightContainer {
+    display: none; /* 작은 화면에서는 숨김 */
+  }
+}
 @media (max-width: 768px) {
   .header {
-      padding: 1.5625rem 1rem; /* 작은 화면에서 패딩 축소 */
+    padding: 1rem 1rem; /* 모바일 화면에서 패딩 축소 */
+  }
+
+  .navLink {
+    flex-direction: column; /* 네비게이션 링크를 세로로 배치 */
+  }
+
+  .rightContainer {
+    display: none; /* 모바일에서는 우측 컨테이너 숨김 */
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    padding: 1rem 10%; /* 데스크톱에서 패딩을 넓게 */
   }
 }
 
 @media (min-width: 1920px) {
   .header {
-      padding: 1.5625rem 60rem; 
+    padding: 1rem 25%; /* 더 큰 화면에서는 추가 여백 */
   }
 }

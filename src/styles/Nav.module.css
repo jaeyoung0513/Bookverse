@@ -77,11 +77,10 @@
 
 /* 반응형 미디어 쿼리 */
 @media (max-width: 768px) {
-    .linksContainer, .rightContainer {
-        display: none; /* 모바일에서는 메뉴 버튼으로 대체될 수 있음 */
-    }
 
     .navLink {
-        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        font-size: 6px;
     }
 }
