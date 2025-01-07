@@ -25,13 +25,18 @@ public class UserController {
         ;
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 있는 아이디입니다. 다시 입력해주세요.");
     }
-
+    
     @GetMapping(value = "/check/id")
     public ResponseEntity<String> checkId(@RequestParam String email) {
-        userService.checkId(email);
-        return ResponseEntity.status(HttpStatus.OK).body("가입가능한 아이디입니다.");
+        boolean isAvailable = userService.checkId(email);
+        if (isAvailable) {
+            return ResponseEntity.ok("가입가능한 아이디입니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 있는 아이디입니다. 다른 아이디를 입력해주세요.");
+        }
     }
-
+    
+    
     @DeleteMapping(value = "/cancel")
     public ResponseEntity<String> cancel(@RequestParam String email) {
         userService.cancelUser(email);
