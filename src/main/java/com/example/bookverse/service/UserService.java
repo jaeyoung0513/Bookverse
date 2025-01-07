@@ -5,6 +5,7 @@ import com.example.bookverse.data.entity.RoleEntity;
 import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
+import com.example.bookverse.data.response.ResponseUserInfo;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +39,9 @@ public class UserService {
             this.userRepository.save(userEntity);
 
             RoleEntity roleEntity = new RoleEntity();
-            RoleEntity roleEntity2 = new RoleEntity();
             roleEntity.setUser(userEntity);
             if (user.getEmail().equals("admin@bookverse.com")) {
                 roleEntity.setRoleName("ROLE_ADMIN");
-                roleEntity2.setUser(userEntity);
-                roleEntity2.setRoleName("ROLE_USER");
-                roleRepository.save(roleEntity2);
             } else {
                 roleEntity.setRoleName("ROLE_USER");
             }
@@ -53,6 +50,19 @@ public class UserService {
             return userEntity;
         }
         return null;
+    }
+
+    public ResponseUserInfo userInfo(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("회원이 아닙니다.");
+        }
+        ResponseUserInfo userInfo = ResponseUserInfo.builder()
+                .userId(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+        return userInfo;
     }
 
     public void checkId(String email) {

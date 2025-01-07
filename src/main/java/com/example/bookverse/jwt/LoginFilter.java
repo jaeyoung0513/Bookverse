@@ -50,13 +50,18 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority grantedAuthority = iterator.next();
         String role = grantedAuthority.getAuthority();
 
-        String accessToken = this.jwtutil.CreateJWT("access", username, role, 24 * 60 * 60 * 1000L);
+        String accessToken = this.jwtutil.CreateJWT("access", username, role, 5 * 60 * 1000L);
         String refreshToken = this.jwtutil.CreateJWT("refresh", username, role, 24 * 60 * 60 * 1000L);
 
+        HashMap<String, String> responseData = new HashMap<>();
+        responseData.put("email", username);
+        responseData.put("role", role);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String responseBody = objectMapper.writeValueAsString(responseData);
         res.addHeader("Authorization", "Bearer " + accessToken);
         res.addCookie(createCookie("refresh", refreshToken));
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write("로그인 성공");
+        res.getWriter().write(responseBody);
     }
 
     private Cookie createCookie(String key, String value) {

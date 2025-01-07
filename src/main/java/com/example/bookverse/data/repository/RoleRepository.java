@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
     @Query(value = "select r.role_name from role r join user u on r.user_id = u.user_id where u.email = :email", nativeQuery = true)
-    List<String> findRolesByEmail(@Param("email") String email);
+    String findRoleByEmail(@Param("email") String email);
 
     @Transactional
     @Modifying

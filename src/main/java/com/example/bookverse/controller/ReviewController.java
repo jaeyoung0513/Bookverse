@@ -1,6 +1,7 @@
 package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.ReviewDTO;
+import com.example.bookverse.data.response.ResponseReviewDTO;
 import com.example.bookverse.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,14 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<ReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO) {
-        ReviewDTO savedReview = reviewService.addReview(reviewDTO);
+    public ResponseEntity<ResponseReviewDTO> addReview(@RequestBody ReviewDTO reviewDTO) {
+        ResponseReviewDTO savedReview = reviewService.addReview(reviewDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReview);
     }
 
     @GetMapping(value = "/book/{bookId}")
-    public ResponseEntity<List<ReviewDTO>> getBookReviews(@PathVariable Long bookId) {
-        List<ReviewDTO> reviews = reviewService.getReviewsByBook(bookId);
+    public ResponseEntity<List<ResponseReviewDTO>> getBookReviews(@PathVariable Long bookId) {
+        List<ResponseReviewDTO> reviews = reviewService.getReviewsByBook(bookId);
         return ResponseEntity.ok(reviews);
     }
 

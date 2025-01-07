@@ -28,9 +28,8 @@ public class AuthenService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        roleRepository.findRolesByEmail(email).forEach(role -> {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role));
-        });
+        String role = roleRepository.findRoleByEmail(email);
+        grantedAuthorities.add(new SimpleGrantedAuthority(role));
 
         return new User(user.getEmail(), user.getPw(), grantedAuthorities);
     }

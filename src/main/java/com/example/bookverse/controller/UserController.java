@@ -2,6 +2,7 @@ package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.UserDTO;
 import com.example.bookverse.data.entity.UserEntity;
+import com.example.bookverse.data.response.ResponseUserInfo;
 import com.example.bookverse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,12 @@ public class UserController {
     public ResponseEntity<String> cancel(@RequestParam String email) {
         userService.cancelUser(email);
         return ResponseEntity.status(HttpStatus.OK).body("회원탈퇴되었습니다.");
+    }
+
+    @GetMapping(value = "/userinfo")
+    public ResponseEntity<ResponseUserInfo> userInfo(@RequestParam String email) {
+        ResponseUserInfo user = userService.userInfo(email);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @GetMapping(value = "/find/id")

@@ -7,11 +7,13 @@ import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.BookRepository;
 import com.example.bookverse.data.repository.ReviewRepository;
 import com.example.bookverse.data.repository.UserRepository;
+import com.example.bookverse.data.response.ResponseReviewDTO;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class ReviewService {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
-    public ReviewDTO addReview(ReviewDTO reviewDTO) {
+    public ResponseReviewDTO addReview(ReviewDTO reviewDTO) {
         UserEntity user = userRepository.findById(reviewDTO.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자입니다."));
         BookEntity book = bookRepository.findById(reviewDTO.getBookId())
@@ -34,14 +36,18 @@ public class ReviewService {
                 .build();
 
         ReviewEntity savedReview = reviewRepository.save(review);
-        return convertToDTO(savedReview);
+        ReviewEntity byId = reviewRepository.findById(savedReview.getId()).get();
+        ResponseReviewDTO responseReviewDTO=ResponseReviewDTO.builder()
+                .reviewId(byId.getId())
+                .name(user.getName())
+                .bookId(byId.getBook().getId())
+                .content(byId.getContent())
+                .build();
+        return responseReviewDTO;
     }
 
-    public List<ReviewDTO> getReviewsByBook(Long bookId) {
-        return reviewRepository.findByBookId(bookId)
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public List<ResponseReviewDTO> getReviewsByBook(Long bookId) {
+        return reviewRepository.findAllReviewsByBookId(bookId);
     }
 
     public List<ReviewDTO> getReviewsByUser(Long userId) {
