@@ -99,7 +99,7 @@
 
 .purchase_Button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #f69a06;
     color: white;
     border: none;
     border-radius: 5px;
@@ -110,7 +110,7 @@
 }
 
 .purchase_Button:hover {
-    background-color: #0056b3;
+    background-color: #f2b657;
 }
 
 .purchase_DeleteButton{

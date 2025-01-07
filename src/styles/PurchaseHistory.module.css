@@ -11,8 +11,8 @@
     content: '';
     position: absolute;
     top: -20px;
-    left: -230px;
-    width: calc(100% + 20vh);
+    left: -42vh;
+    width: 120%;
     height: 1.5px;
     background-color: black;
 }
@@ -23,16 +23,6 @@
     padding-top: 15px;
     margin-bottom: 10px;
     margin-top: -10px;
-}
-
-.purchaseTitle::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -15px;
-    width: 1.5px;
-    height: calc(100% + 100vh);
-    background-color: black; /* 검은색 세로 선 */
 }
 
 .purchaseBookDetails {
