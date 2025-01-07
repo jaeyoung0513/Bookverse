@@ -11,7 +11,9 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const newItem = action.payload;
+      const newItem = {...action.payload, quantity:1};
+      console.log('New item added to cart:', newItem);
+
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
@@ -23,6 +25,8 @@ const cartSlice = createSlice({
         (sum, item) => sum + item.price * item.quantity,
         0
       );
+      console.log('Updated cart items:', state.items);  // 상태 업데이트 확인용 로그
+      console.log('Total price:', state.total);  // 총합 확인용 로그
     },
 
     updateQuantity: (state, action) => {

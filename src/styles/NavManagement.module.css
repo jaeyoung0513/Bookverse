@@ -1,0 +1,87 @@
+/* 로고 컨테이너 및 이미지 스타일 */
+.admin_logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.admin_logoImage {
+    width: 5.2rem;
+    height: 1.139375rem;
+}
+
+/* 네비게이션 링크 스타일 */
+.admin_navLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px; /* 좌우 패딩 */
+    box-sizing: border-box;
+    background-color: #fff; /* 배경색 */
+}
+
+.admin_linksContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 35px;
+}
+
+.admin_navLink a {
+    color: black;
+    font-size: 15px;
+    font-weight: bolder;
+    text-decoration: none;
+    margin-right: 20px;
+    position: relative;
+}
+
+.admin_linksContainer a:hover,
+.admin_linksContainer a.active,
+.admin_linksContainer a.active:hover { /* 활성화 상태에서도 호버 효과 유지 */
+    color: orange;
+}
+
+.admin_linksContainer a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1.7px;
+    background-color: transparent;
+    transition: background-color 0.3s;
+}
+
+.admin_linksContainer a:hover::after,
+.admin_linksContainer a.active::after,
+.admin_linksContainer a.active:hover::after { /* 활성화 상태에서도 호버 효과의 after 유지 */
+    background-color: rgb(255, 142, 36);
+}
+
+/* 우측 컨테이너 스타일 */
+.admin_rightContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 18px;
+}
+
+
+.admin_userIcon,
+.admin_cartIcon {
+    height: 20px;
+    padding: 0;
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 768px) {
+    .linksContainer, .rightContainer {
+        display: none; /* 모바일에서는 메뉴 버튼으로 대체될 수 있음 */
+    }
+
+    .navLink {
+        justify-content: space-between;
+    }
+}

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import styles from "../../styles/BookDetail.module.css";
 import errorDisplay from "../../api/errorDisplay";
+import { addToWishList } from "../../redux/wishlistSlice";
 
 export default function BookDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [book, setBook] = useState(null);
   const [backgroundStyle, setBackgroundStyle] = useState({
     filter: "blur(2px)",
@@ -35,6 +38,14 @@ export default function BookDetail() {
       });
   }, [id, navigate]);
 
+  const handleAddToWishlist = () => {
+    if (book) {
+      dispatch(addToWishList(book)); // 찜 목록에 추가
+      alert("♡♥♡찜하기가 완료되었습니다!♡♥♡");
+      navigate("/booklist"); // booklist 페이지로 이동
+    }
+  };
+
   if (!book) {
     return <div>Loading...</div>;
   }
@@ -48,7 +59,10 @@ export default function BookDetail() {
           <h1 className={styles.title}>{book.title}</h1>
           <h3 className={styles.author}>{book.author}</h3>
           <button className={styles.addCartButton}>장바구니 담기</button>
+          {/* 찜하기 버튼 추가 */}
+          <button className={styles.addWishlistButton} onClick={handleAddToWishlist}>찜하기</button>
         </div>
+        
       </div>
 
       <div className={styles.detailBox}>

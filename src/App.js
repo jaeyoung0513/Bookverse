@@ -15,6 +15,10 @@ import UserSidebar from "./components/user/UserSidebar";
 import MyMenu from "./pages/MyMenu";
 import PurchaseForm from "./components/user/PurchaseForm";
 import BookSearch from "./components/book/BookSearch";
+import NavManagement from "./components/admin/NavManagement";
+import BookManagement from "./components/admin/BookManagement";
+import UserManagement from "./components/admin/UserManagement";
+import SalesManagement from "./components/admin/SalesManagement";
 
 function App() {
   return (
@@ -41,6 +45,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/finduserinfo" element={<FindUserInfo />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/admin" element={<NavManagement />}>
+          <Route path="/admin/bookmanagement" element={<BookManagement />} />
+          <Route path="/admin/usermanagement" element={<UserManagement />} />
+          <Route path="/admin/salesmanagement" element={<SalesManagement />} />
+            </Route>
       </Routes>
     </BrowserRouter>
   );

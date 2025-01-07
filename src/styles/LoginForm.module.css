@@ -85,8 +85,11 @@
     margin-top: 20px;
   }
   
-  .link {
+  .link_finduserinfo {
     color: #343638;
     text-decoration: none;
   }
-  
+
+  .link_finduserinfo:hover {
+    color: orange;
+  }

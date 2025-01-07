@@ -38,20 +38,27 @@
 .wishBookItem {
     display: flex;
     align-items: center;
+    padding: 3px;
     margin-bottom: 20px;
-    margin-left: 25vh;
-    margin-top: 10vh;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-left: 5vh;
+    margin-top: 3vh;
+    width: 85%;
 }
 
 .wishBookImage {
-    width: 100px;
-    height: auto;
+    width: 150px;
+    height: 180px;
     margin-right: 20px;
+    margin-left: 10px;
 }
 
 .wishBookDetails {
     flex: 1;
-    margin-left: 25vh;
+    margin-left: 10vh;
 }
 
 .wishBookTitle {
@@ -69,10 +76,35 @@
 }
 
 .addToCartButton {
+    width: 15%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #f69a06;
     color: white;
     border: none;
     cursor: pointer;
-    margin-top: 10vh;
+    margin-top: 1vh;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-right: 15vh;
+}
+
+.addToCartButton:hover {
+    background-color: #fdb43d;
+}
+
+.wish_deleteIcon {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 2.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.wish_deleteIcon:hover {
+    background-color: #e60000;
 }
