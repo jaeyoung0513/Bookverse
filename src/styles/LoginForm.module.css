@@ -41,7 +41,7 @@
     margin: 10px 0;
     border-radius: 5px;
     border: none;
-    background-color: #373939;
+    background-color: #fbb319;
     color: white;
     cursor: pointer;
   }
@@ -85,8 +85,11 @@
     margin-top: 20px;
   }
   
-  .link {
+  .link_finduserinfo {
     color: #343638;
     text-decoration: none;
   }
-  
+
+  .link_finduserinfo:hover {
+    color: orange;
+  }

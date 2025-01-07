@@ -90,10 +90,9 @@ export default function RegisterForm() {
         <Link to="/">
           <img src="/BookverseLogo.png" className={styles.logoImage} alt="" />
         </Link>
-        <h1 className={styles.title}>회원가입</h1>
         <form onSubmit={handleRegister}>
           <div className={styles.formGroup}>
-            <label htmlFor="username">아이디</label>
+            <label htmlFor="username">이메일</label>
             <div className={styles.usernameContainer}>
               <input
                   type="text"

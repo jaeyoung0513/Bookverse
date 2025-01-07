@@ -9,7 +9,7 @@
 .FindDivider {
     width: 3px;
     border-radius: 1px;
-    background-color: #dedede; /* 세로선 색상 */
+    background-color: #f7d58e; /* 세로선 색상 */
     margin: 0 20px;
 }
 

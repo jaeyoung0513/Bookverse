@@ -49,10 +49,10 @@ export default function LoginForm() {
         </div>
         <button className={styles.naverButton}>네이버 로그인</button>
         <div className={styles.linkContainer}>
-          <a href="/register" className={styles.link}>
+          <a href="/register" className={styles.link_finduserinfo}>
             회원가입
           </a>
-          <a href="/finduserinfo" className={styles.link}>
+          <a href="/finduserinfo" className={styles.link_finduserinfo}>
             아이디/비밀번호 찾기
           </a>
         </div>

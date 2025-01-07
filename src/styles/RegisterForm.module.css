@@ -1,79 +1,109 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 400px;
-  }
-  .logoImage {
-    width: 10.4rem;
-    height: 2.239375rem;
-    margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 500px;
+  background: #fff; /* 배경색 추가 */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 그림자 효과 추가 */
+  border-radius: 8px; /* 모서리 둥글게 처리 */
 }
-  
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .formGroup {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 25px;
-  }
-  
-  .formGroup label {
-    width: 25%;
-    margin-bottom: 0px;
-    text-align: left;
-    padding-right: 10px;
-  }
-  
-  .formGroup input {
-    width: 70%;
-    padding: 10px;
-    margin: 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .usernameContainer {
-    display: flex;
-    align-items: center;
-    width: 75%;
-  }
 
-  .usernameInput {
-    width: 100%;
-  }
+.logoImage {
+  width: auto;
+  height: 60px; /* 로고 이미지 크기 조정 */
+  margin-bottom: 10px;
+}
 
-  .checkbtn {
-    display: block;
-    width: 30%;
-    margin-left: 40px;
-    padding: 5px; 
-    border-radius: 5px; 
-    border: none; 
-    background-color: #007BFF; 
-    color: white; 
-    cursor: pointer;
-  }
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 2px;
+}
 
-  .registerbtn {
-    width: 100%; 
-    padding: 10px; 
-    margin: 10px 0; 
-    margin-top: 30px;
-    border-radius: 5px; 
-    border: none; 
-    background-color: #007BFF; 
-    color: white; 
-    cursor: pointer;
-  }
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.usernameInput, 
+.emailDomain {
+  flex: 1;
+  margin: 4px 0;
+  margin-right: 10px;
+}
+
+.emailDomain {
+  margin-right: 0;
+}
+.addressContainer {
+  width: 100%;
+}
+
+.checkbtn {
+  width: auto;
+  padding: 3px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fbb319;
+  color: white;
+  cursor: pointer;
+}
+
+.checkbtn:hover {
+  background-color: #cc7a00;
+}
+.addressSearchBtn{
+  margin-top: 4px;
+  width: auto;
+  padding: 3px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fbb319;
+  color: white;
+  cursor: pointer;
+}
+.addressSearchBtn:hover {
+  background-color: #cc7a00;
+}
+
+.registerbtn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fbb319;
+  color: white;
+  cursor: pointer;
+}
+
+.registerbtn:hover {
+  background-color: #cc7a00;
+}

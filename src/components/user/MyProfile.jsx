@@ -107,7 +107,7 @@ const MyProfile = () => {
                     />
                     <span className={styles.editIcon} onClick={() => handleEdit('phone')}>✏️</span>
                 </label>
-                <button className={styles.profilbtn} type="button" onClick={handleSave}>
+                <button className={styles.profilebtn} type="button" onClick={handleSave}>
                     수정
                 </button>
             </form>
