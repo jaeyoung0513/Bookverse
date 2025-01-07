@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const userInfoSlice = createSlice({
   name: "userInfo",
@@ -10,8 +11,8 @@ const userInfoSlice = createSlice({
   },
   reducers: {
     addUserInfo: (state, action) => {
-      const { id, ...userInfo } = action.payload;
-      state.entities[id] = userInfo;
+      const { user_id, ...rest } = action.payload;
+      state.entities[user_id] = rest;
     },
     clearUserInfo: (state) => {
       state.entities = {};
@@ -41,5 +42,22 @@ export const {
   saveJwtToken,
   setRole,
 } = userInfoSlice.actions;
+
+export const updateUserInfo = (userInfo) => async (dispatch) => {
+  try {
+    const response = await axios.put(
+      `/api/user/update/${userInfo.id}`,
+      userInfo
+    );
+    dispatch({
+      type: "userInfo/updateSuccess",
+      payload: response.data,
+    });
+    alert("프로필 정보가 성공적으로 업데이트되었습니다.");
+  } catch (error) {
+    console.error("프로필 업데이트 실패:", error);
+    alert("프로필 업데이트를 실패하였습니다.");
+  }
+};
 
 export default userInfoSlice.reducer;

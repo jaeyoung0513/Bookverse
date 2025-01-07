@@ -30,12 +30,13 @@
 .categoryNav {
     width: 100%;
     box-sizing: border-box;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5625rem 19.25rem;
-    padding-top: 40px;
-    z-index: 10;
+    background-color: #ffffff;
+    padding: 1rem 19.25rem;
+    z-index: 500;
     margin: 0 auto; /* 중앙 정렬을 위해 자동 마진 설정 */
 }
 

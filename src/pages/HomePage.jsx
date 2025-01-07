@@ -6,15 +6,10 @@ import "swiper/css/pagination";
 import "../styles/HomePage.css";
 import BookSwiper from "../components/book/BookSwiper";
 import errorDisplay from "../api/errorDisplay";
-import { useDispatch } from "react-redux";
-import { addBook } from "../redux/bookSlice";
 import CategoryBooks from "../components/book/CategoryBooks";
-import apiClient from "../api/axiosInstance";
 
 export default function HomePage() {
   const [popularBooks, setPopularBooks] = useState([]);
-
-  const dispatch = useDispatch();
 
   // 데이터 fetch 함수
   const fetchData = async () => {
