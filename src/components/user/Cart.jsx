@@ -19,8 +19,13 @@ export default function Cart() {
   };
 
   const handlePurchase = () => {
-    navigate("/mymenu/cart/Purchase");
-  };
+    if(cartItems.length===0){
+      alert("장바구니에 물건을 추가한 뒤 결제버튼을 눌러주세요");
+    } else { navigate("/mymenu/cart/Purchase", {
+      state: { items: cartItems, totalAmount: totalPrice },  // 카트 아이템과 총액을 상태로 전달);
+      });
+    };
+  }
 
   return (
     <div className={styles.cartContainer}>

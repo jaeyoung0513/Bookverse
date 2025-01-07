@@ -6,17 +6,17 @@ const UserSidebar = () => {
     return (
         <div className={styles.sidebar}>
             <ul className={styles.menuList}>
-                <li>
-                    <NavLink to="/mymenu/myprofile" activeClssName={styles.active}>내 정보</NavLink>
+                <li className={styles.sidebarFont}>
+                    <NavLink to="/mymenu/myprofile" className={({ isActive }) => (isActive ? styles.active : '')}>내 정보</NavLink>
                 </li>
-                <li>
-                    <NavLink to="/mymenu/wishlist" activeClssName={styles.active}>찜 목록</NavLink>
+                <li className={styles.sidebarFont}>
+                    <NavLink to="/mymenu/wishlist" className={({ isActive }) => (isActive ? styles.active : '')}>찜 목록</NavLink>
                 </li>
-                <li>
-                    <NavLink to="/mymenu/cart" activeClssName={styles.active}>장바구니</NavLink>
+                <li className={styles.sidebarFont}>
+                    <NavLink to="/mymenu/cart" className={({ isActive }) => (isActive ? styles.active : '')}>장바구니</NavLink>
                 </li>
-                <li>
-                    <NavLink to="/mymenu/purchasehistory" activeClssName={styles.active}>구매 기록</NavLink>
+                <li className={styles.sidebarFont}>
+                    <NavLink to="/mymenu/purchasehistory" className={({ isActive }) => (isActive ? styles.active : '')}>구매 기록</NavLink>
                 </li>
             </ul>
         </div>

@@ -59,7 +59,7 @@ export default function BookDetail() {
           <h1 className={styles.title}>{book.title}</h1>
           <h3 className={styles.author}>{book.author}</h3>
           <button className={styles.addCartButton}>장바구니 담기</button>
-          {/* 찜하기 버튼 추가 */}
+          
           <button className={styles.addWishlistButton} onClick={handleAddToWishlist}>찜하기</button>
         </div>
         
