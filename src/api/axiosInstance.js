@@ -1,64 +1,61 @@
-/* eslint-disable no-undef */
-import axios, { responseEncoding } from "axios";
-import store, { saveJwtToken } from "../redux/userInfoSlice";
+import axios from "axios";
+import store from "../redux/store";
 
-// Axios 인스턴스를 생성하여 API 클라이언트를 정의합니다.
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:8080", // 요청의 기본 URL을 설정합니다.
+  baseURL: "http://localhost:8080",
   headers: {
-    "Content-Type": "application/json", // 기본 콘텐츠 타입을 JSON으로 설정합니다.
+    "Content-Type": "application/json",
   },
 });
 
-// 요청 인터셉터를 설정합니다.
 apiClient.interceptors.request.use(
   (config) => {
-    // 요청 데이터가 URLSearchParams일 경우 콘텐츠 타입을 변경합니다.
     if (config.data instanceof URLSearchParams) {
       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
     // 스토어에서 JWT 토큰을 가져와 요청 헤더에 추가합니다.
-    const jwtToken = store.getState().userInfo.jwtToken;
-    config.headers["authorization"] = jwtToken;
+    const state = store.getState();
+    const jwtToken = state.userInfo.jwtToken;
+    if (jwtToken) {
+      config.headers["Authorization"] = `Bearer ${jwtToken}`;
+    }
     return config;
   },
-  (error) => {
-    // 요청 오류가 있는 경우 거부합니다.
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// 응답 인터셉터를 설정합니다.
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !error.config._retry
+    ) {
+      error.config._retry = true;
       try {
         const reissueResponse = await axios.post(
-          `${baseURL}/api/reissue`, // 명확한 URL 설정
+          `${apiClient.defaults.baseURL}/api/reissue`,
           {},
-          { withCredentials: true } // 쿠키 포함
+          { withCredentials: true }
         );
-        const newToken = reissueResponse.headers["authorization"];
+        const newToken = reissueResponse.data.accessToken;
 
         // Redux 상태에 새로운 토큰 저장
-        store.dispatch(saveJwtToken(newToken));
+        store.dispatch({
+          type: "userInfo/saveJwtToken",
+          payload: newToken,
+        });
 
         // 요청 헤더에 새로운 토큰 추가 후 재요청
-        originalRequest.headers["Authorization"] = newToken;
-        return apiClient(originalRequest);
+        error.config.headers["Authorization"] = `Bearer ${newToken}`;
+        return apiClient(error.config);
       } catch (reissueError) {
         return Promise.reject(reissueError);
       }
     }
-
     return Promise.reject(error);
   }
 );
 
-// apiClient 인스턴스를 기본으로 내보냅니다.
 export default apiClient;
