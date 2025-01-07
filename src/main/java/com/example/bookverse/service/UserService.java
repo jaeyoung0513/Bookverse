@@ -5,7 +5,6 @@ import com.example.bookverse.data.entity.RoleEntity;
 import com.example.bookverse.data.entity.UserEntity;
 import com.example.bookverse.data.repository.RoleRepository;
 import com.example.bookverse.data.repository.UserRepository;
-import com.example.bookverse.data.response.ResponseUserInfo;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -52,17 +51,12 @@ public class UserService {
         return null;
     }
 
-    public ResponseUserInfo userInfo(String email) {
+    public UserDTO userInfo(String email) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
             throw new EntityNotFoundException("회원이 아닙니다.");
         }
-        ResponseUserInfo userInfo = ResponseUserInfo.builder()
-                .userId(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
-        return userInfo;
+        return convertToDTO(user);
     }
 
     public void checkId(String email) {
@@ -178,6 +172,7 @@ public class UserService {
     // 변환 메서드
     private UserDTO convertToDTO(UserEntity userEntity) {
         return UserDTO.builder()
+                .user_id(userEntity.getId())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .birthdate(userEntity.getBirthdate())

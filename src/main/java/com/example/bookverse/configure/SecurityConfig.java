@@ -50,13 +50,13 @@ public class SecurityConfig {
                                         "/api/book/search", "/api/book/bookdetail/{id}", "/api/book/category",
                                         "/api/purchase/top/all", "/api/purchase/top/category", "/api/book/booklist", "/api/book/all",
                                         "/api/reissue").permitAll()
-                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}",
+                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}", "/api/user/userinfo",
                                         "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
                                         "/api/review/edit", "/api/review/delete",
                                         "/api/purchase/add/wish", "/api/purchase/delete/wish",
                                         "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
                                         "/api/purchase/membersPurchaseList").hasRole("USER")
-                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}",
+                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}","/api/user/userinfo",
                                         "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
                                         "/api/review/edit", "/api/review/delete",
                                         "/api/purchase/add/wish", "/api/purchase/delete/wish",

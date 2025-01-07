@@ -1,8 +1,6 @@
 package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.UserDTO;
-import com.example.bookverse.data.entity.UserEntity;
-import com.example.bookverse.data.response.ResponseUserInfo;
 import com.example.bookverse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,12 +26,8 @@ public class UserController {
     
     @GetMapping(value = "/check/id")
     public ResponseEntity<String> checkId(@RequestParam String email) {
-        boolean isAvailable = userService.checkId(email);
-        if (isAvailable) {
-            return ResponseEntity.ok("가입가능한 아이디입니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 있는 아이디입니다. 다른 아이디를 입력해주세요.");
-        }
+        this.userService.checkId(email);
+        return ResponseEntity.status(HttpStatus.OK).body("가입가능한 아이디 입니다");
     }
     
     
@@ -44,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/userinfo")
-    public ResponseEntity<ResponseUserInfo> userInfo(@RequestParam String email) {
-        ResponseUserInfo user = userService.userInfo(email);
+    public ResponseEntity<UserDTO> userInfo(@RequestParam String email) {
+        UserDTO user = userService.userInfo(email);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
