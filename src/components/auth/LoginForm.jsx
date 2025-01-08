@@ -37,17 +37,19 @@ export default function LoginForm() {
       const role = response.data.role;
 
       // Redux 상태 업데이트
-      dispatch(saveJwtToken(token));
-      dispatch(setRole(role));
+      await dispatch(saveJwtToken(token));
+      await dispatch(setRole(role));
 
       // 사용자 정보 요청
-      const userInfoResponse = await apiClient.get("/api/user/userinfo", {
-        params: { email },
-        withCredentials: true,
-      });
+      if (role === "ROLE_USER") {
+        const userInfoResponse = await apiClient.get("/api/user/userinfo", {
+          params: { email },
+          withCredentials: true,
+        });
 
-      // Redux에 사용자 정보 저장
-      dispatch(setUserInfo(userInfoResponse.data));
+        // Redux에 사용자 정보 저장
+        await dispatch(setUserInfo(userInfoResponse.data));
+      }
 
       // 홈 페이지로 이동
       navigate("/");
