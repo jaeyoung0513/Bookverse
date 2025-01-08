@@ -25,7 +25,7 @@ public class UserEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "pw", nullable = false)
+    @Column(name = "pw", nullable = false, unique = true)
     private String pw;
 
     @Column(name = "name", nullable = false)

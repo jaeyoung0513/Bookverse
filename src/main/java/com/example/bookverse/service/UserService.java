@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -75,41 +76,48 @@ public class UserService {
             userRepository.deleteById(user.getId());
         }
     }
-
+    
     public String findId(UserDTO user) {
-        String id = userRepository.findIdByEmail(user.getName(), user.getBirthdate(), user.getPhone());
+        String id = userRepository.findEmailByNameBirthdatePhone(
+                user.getName(),
+                user.getBirthdate(),
+                user.getPhone()
+        );
         if (id == null) {
             throw new EntityNotFoundException("일치하는 회원이 없습니다. 다시 입력해주세요.");
         }
         return id;
     }
-
+    
+    
     public String findPw(UserDTO user) {
-        UserEntity userEntity = userRepository.findUserEntityByEmailNameBirthdatePhone(user.getEmail(), user.getName(), user.getBirthdate(), user.getPhone());
+        // 사용자 정보로 회원 검색
+        UserEntity userEntity = userRepository.findUserEntityByEmailNameBirthdatePhone(
+                user.getEmail(), user.getName(), user.getBirthdate(), user.getPhone()
+        );
         if (userEntity == null) {
             throw new EntityNotFoundException("일치하는 회원이 없습니다. 다시 입력해주세요.");
         }
-
-        String newPw = createNewPw(10);
-        String encodePw = passwordEncoder.encode(newPw);
-        userEntity.setPw(encodePw);
+        
+        // 4자리 임시 비밀번호 생성
+        String newPw = createNewPw(4);
+        
+        // 비밀번호 암호화 후 저장
+        String encodedPw = passwordEncoder.encode(newPw);
+        userEntity.setPw(encodedPw);
         userEntity.setUpdatedAt(LocalDateTime.now());
-        userRepository.save(userEntity);
-
+        userRepository.save(userEntity); // 변경사항 저장
+        
+        // 생성된 비밀번호 반환
         return newPw;
     }
-
-    public String createNewPw(int len) {
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        SecureRandom rm = new SecureRandom();
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < len; i++) {
-            int index = rm.nextInt(chars.length());
-            sb.append(chars.charAt(index));
+    private String createNewPw(int length) {
+        StringBuilder password = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            password.append(random.nextInt(10)); // 0~9 사이의 랜덤 숫자 추가
         }
-        return sb.toString();
+        return password.toString();
     }
 
 

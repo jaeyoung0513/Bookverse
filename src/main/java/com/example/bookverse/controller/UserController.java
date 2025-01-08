@@ -2,6 +2,7 @@ package com.example.bookverse.controller;
 
 import com.example.bookverse.data.dto.UserDTO;
 import com.example.bookverse.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,19 +43,32 @@ public class UserController {
         UserDTO user = userService.userInfo(email);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
-
-    @GetMapping(value = "/find/id")
+    
+    @PostMapping(value = "/find/id")
     public ResponseEntity<String> findId(@RequestBody UserDTO user) {
-        String id = userService.findId(user);
-        return ResponseEntity.status(HttpStatus.OK).body(id);
+        try {
+            String id = userService.findId(user);
+            return ResponseEntity.ok(id); // 200 OK로 이메일 반환
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // 404 Not Found
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다."); // 500 Internal Server Error
+        }
     }
-
-    @GetMapping(value = "/find/pw")
+    
+    @PostMapping(value = "/find/pw")
     public ResponseEntity<String> findPw(@RequestBody UserDTO user) {
-        String newPw = userService.findPw(user);
-        return ResponseEntity.status(HttpStatus.OK).body(newPw);
+        try {
+            String newPassword = userService.findPw(user); // 서비스 호출
+            return ResponseEntity.status(HttpStatus.OK).body(newPassword); // 평문으로 반환
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 회원이 없습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 찾기 중 오류가 발생했습니다.");
+        }
     }
-
+    
+    
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         UserDTO updatedUser = userService.updateUser(id, userDTO);

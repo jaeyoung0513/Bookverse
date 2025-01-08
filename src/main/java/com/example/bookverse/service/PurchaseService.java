@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,7 +74,37 @@ public class PurchaseService {
             deleteCart(email, requestBuyDTO.getBookId());
         }
     }
-
+    public List<BookDTO> getWishlistByUser(String email) {
+        // 사용자 검증
+        UserEntity user = existsByEmail(email);
+        
+        // 위시리스트 조회
+        List<WishlistEntity> wishlist = wishlistRepository.findByUserEmail(user.getEmail());
+        
+        if (wishlist == null || wishlist.isEmpty()) {
+            return Collections.emptyList(); // 빈 목록 반환
+        }
+        
+        // WishlistEntity -> BookDTO 변환
+        return wishlist.stream()
+                .map(wish -> {
+                    BookEntity book = wish.getBook();
+                    return BookDTO.builder()
+                            .id(book.getId())
+                            .title(book.getTitle())
+                            .desc(book.getDesc())
+                            .author(book.getAuthor())
+                            .publisher(book.getPublisher())
+                            .category(book.getCategory())
+                            .quantity(book.getQuantity())
+                            .price(book.getPrice())
+                            .image(book.getImage())
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+    
+    
     public void addCart(String email, Long bookId, Integer quantity) {
         UserEntity user = existsByEmail(email);
         BookEntity book = existsByBookId(bookId);
@@ -97,6 +128,20 @@ public class PurchaseService {
         CartEntity cartEntity = cartRepository.findByUserIdAndBookId(user.getId(), bookId);
         cartRepository.delete(cartEntity);
     }
+    
+    public void clearCart(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
+        }
+        // Fetch the user by email
+        UserEntity user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("사용자를 찾을 수 없습니다.");
+        }
+        
+        // Clear all cart items for the user
+        cartRepository.deleteAllByUser(user);
+    }
 
     public void addWish(String email, Long bookId) {
         UserEntity user = existsByEmail(email);
@@ -108,14 +153,14 @@ public class PurchaseService {
                 .build();
         wishlistRepository.save(wishlist);
     }
-
+    
     public void deleteWish(String email, Long bookId) {
-        existsByEmail(email);
-        wishlistRepository.findById(bookId).ifPresent(wishlist -> {
-            wishlistRepository.deleteById(wishlist.getId());
-        });
+        UserEntity user = existsByEmail(email); // 사용자 검증
+        wishlistRepository.findByUserEmailAndBookId(user.getEmail(), bookId) // 이메일과 책 ID로 찾기
+                .ifPresent(wishlist -> wishlistRepository.deleteById(wishlist.getId())); // 삭제
     }
-
+    
+    
     public List<BookDTO> findTop5Books() {
         List<Top5BooksResponse> top5Books = purchaseRepository.findTop5Books();
         List<BookDTO> books = new ArrayList<>();
