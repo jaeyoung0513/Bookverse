@@ -1,94 +1,162 @@
 .cartContainer {
     position: relative;
-    margin-top: 15px;
-    margin-left: 200px;
-    padding-top: 10px; /* 가로 선과 컨텐츠 사이에 여백 추가 */
-    /*border: 1px solid black;*/
-    height: 40rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 800px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
 }
 
 .cartContainer::before {
     content: '';
     position: absolute;
-    top: -20px;
-    left: -42vh;
-    width: 120%;
-    height: 1.5px;
-    background-color: black;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 1px;
 }
 
 .cartTitle {
-    position: relative;
-    padding-left: 5vh; /*  텍스트와 세로선 사이의 여백 */
-    padding-top: 15px;
-    margin-bottom: 10px;
-    margin-top: -10px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
 }
 
 .cartBookItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3px;
-    margin-bottom: 10px;
-    background-color: #ffffff;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin-right: 30vh;
-    margin-left: 5vh;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cartBookItem:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .cartBookDetails {
     flex: 1;
+    padding: 0 1rem;
 }
 
 .cartBookDetails p {
-    margin: 5px 0;
+    margin: 0.5rem 0;
     font-size: 1rem;
-    color: #333;
+    color: #555;
 }
 
 .cartDeleteButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #ff4d4d;
     color: white;
     border: none;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 40px;
+    height: 40px;
 }
 
 .cartDeleteButton:hover {
     background-color: #e60000;
+    transform: scale(1.1);
 }
 
 .cartTotal {
-    text-align: left;
+    text-align: right;
     font-size: 1.5rem;
     font-weight: bold;
-    margin-top: 20px;
-    margin-left: 110vh;
+    color: #333;
+    margin-top: 2rem;
 }
 
-.cartPurchaseButton {
-    display: block;
-    width: 30%;
+.cartActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 20px;
+  }
+  
+  .cartClearButton {
+    display: inline-block;
+    width: 48%;
     padding: 15px;
-    background-color: #f69a06;
+    background-color: #ff4d4d;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s;
-    margin-top: 20px;
-    margin-left: 45vh;
-}
-
-.cartPurchaseButton:hover {
+  }
+  
+  .cartClearButton:hover {
+    background-color: #e60000;
+  }
+  
+  .cartPurchaseButton {
+    display: inline-block;
+    width: 48%;
+    padding: 15px;
+    background-color: #f69a06;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .cartPurchaseButton:hover {
     background-color: #fcb747;
+  }
+  
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cartContainer {
+        margin: 1rem auto;
+        padding: 1.5rem;
+    }
+
+    .cartTitle {
+        font-size: 1.8rem;
+    }
+
+    .cartBookItem {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cartBookDetails {
+        padding: 0;
+    }
+
+    .cartTotal {
+        font-size: 1.3rem;
+    }
+
+    .cartPurchaseButton {
+        width: 100%;
+        font-size: 1rem;
+    }
 }

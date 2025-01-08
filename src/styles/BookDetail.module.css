@@ -1,172 +1,203 @@
-.container {
+.bookDetailContainer {
     display: flex;
-    flex-wrap: wrap; /* 줄 바꿈 허용 */
+    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 2rem 10%; /* 상대적인 패딩 값 사용 */
+    gap: 1.5rem; /* 컴포넌트 사이 간격 추가 */
+    padding: 2rem 8%;
     color: #2c3e50;
-    font-family: 'Roboto', sans-serif;
-    background: #ffffff;
-    margin: 0 auto; /* 중앙 정렬 */
+    font-family: "Roboto", sans-serif;
+    background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
   
-  .card {
+  .bookDetailCard,
+  .reviewContainer {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; /* 작은 화면에서는 100% */
-    max-width: 45%; /* 최대 폭 제한 */
-    border-radius: 10px;
+    width: 100%;
+    max-width: 47%; /* 두 컴포넌트가 나란히 차지하는 공간 조정 */
+    background-color: #ffffff;
+    border-radius: 15px;
     overflow: hidden;
-    margin-bottom: 2rem; /* 요소 간격 추가 */
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
-  .cardContent {
+  .bookDetailCard:hover,
+  .reviewContainer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .bookDetailCardContent {
     position: relative;
     z-index: 1;
     width: 100%;
-    padding: 2rem; /* 작은 화면에서 패딩 축소 */
-    background: rgba(255, 255, 255, 0.85); /* 내용의 가독성을 위해 배경 투명도 추가 */
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
-  .leftButtons {
+  
+  .bookDetailHeartIconFilled {
+    color: #ff6b6b;
+    font-size: 1.8rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .bookDetailHeartIconFilled:hover {
+    transform: scale(1.2);
+    color: #ff3b3b;
+  }
+  
+  .bookDetailHeartIconEmpty {
+    color: #ced4da;
+    font-size: 1.8rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .bookDetailHeartIconEmpty:hover {
+    transform: scale(1.2);
+    color: #495057;
+  }
+  
+  .bookDetailLeftButtons {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
+    margin-top: 1rem;
   }
   
-  .bookImage {
-    width: 100%; /* 부모 요소에 맞게 크기 조정 */
-    max-width: 320px; /* 최대 크기 제한 */
-    height: auto; /* 비율 유지 */
-    object-fit: contain;
-    border-radius: 5px;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
-  }
-  
-  .author {
-    font-size: 1rem;
-    color: #6a7070;
+  .bookDetailImage {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
   }
   
-  .detailBox {
-    display: flex;
-    width: 100%; /* 작은 화면에서 100% */
-    max-width: 45%; /* 최대 폭 제한 */
-    padding: 2rem; /* 작은 화면에서 패딩 축소 */
-    background: #fff;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem; /* 요소 간격 추가 */
-  }
-  
-  .desc {
-    margin-top: 2rem;
-    padding: 0 1rem; /* 작은 화면에서 패딩 축소 */
-    font-size: 1rem;
-    text-align: justify;
-  }
-  
-  .infoRow {
-    display: flex;
-    padding: 0 1.5rem; /* 작은 화면에서 패딩 축소 */
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
-  
-  .label {
-    font-weight: bold;
-  }
-  
-  .category,
-  .value {
-    color: #34495e;
-  }
-  
-  .addCartButton,
-  .purchaseButton,
-  .addWishlistButton {
-    padding: 10px 20px; /* 작은 화면에서 버튼 크기 축소 */
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(255, 179, 39);
-    font-size: 12px;
-    font-weight: 500;
-    color: rgb(40, 40, 40);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  
-  .addCartButton:hover,
-  .purchaseButton:hover,
-  .addWishlistButton:hover {
-    background-color: #feb669;
-  }
-  
-  .ratingFilled,
-  .notRated {
-    padding: 1rem;
+  .bookDetailTitle {
     font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0.5rem 0;
+    text-align: center;
   }
   
-  .notRated {
-    color: #bdc3c7;
+  .bookDetailAuthor {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+    text-align: center;
   }
   
-  /* 작은 화면 스타일 */
+  .bookDetailBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bookDetailDesc {
+    margin: 1.5rem 0;
+    padding: 0 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+    color: #495057;
+  }
+  
+  .bookDetailInfoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+  }
+  
+  .bookDetailLabel {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .bookDetailCategory,
+  .bookDetailValue {
+    color: #bf5803;
+    font-weight: 500;
+  }
+  
+  .bookDetailAddCartButton,
+  .bookDetailPurchaseButton,
+  .bookDetailAddWishlistButton {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 14px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #ff6b6b, #ff8c66);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
+  }
+  
+  .bookDetailAddCartButton:hover,
+  .bookDetailPurchaseButton:hover,
+  .bookDetailAddWishlistButton:hover {
+    background: linear-gradient(to right, #ff3b3b, #ff6b3b);
+    box-shadow: 0 6px 12px rgba(255, 59, 59, 0.5);
+    transform: translateY(-3px);
+  }
+  
+  .bookDetailAddCartButton:active,
+  .bookDetailPurchaseButton:active,
+  .bookDetailAddWishlistButton:active {
+    transform: translateY(0px);
+    box-shadow: 0 3px 6px rgba(255, 59, 59, 0.3);
+  }
+  
+  .reviewContainer {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 47%;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 반응형 스타일 */
   @media (max-width: 768px) {
-    .container {
-      flex-direction: column; /* 세로로 배치 */
-      padding: 1.5rem 2rem; /* 패딩 축소 */
+    .bookDetailContainer {
+      flex-direction: column;
+      padding: 1rem;
     }
   
-    .card,
-    .detailBox {
-      width: 100%; /* 작은 화면에서 100% */
-      max-width: 100%; /* 최대 폭 제한 해제 */
-    }
-  
-    .desc {
-      margin-top: 1.5rem;
-      font-size: 0.9rem; /* 텍스트 크기 축소 */
+    .bookDetailCard,
+    .reviewContainer {
+      max-width: 100%;
+      margin-bottom: 1rem;
     }
   }
   
-  /* 중간 화면 스타일 */
-  @media (min-width: 769px) and (max-width: 1200px) {
-    .container {
-      padding: 2rem 8%; /* 중간 화면에서 패딩 조정 */
-    }
-  
-    .card,
-    .detailBox {
-      max-width: 48%; /* 중간 화면에서 약간의 여유 공간 추가 */
-    }
-  }
-  
-  /* 데스크톱 스타일 */
   @media (min-width: 1200px) {
-    .container {
-      padding: 2rem 10%; /* 데스크톱에서 패딩을 넓게 */
-    }
-  }
-  
-  /* 초대형 화면 스타일 */
-  @media (min-width: 1920px) {
-    .container {
-      padding: 2rem 35%; /* 더 큰 화면에서 추가 여백 */
+    .bookDetailContainer {
+      padding: 2rem 15%;
     }
   }
   

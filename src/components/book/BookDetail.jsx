@@ -5,7 +5,10 @@ import apiClient from "../../api/axiosInstance";
 import styles from "../../styles/BookDetail.module.css";
 import errorDisplay from "../../api/errorDisplay";
 import { addToWishList, removeFromWishList } from "../../redux/wishlistSlice";
+import { addItem } from "../../redux/cartSlice"; // Import the addItem action
 import { selectIsInWishlist } from "../../redux/selectors";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import Review from "../common/Review";
 
 export default function BookDetail() {
   const { id } = useParams();
@@ -16,31 +19,17 @@ export default function BookDetail() {
     selectIsInWishlist(state, parseInt(id, 10))
   );
 
-  const loginFlag = useSelector((state) => state.userInfo.loginFlag); // 로그인 상태 가져오기
+  const loginFlag = useSelector((state) => state.userInfo.loginFlag);
   const user = useSelector((state) => state.userInfo.user);
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [backgroundStyle, setBackgroundStyle] = useState({
-    filter: "blur(2px)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    top: "-180px",
-    zIndex: 0,
-  });
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
         const response = await apiClient.get(`/api/book/bookdetail/${id}`);
         setBook(response.data);
-        setBackgroundStyle((prev) => ({
-          ...prev,
-          backgroundImage: `url(${response.data.image})`,
-        }));
       } catch (error) {
         errorDisplay(error);
         navigate("/");
@@ -49,13 +38,34 @@ export default function BookDetail() {
     fetchBookDetails();
   }, [id, navigate]);
 
-  const handleCart = () => {
-    if (!loginFlag) {
+  const handleCart = async () => {
+    if (!loginFlag || !user?.email) {
       alert("로그인 후 이용해주세요.");
       return;
     }
-    // 장바구니 추가 로직 (구현 필요)
-    alert("장바구니에 추가되었습니다!");
+
+    try {
+      await apiClient.post("/api/purchase/add/cart", {
+        email: user.email,
+        bookId: Number(id),
+        quantity: 1,
+      });
+
+      // Redux에 장바구니 데이터 저장
+      dispatch(
+        addItem({
+          id: book.id,
+          title: book.title,
+          author: book.author,
+          price: book.price,
+          quantity: 1,
+        })
+      );
+
+      alert("장바구니에 추가되었습니다!");
+    } catch (error) {
+      errorDisplay(error);
+    }
   };
 
   const handlePurchase = () => {
@@ -63,8 +73,7 @@ export default function BookDetail() {
       alert("로그인 후 이용해주세요.");
       return;
     }
-    // 구매 로직 (구현 필요)
-    alert("구매 페이지로 이동합니다.");
+    navigate("/mymenu/cart/purchase");
   };
 
   const toggleWishlist = async () => {
@@ -79,14 +88,14 @@ export default function BookDetail() {
     try {
       if (isInWishlist) {
         await apiClient.post("/api/purchase/delete/wish", {
-          email: user.email, // 사용자 이메일 추가
-          bookId: book.id,
+          email: user.email,
+          bookId: Number(id),
         });
         dispatch(removeFromWishList(book));
       } else {
         await apiClient.post("/api/purchase/add/wish", {
-          email: user.email, // 사용자 이메일 추가
-          bookId: book.id,
+          email: user.email,
+          bookId: Number(id),
         });
         dispatch(addToWishList(book));
       }
@@ -102,51 +111,58 @@ export default function BookDetail() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
-        <div style={backgroundStyle}></div>
-        <div className={styles.cardContent}>
-          <img src={book.image} alt={book.title} className={styles.bookImage} />
-          <h1 className={styles.title}>{book.title}</h1>
-          <h3 className={styles.author}>{book.author}</h3>
-          <div className={styles.leftButtons}>
-            <button className={styles.addCartButton} onClick={handleCart}>
+    <div className={styles.bookDetailContainer}>
+      <div className={styles.bookDetailCard}>
+        <div className={styles.bookDetailCardContent}>
+          <img
+            src={book.image}
+            alt={book.title}
+            className={styles.bookDetailImage}
+          />
+          <h2 className={styles.bookDetailTitle}>{book.title}</h2>
+          <h3 className={styles.bookDetailAuthor}>{book.author}</h3>
+          <div className={styles.bookDetailLeftButtons}>
+            <button
+              className={styles.bookDetailAddCartButton}
+              onClick={handleCart}
+            >
               장바구니 담기
             </button>
             <button
-              className={styles.addWishlistButton}
+              className={styles.bookDetailAddWishlistButton}
               onClick={toggleWishlist}
               disabled={loading}
             >
-              {loading ? "처리 중..." : isInWishlist ? "찜 제거" : "찜하기"}
+              {loading ? (
+                "처리 중..."
+              ) : isInWishlist ? (
+                <FaHeart className={styles.bookDetailHeartIconFilled} />
+              ) : (
+                <FaRegHeart className={styles.bookDetailHeartIconEmpty} />
+              )}
             </button>
           </div>
         </div>
       </div>
-
-      <div className={styles.detailBox}>
-        <p className={styles.desc}>{book.desc}</p>
-        <div className={styles.infoRow}>
-          <span className={styles.label}>카테고리</span>
-          <span className={styles.category}>{book.category}</span>
+      <div className={styles.bookDetailCard}>
+        <div>
+          <p className={styles.bookDetailDesc}>{book.desc}</p>
+          <div className={styles.bookDetailInfoRow}>
+            <span className={styles.bookDetailLabel}>카테고리</span>
+            <span className={styles.bookDetailCategory}>{book.category}</span>
+          </div>
+          <div className={styles.bookDetailInfoRow}>
+            <span className={styles.bookDetailLabel}>출판사</span>
+            <span className={styles.bookDetailValue}>{book.publisher}</span>
+          </div>
         </div>
-        <div className={styles.infoRow}>
-          <span className={styles.label}>출판사</span>
-          <span className={styles.value}>{book.publisher}</span>
+        <div className={styles.bookDetailReviewContainer}>
+          <Review bookId={Number(id)} />
         </div>
-        <div className={styles.rating}>
-          {[...Array(5)].map((_, index) => (
-            <span
-              key={index}
-              className={
-                book.rating > index ? styles.ratingFilled : styles.notRated
-              }
-            >
-              ⭐
-            </span>
-          ))}
-        </div>
-        <button className={styles.purchaseButton} onClick={handlePurchase}>
+        <button
+          className={styles.bookDetailPurchaseButton}
+          onClick={handlePurchase}
+        >
           구매하기
         </button>
       </div>

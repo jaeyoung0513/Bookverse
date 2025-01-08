@@ -1,6 +1,6 @@
 .profileContainer {
     max-width: 600px;
-    margin: 50px auto;
+    margin: auto;
     padding: 20px;
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -86,7 +86,6 @@
 @media (max-width: 768px) {
     .profileContainer {
         max-width: 100%;
-        margin: 20px;
         padding: 15px;
     }
 
