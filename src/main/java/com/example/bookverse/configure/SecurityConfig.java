@@ -30,26 +30,26 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    
+
     @Bean
-    public LogoutSuccessHandler logoutHandler(){
+    public LogoutSuccessHandler logoutHandler() {
         return (request, response, authentication) -> {
             response.setStatus(HttpStatus.OK.value());
             response.getWriter().write("Logout success!!");
-            
+
         };
     }
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -58,18 +58,28 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers(
                                         "/api/", "/api/user/login", "/api/user/join", "/api/user/logout", // 로그아웃 엔드포인트 추가
-                                        "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw","/api/review/book/{bookId}",
+                                        "/api/user/check/id", "/api/user/find/id", "/api/user/find/pw", "/api/review/book/{bookId}",
                                         "/api/book/search", "/api/book/bookdetail/{id}", "/api/book/category",
                                         "/api/purchase/top/all", "/api/purchase/top/category", "/api/book/booklist", "/api/book/all",
                                         "/api/reissue").permitAll()
                                 .requestMatchers("/api/user/cancel", "/api/user/update/{id}", "/api/user/userinfo",
                                         "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
                                         "/api/review/edit", "/api/review/delete",
-                                        "/api/purchase/add/wish", "/api/purchase/delete/wish", "/api/purchase/wishlist",
+                                        "/api/purchase/add/wish", "/api/purchase/delete/wish",
                                         "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
                                         "/api/purchase/membersPurchaseList").hasRole("USER")
+                                .requestMatchers("/api/user/cancel", "/api/user/update/{id}", "/api/user/userinfo",
+                                        "/api/review/add", "/api/review/book/{bookId}", "/api/review/user/{userId}",
+                                        "/api/review/edit", "/api/review/delete",
+                                        "/api/purchase/add/wish", "/api/purchase/delete/wish",
+                                        "/api/purchase/add/cart", "/api/purchase/delete/cart", "/api/purchase/buy",
+                                        "/api/purchase/membersPurchaseList",
+                                        "/api/user/{userId}/setDormant", "/api/user/{userId}/setActive",
+                                        "/api/user/filter", "/api/user/userlist",
+                                        "/api/book/add", "/api/book/edit/{id}",
+                                        "/api/purchase/purchaselist", "/api/purchase/members-purchaselist").hasRole("ADMIN")
                                 .anyRequest().authenticated());
-        
+
         http.cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
             config.addAllowedOrigin("http://localhost:3000");
@@ -79,26 +89,26 @@ public class SecurityConfig {
             config.addExposedHeader("Authorization");
             return config;
         }));
-        
+
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        
+
         http.addFilterBefore(new JwtFilter(this.jwtUtil), LoginFilter.class);
         http.addFilterAt(new LoginFilter(authenticationManager(this.authenticationConfiguration), this.jwtUtil), UsernamePasswordAuthenticationFilter.class);
-        
+
         http.exceptionHandling(exception -> {
             exception.authenticationEntryPoint(this.customAuthenticationEntryPoint);
             exception.accessDeniedHandler(this.customAccessDeniedHandler);
         });
-        
+
         // 로그아웃 설정 추가
-        http.logout(logout->logout.logoutUrl("/api/user/logout")
+        http.logout(logout -> logout.logoutUrl("/api/user/logout")
                 .logoutSuccessHandler(logoutHandler())
-                .addLogoutHandler((request, response, authentication)->{
-                    if(request.getSession()!=null){
+                .addLogoutHandler((request, response, authentication) -> {
+                    if (request.getSession() != null) {
                         request.getSession().invalidate();
                     }
-                }).deleteCookies("JSESSIONID","refresh"));
-        
+                }).deleteCookies("JSESSIONID", "refresh"));
+
         return http.build();
     }
 }

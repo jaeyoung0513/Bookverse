@@ -40,7 +40,7 @@ public class UserService {
 
             RoleEntity roleEntity = new RoleEntity();
             roleEntity.setUser(userEntity);
-            if (user.getEmail().equals("admin@bookverse.com")) {
+            if (user.getEmail().equals("admin@gmail.com")) {
                 roleEntity.setRoleName("ROLE_ADMIN");
             } else {
                 roleEntity.setRoleName("ROLE_USER");
@@ -76,7 +76,7 @@ public class UserService {
             userRepository.deleteById(user.getId());
         }
     }
-    
+
     public String findId(UserDTO user) {
         String id = userRepository.findEmailByNameBirthdatePhone(
                 user.getName(),
@@ -88,8 +88,8 @@ public class UserService {
         }
         return id;
     }
-    
-    
+
+
     public String findPw(UserDTO user) {
         // 사용자 정보로 회원 검색
         UserEntity userEntity = userRepository.findUserEntityByEmailNameBirthdatePhone(
@@ -98,19 +98,20 @@ public class UserService {
         if (userEntity == null) {
             throw new EntityNotFoundException("일치하는 회원이 없습니다. 다시 입력해주세요.");
         }
-        
+
         // 4자리 임시 비밀번호 생성
         String newPw = createNewPw(4);
-        
+
         // 비밀번호 암호화 후 저장
         String encodedPw = passwordEncoder.encode(newPw);
         userEntity.setPw(encodedPw);
         userEntity.setUpdatedAt(LocalDateTime.now());
         userRepository.save(userEntity); // 변경사항 저장
-        
+
         // 생성된 비밀번호 반환
         return newPw;
     }
+
     private String createNewPw(int length) {
         StringBuilder password = new StringBuilder();
         Random random = new Random();
